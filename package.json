@@ -1,10 +1,12 @@
 {
+  "homepage": "https://anemy.github.io/svgee",
   "name": "svgee",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "dependencies": {
