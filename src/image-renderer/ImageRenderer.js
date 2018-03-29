@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 export default class ImageRenderer extends Component {
+  state = {
+    isRendered: false,
+    isRendering: false
+  }
+
   componentDidMount() {
     this.updateCanvasRender();
   }
@@ -15,6 +20,10 @@ export default class ImageRenderer extends Component {
     const { image } = this.props;
 
     if (image.getNeedsRender()) {
+      this.setState({
+        isRendered: false,
+        isRendering: true
+      });
       image.setRendering();
 
       const imageData = image.getData();
@@ -35,14 +44,20 @@ export default class ImageRenderer extends Component {
       console.log('Canvas render updated.');
 
       image.setRendered();
+      this.setState({
+        isRendering: true,
+        isRendered: true
+      });
     }
   }
 
   render() {
     const { image } = this.props;
+    const { isRendered } = this.state;
 
     return (
       <div className="svgee-image-renderer">
+        {!isRendered && <p>Building Image...</p>}
         <canvas
           height={image.getRenderHeight()}
           ref={ref => {this.canvasRef = ref;}}

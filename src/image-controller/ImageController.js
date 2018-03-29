@@ -71,3 +71,23 @@ export default class ImageController {
     image.src = imageURI;
   }
 }
+
+
+// setTimeout(() => {
+//   // Invert the image in a few seconds just for example - remove later.
+//   const imageData = [...this.image.getData()];
+
+//   for (let i = 0; i < imageData.length; i++) {
+//     if (i % 4 === 0) { // Skip alpha channel.
+//       imageData[i] = 255 - imageData[i];
+//     }
+//   }
+
+//   this.image.setData(imageData);
+//   this.image.setNeedsRender();
+
+//   this.setState({
+//     // Force a re-render.
+//     imageLoaded: true
+//   });
+// }, 3000);

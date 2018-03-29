@@ -1,7 +1,7 @@
 .svgee-home {
   color: #333;
   text-align: center;
-  padding: 40px;
+  height: 100vh;
 }
 
 input[type="file"] {
@@ -20,4 +20,21 @@ input[type="file"] {
   border-color: #333;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.svgee-image-upload-disabled {
+  visibility: hidden;
+}
+.svgee-image-upload-disabled:hover {
+  cursor: not-allowed;
+}
+
+.import-image-prompt {
+  padding-top: 200px;
+}
+
+.svgee-home-item {
+  border: 1px solid #eee;
+  height: 100vh;
+  overflow: auto;
 }
