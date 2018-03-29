@@ -1,6 +1,9 @@
+import jsfeat from 'jsfeat';
+
 export default class ImageController {
   constructor() {
     this.imageData = null;
+    this.originalImageData = null;
     this.loadedImage = false;
 
     this.width = 0;
@@ -8,6 +11,27 @@ export default class ImageController {
 
     this.rendered = false;
     this.isRendering = false;
+  }
+
+  invertImage() {
+    const grayImageMatrix = new jsfeat.matrix_t(this.width, this.height, jsfeat.U8C1_t);
+
+    console.log('pre imageData', [...this.image.data]);
+
+    jsfeat.imgproc.grayscale(this.image.data, this.width, this.height, grayImageMatrix);
+    
+    let data_u32 = new Uint32Array(this.image.data.buffer);
+    let i = grayImageMatrix.cols * grayImageMatrix.rows, pix = 0;
+
+    let alpha = (0xff << 24);
+    while (--i >= 0) {
+        pix = grayImageMatrix.data[i];
+        data_u32[i] = alpha | (pix << 16) | (pix << 8) | pix;
+    }
+
+    console.log('post imageData', [...this.image.data]);
+
+    this.imageData = [...this.image.data];
   }
 
   getNeedsRender() {
@@ -57,7 +81,9 @@ export default class ImageController {
 
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
+      this.image = context.getImageData(0, 0, canvas.width, canvas.height);
       this.imageData = [...context.getImageData(0, 0, canvas.width, canvas.height).data];
+      this.originalImageData = [...this.imageData];
       this.loadedImage = true;
       this.setNeedsRender();
       done(false);

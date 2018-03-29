@@ -17,6 +17,20 @@ export default class Home extends Component {
   image = null;
   svgController = null;
 
+  invertImageClicked = () => {
+    if (this.state.imageLoaded) {
+      this.image.invertImage();
+
+      console.log('done');
+
+      this.image.setNeedsRender();
+
+      this.setState({
+        imageLoaded: true
+      });
+    }
+  }
+
   handleImageChange = () => {
     if (!this.state.loadingImage && this.imageInputRef.files &&
       this.imageInputRef.files[0]
@@ -87,7 +101,12 @@ export default class Home extends Component {
           </div>
           <div className="unit one-fifth">
             <div className="svgee-home-item">
-              Controls - Coming soon.
+              <p>Controls</p>
+              <button
+                onClick={this.invertImageClicked}
+              >
+                Invert Image
+              </button>
             </div>
           </div>
         </div>}

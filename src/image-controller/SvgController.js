@@ -1,5 +1,6 @@
 // TODO: Add some randomness factors.
 
+
 const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
@@ -8,10 +9,12 @@ const SVG_RENDER_TYPES = {
   RECTANGLE: 'RECTANGLE'
 };
 
-const SVG_ANALYZE_TYPES = {
-  BLOB: 'BLOB',
-  DIRECTIONAL: 'DIRECTIONAL'
-};
+// How to fill - recursive filling functions.
+
+// const SVG_ANALYZE_TYPES = {
+//   BLOB: 'BLOB',
+//   DIRECTIONAL: 'DIRECTIONAL'
+// };
 
 export class SvgControllerThreshholds {
   static colorDiffMin = 0;
@@ -42,11 +45,7 @@ function isPixelInDrawThreshold(trackerPixel, pixel) {
   } = SvgControllerThreshholds;
 
   return Math.abs(pixel.x - trackerPixel.x) < xMinDiff || Math.abs(pixel.x - trackerPixel.x) > xMaxDiff ||
-         Math.abs(pixel.y - trackerPixel.y) < yMinDiff || Math.abs(pixel.y - trackerPixel.y) > yMaxDiff
-
-  if () {
-    return false;
-  }
+         Math.abs(pixel.y - trackerPixel.y) < yMinDiff || Math.abs(pixel.y - trackerPixel.y) > yMaxDiff;
 }
 
 
@@ -99,6 +98,7 @@ export default class SvgController {
       const imageData = this.image.getData();
 
       let currentTrackingPixel = null;
+      let lastPixel = null;
       for (let i = 0; i < imageData.length / 4; i++) {
         const pixelIndex = i * 4;
         const pixel = {
@@ -114,21 +114,28 @@ export default class SvgController {
           currentTrackingPixel = {
             ...pixel
           };
+          lastPixel = {
+            ...pixel
+          };
           continue;
         }
 
         const inThreshhold = isPixelInThreshhold(currentTrackingPixel, pixel);
         if (!inThreshhold) {
           // Make the line! New tracker.
-          if (pixel.y % 10 === 0) {
+          if (lastPixel.y % 10 === 0 && isPixelInDrawThreshold(lastPixel, currentTrackingPixel)) {
             const displayColor = 'rgb(28, 32, 38)';// `rgb(${pixel.r}, ${pixel.g}, ${pixel.b})`;
-            newString += `<line x1="${pixel.x}" y1="${pixel.y}" x2="${currentTrackingPixel.x}" y2="${currentTrackingPixel.y}" style="stroke: ${displayColor}; stroke-width:2" />`;
+            newString += `<line x1="${lastPixel.x}" y1="${lastPixel.y}" x2="${currentTrackingPixel.x}" y2="${currentTrackingPixel.y}" style="stroke: ${displayColor}; stroke-width:2" />`;
           }
 
           currentTrackingPixel = {
             ...pixel
           };
         }
+
+        lastPixel = {
+          ...pixel
+        };
       }
 
       this.isRendering = false;
