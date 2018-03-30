@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 import './Home.css';
 
-import ImageController from '../image-controller/ImageController';
 import ImageRenderer from '../image-renderer/ImageRenderer';
 import SvgRenderer from '../svg-renderer/SvgRenderer';
-import SvgController from '../image-controller/SvgController';
+
+import { createController } from '../controller/Controller';
 
 export default class Home extends Component {
   state = {
@@ -14,8 +14,8 @@ export default class Home extends Component {
     loadingImage: false
   }
 
-  image = null;
-  svgController = null;
+  controller = null;
+  originalImageURI = null;
 
   invertImageClicked = () => {
     if (this.state.imageLoaded) {
@@ -36,24 +36,26 @@ export default class Home extends Component {
       this.imageInputRef.files[0]
     ) {
       this.setState({
-        loadingImage: true
+        loadingImage: true,
+        imageLoadingError: false
       });
 
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        this.image = new ImageController();
+        this.controller = createController();
+        this.originalImageURI = reader.result;
 
-        this.image.loadImageFromURI(reader.result, err => {
-          this.svgController = new SvgController();
-          this.svgController.setImage(this.image);
-          this.svgController.setNeedsRender();
+        this.setState({
+          loadingImage: false,
+          imageLoaded: true
+        });
+      };
 
-          this.setState({
-            loadingImage: false,
-            imageLoadingError: err,
-            imageLoaded: !err
-          });
+      reader.onerror = () => {
+        this.setState({
+          loadingImage: false,
+          imageLoadingError: true
         });
       };
 
@@ -87,26 +89,16 @@ export default class Home extends Component {
           </div>
         }
         {loadingImage && <p>Importing Image...</p>}
-        {imageLoadingError && <p>Failed to load image. Please try again</p>}
+        {imageLoadingError && <p>Failed to load image. Please try again.</p>}
         {imageLoaded && <div className="grid no-gutters">
-          <div className="unit two-fifths">
+          <div className="unit one-half">
             <div className="svgee-home-item">
-              <ImageRenderer image={this.image}/>
+              <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>
             </div>
           </div>
-          <div className="unit two-fifths">
+          <div className="unit one-half">
             <div className="svgee-home-item">
               <SvgRenderer svgController={this.svgController}/>
-            </div>
-          </div>
-          <div className="unit one-fifth">
-            <div className="svgee-home-item">
-              <p>Controls</p>
-              <button
-                onClick={this.invertImageClicked}
-              >
-                Invert Image
-              </button>
             </div>
           </div>
         </div>}
