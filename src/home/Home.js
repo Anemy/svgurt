@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import './Home.css';
 
 import ImageRenderer from '../image-renderer/ImageRenderer';
-import SvgRenderer from '../svg-renderer/SvgRenderer';
 
 import { createController } from '../controller/Controller';
 
@@ -20,8 +19,6 @@ export default class Home extends Component {
   invertImageClicked = () => {
     if (this.state.imageLoaded) {
       this.image.invertImage();
-
-      console.log('done');
 
       this.image.setNeedsRender();
 
@@ -90,18 +87,7 @@ export default class Home extends Component {
         }
         {loadingImage && <p>Importing Image...</p>}
         {imageLoadingError && <p>Failed to load image. Please try again.</p>}
-        {imageLoaded && <div className="grid no-gutters">
-          <div className="unit one-half">
-            <div className="svgee-home-item">
-              <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>
-            </div>
-          </div>
-          <div className="unit one-half">
-            <div className="svgee-home-item">
-              <SvgRenderer svgController={this.svgController}/>
-            </div>
-          </div>
-        </div>}
+        {imageLoaded && <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>}
       </div>
     );
   }

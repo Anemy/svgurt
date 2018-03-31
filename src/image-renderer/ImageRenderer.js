@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 
+import { updateRenderType } from '../controller/Controller';
+
 import { manipulateImageData } from './image-manipulator';
+import { renderSvgString } from './svg-renderer';
+import { downloadSVGString } from './downloader';
 
 export default class ImageRenderer extends Component {
   constructor(props) {
@@ -14,13 +18,40 @@ export default class ImageRenderer extends Component {
     imageLoadingError: false,
     isRendered: false,
     isRendering: false,
-    loadingImage: true
+    loadingImage: true,
+    svgString: ''
   }
 
   componentDidMount() {
     this.props.controller.importNewImage.onChange(() => {
       this.hiddenImageChooser.focus();
       this.hiddenImageChooser.click();
+    });
+
+    this.props.controller.downloadSvgButton.onChange(() => {
+      downloadSVGString(this.state.svgString);
+    });
+
+    this.props.controller.svgRenderTypeController.onChange(() => {
+      updateRenderType(this.props.controller);
+
+      _.each(this.props.controller.svgChangingControls, svgSettingControl => {
+        svgSettingControl.onFinishChange(() => {
+          this.updateSvgRender();
+        });
+      });
+    });
+
+    _.each(this.props.controller.svgChangingControls, svgSettingControl => {
+      svgSettingControl.onFinishChange(() => {
+        this.updateSvgRender();
+      });
+    });
+
+    _.each(this.props.controller.svgSettingControls, svgSettingControl => {
+      svgSettingControl.onFinishChange(() => {
+        this.updateSvgRender();
+      });
     });
 
     // Listen for changes on all of the image changing controls.
@@ -90,14 +121,16 @@ export default class ImageRenderer extends Component {
         this.height = htmlRenderedImage.height;
         this.width = htmlRenderedImage.width;
 
+        console.log('Loaded image with resolution', this.width, this.height);
+
         const ctx =  this.canvasRef.getContext('2d');
         this.renderedImage = htmlRenderedImage;
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
-        const imageData = ctx.getImageData(0, 0, this.width, this.height);
+        this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-        manipulateImageData(imageData, this.props.controller.imageSettings, this.width, this.height);
+        manipulateImageData(this.imageData, this.props.controller.imageSettings, this.width, this.height);
 
-        ctx.putImageData(imageData, 0, 0);
+        ctx.putImageData(this.imageData, 0, 0);
 
         // Check if no updates here.
         this.setState({
@@ -106,10 +139,23 @@ export default class ImageRenderer extends Component {
           loadingImage: false
         });
 
+        this.updateSvgRender();
+
         console.log('Done rendering new image.');
       };
 
       htmlRenderedImage.src = this.imageURI;
+    }
+  }
+
+  updateSvgRender() {
+    if (this.state.isRendered && this.imageData) {
+      renderSvgString(this.imageData.data, this.props.controller.svgSettings, this.width, this.height, svgString => {
+        // TODO: Version/cancel this.
+        this.setState({
+          svgString
+        });
+      });
     }
   }
 
@@ -124,11 +170,11 @@ export default class ImageRenderer extends Component {
 
       const ctx =  this.canvasRef.getContext('2d');
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
-      const imageData = ctx.getImageData(0, 0, this.width, this.height);
+      this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-      manipulateImageData(imageData, this.props.controller.imageSettings, this.width, this.height);
+      manipulateImageData(this.imageData, this.props.controller.imageSettings, this.width, this.height);
 
-      ctx.putImageData(imageData, 0, 0);
+      ctx.putImageData(this.imageData, 0, 0);
 
       // Check if no updates here.
       this.setState({
@@ -137,15 +183,17 @@ export default class ImageRenderer extends Component {
       });
 
       console.log('Done rendering the updated image.');
+
+      this.updateSvgRender();
     }
   }
 
   render() {
-    const { isRendered, isRendering, loadingImage } = this.state;
+    const { isRendered, isRendering, loadingImage, svgString } = this.state;
 
     return (
       <div className="svgee-image-renderer">
-        {/* {!isRendered && !isRendering} */}
+        {/* {!isRendered && !isRendering} We should do something... */}
         <input
           accept="image/*"
           onChange={() => this.handleImageChange()}
@@ -154,12 +202,23 @@ export default class ImageRenderer extends Component {
         />
         {loadingImage && <p>Loading Image...</p>}
         {isRendering && <p>Building Image...</p>}
-        <canvas
-          style={{
-            visibility: isRendered && !isRendering ? 'visible' : 'hidden'
-          }}
-          ref={ref => { this.canvasRef = ref; }}
-        />
+        <div className="grid no-gutters">
+          <div className="unit half">
+            <div className="svgee-home-item">
+              <canvas
+                style={{
+                  visibility: isRendered && !isRendering ? 'visible' : 'hidden'
+                }}
+                ref={ref => { this.canvasRef = ref; }}
+              />
+            </div>
+          </div>
+          <div className="unit half">
+            <div className="svgee-home-item">
+              <div dangerouslySetInnerHTML={{__html: svgString}} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
