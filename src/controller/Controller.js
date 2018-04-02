@@ -23,12 +23,12 @@ class SvgController {
   maxColorRecognized = 255;
   length = 5;
   liveUpdate = true;
-  randomness = 0.5;
+  randomness = 0.2;
   randomSeed = 1;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   strokeWidth = 1;
-  svgRenderType = SVG_RENDER_TYPES.CURVE;
+  svgRenderType = SVG_RENDER_TYPES.LINE;
   wavelength = 5;
   waves = 3;
   chooseSVGRenderType() {}

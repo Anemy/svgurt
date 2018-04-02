@@ -35,6 +35,8 @@ export default class ImageRenderer extends Component {
     this.props.controller.svgRenderTypeController.onChange(() => {
       updateRenderType(this.props.controller);
 
+      this.updateSvgRender();
+      
       _.each(this.props.controller.svgChangingControls, svgSettingControl => {
         svgSettingControl.onFinishChange(() => {
           this.updateSvgRender();
