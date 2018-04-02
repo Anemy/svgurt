@@ -3,9 +3,9 @@
 export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
-  HASH: 'HASH',
-  LINE: 'LINE',
-  RECTANGLE: 'RECTANGLE'
+  // HASH: 'HASH',
+  LINE: 'LINE'
+  // RECTANGLE: 'RECTANGLE'
 };
 
 // How to fill - recursive filling functions.
@@ -33,14 +33,50 @@ function isPixelInColorThreshhold(pixel, controls) {
          pixel.b <= maxColorRecognized;
 }
 
+/*
+f(x) = A sin(wt + p)
+where
+
+A is the amplitude
+w is the frequency
+p is the phase
+*/
+
 function tryToRenderPixel(pixel, svgSettings) {
   switch (svgSettings.svgRenderType) {
     case SVG_RENDER_TYPES.CURVE: {
       if (isPixelInGridThreshold(pixel, svgSettings) &&
           isPixelInColorThreshhold(pixel, svgSettings)) {
         const displayColor = 'rgb(28, 32, 38)';// `rgb(${pixel.r}, ${pixel.g}, ${pixel.b})`;
-        return `<line x1="${pixel.x}" y1="${pixel.y}" x2="${pixel.x + 5}" y2="${pixel.y - 3}" style="stroke: ${displayColor}; stroke-width: ${svgSettings.strokeWidth}" />`;
+        // While through wavelength to end.
+        let curvePath = `M ${pixel.x} ${pixel.y}`;
+        for (let i = 0; i < svgSettings.waves; i++) {
+          let points = [{
+            x: pixel.x + (Math.PI / 2) * (i + 1) * Math.cos(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength,
+            y: pixel.y + (Math.PI / 2) * (i + 1) * Math.sin(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength
+          }, {
+            x: pixel.x + (Math.PI * (3 / 2)) * (i + 1) * Math.cos(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength,
+            y: pixel.y + (Math.PI * (3 / 2)) * (i + 1) * Math.sin(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength
+          }, {
+            x: pixel.x + (Math.PI * 2) * (i + 1) * Math.cos(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength,
+            y: pixel.y + (Math.PI * 2) * (i + 1) * Math.sin(svgSettings.direction * (Math.PI / 180)) * svgSettings.wavelength
+          }];
+          curvePath += ` C ${points[0].x} ${points[0].y}, ${points[1].x} ${points[1].y}, ${points[2].x} ${points[2].y}`;
+        }
+        if (Math.random() > .9) {
+          console.log('curvepath', curvePath);
+        }
+        return `<path d="${curvePath}" style="stroke: ${displayColor}; stroke-width: ${svgSettings.strokeWidth};" />`;
       }
+      break;
+    }
+    case SVG_RENDER_TYPES.LINE: {
+      if (isPixelInGridThreshold(pixel, svgSettings) &&
+          isPixelInColorThreshhold(pixel, svgSettings)) {
+        const displayColor = 'rgb(28, 32, 38)';// `rgb(${pixel.r}, ${pixel.g}, ${pixel.b})`;
+        return `<line x1="${pixel.x}" y1="${pixel.y}" x2="${pixel.x + svgSettings.length * Math.cos(svgSettings.direction * (Math.PI / 180))}" y2="${pixel.y + svgSettings.length * Math.sin(svgSettings.direction * (Math.PI / 180))}" style="stroke: ${displayColor}; stroke-width: ${svgSettings.strokeWidth}" />`;
+      }
+      break;
     }
   }
 }
