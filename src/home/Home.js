@@ -5,6 +5,7 @@ import './Home.css';
 import ImageRenderer from '../image-renderer/ImageRenderer';
 
 import { createController } from '../controller/Controller';
+import exampleImage from '../fixtures/example-image';
 
 export default class Home extends Component {
   state = {
@@ -24,6 +25,19 @@ export default class Home extends Component {
 
       this.setState({
         imageLoaded: true
+      });
+    }
+  }
+
+  handleExampleImageClicked = () => {
+    if (!this.loadingImage && !this.imageLoaded) {
+      this.controller = createController();
+      this.originalImageURI = exampleImage;
+
+      this.setState({
+        loadingImage: false,
+        imageLoaded: true,
+        imageLoadingError: false
       });
     }
   }
@@ -83,6 +97,11 @@ export default class Home extends Component {
               ref={ref => { this.imageInputRef = ref; }}
               type="file"
             />
+            <br />
+            <button
+              onClick={this.handleExampleImageClicked}
+              className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
+            >Use Example Image</button>
           </div>
         }
         {loadingImage && <p>Importing Image...</p>}

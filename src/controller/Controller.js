@@ -18,19 +18,23 @@ class ImageController {
 
 class SvgController {
   amplitude = 5;
+  amplitudeRandomness = 0;
   direction = 45;
+  directionRandomness = 0;
   minColorRecognized = 200;
   maxColorRecognized = 255;
   length = 5;
+  lengthRandomness = 0.5;
   liveUpdate = true;
-  randomness = 0.2;
   randomSeed = 1;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   strokeWidth = 1;
   svgRenderType = SVG_RENDER_TYPES.LINE;
   wavelength = 5;
+  wavelengthRandomness = 0;
   waves = 3;
+  wavesRandomness = 0;
   chooseSVGRenderType() {}
   downloadSVG() {}
 }
@@ -51,10 +55,13 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(svgController, 'renderEveryXPixels', 0, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(svgController, 'renderEveryYPixels', 0, 50).step(1);
       controller.svgChangingControls['waves'] = controller.svgFolder.add(svgController, 'waves', 0, 50);
+      controller.svgChangingControls['wavesRandomness'] = controller.svgFolder.add(svgController, 'wavesRandomness', 0, 1);
       controller.svgChangingControls['direction'] = controller.svgFolder.add(svgController, 'direction', 0, 360);
+      controller.svgChangingControls['directionRandomness'] = controller.svgFolder.add(svgController, 'directionRandomness', 0, 1);
       controller.svgChangingControls['amplitude'] = controller.svgFolder.add(svgController, 'amplitude', 0, 50);
+      controller.svgChangingControls['amplitudeRandomness'] = controller.svgFolder.add(svgController, 'amplitudeRandomness', 0, 1);
       controller.svgChangingControls['wavelength'] = controller.svgFolder.add(svgController, 'wavelength', 0, 50);
-      controller.svgChangingControls['randomness'] = controller.svgFolder.add(svgController, 'randomness', 0, 1);
+      controller.svgChangingControls['wavelengthRandomness'] = controller.svgFolder.add(svgController, 'wavelengthRandomness', 0, 1);
       break;
     }
     case SVG_RENDER_TYPES.LINE: {
@@ -62,8 +69,9 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(svgController, 'renderEveryXPixels', 0, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(svgController, 'renderEveryYPixels', 0, 50).step(1);
       controller.svgChangingControls['length'] = controller.svgFolder.add(svgController, 'length', 0, 50);
+      controller.svgChangingControls['lengthRandomness'] = controller.svgFolder.add(svgController, 'lengthRandomness', 0, 1);
       controller.svgChangingControls['direction'] = controller.svgFolder.add(svgController, 'direction', 0, 360);
-      controller.svgChangingControls['randomness'] = controller.svgFolder.add(svgController, 'randomness', 0, 1);
+      controller.svgChangingControls['directionRandomness'] = controller.svgFolder.add(svgController, 'directionRandomness', 0, 1);
       break;
     }
     case SVG_RENDER_TYPES.RECTANGLE: {

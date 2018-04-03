@@ -49,24 +49,27 @@ function tryToRenderPixel(pixel, svgSettings) {
           isPixelInColorThreshhold(pixel, svgSettings)) {
         const {
           amplitude,
+          amplitudeRandomness,
           direction,
-          randomness,
+          directionRandomness,
           strokeWidth,
           wavelength,
-          waves
+          wavelengthRandomness,
+          waves,
+          wavesRandomness
         } = svgSettings;
 
         const displayColor = 'rgb(28, 32, 38)';
         // While through wavelength to end.
         let curvePath = `M ${pixel.x} ${pixel.y}`;
-        const dir = direction + 360 * randomness * Math.random();
+        const dir = direction + 360 * directionRandomness * Math.random();
         const xDir = Math.cos(dir * (Math.PI / 180));
         const yDir = Math.sin(dir * (Math.PI / 180));
         const inverseXDir = Math.cos((dir - 90) * (Math.PI / 180));
         const inverseYDir = Math.sin((dir - 90) * (Math.PI / 180));
-        const wavelen = wavelength * (1 - Math.random() * randomness);
-        const amp = amplitude * (1 - Math.random() * randomness);
-        const wavAmount = waves - Math.round(waves * (1 - Math.random() * randomness));
+        const wavelen = wavelength * (1 - Math.random() * wavelengthRandomness);
+        const amp = amplitude * (1 - Math.random() * amplitudeRandomness);
+        const wavAmount = waves - Math.round(waves * (1 - Math.random() * wavesRandomness));
         for (let i = 0; i < wavAmount; i++) {
           let points = [{
             x: pixel.x + (((i * wavelen) + wavelen / 4) * xDir + inverseXDir * amp),
@@ -93,19 +96,21 @@ function tryToRenderPixel(pixel, svgSettings) {
 
         const {
           direction,
+          directionRandomness,
           length,
-          randomness,
+          lengthRandomness,
           strokeWidth
         } = svgSettings;
 
-        const dir = direction + 360 * randomness * Math.random();
+        const dir = direction + 360 * directionRandomness * Math.random();
         const xMove = length * Math.cos(dir * (Math.PI / 180));
         const yMove = length * Math.sin(dir * (Math.PI / 180));
 
         const x1 = pixel.x;
         const y1 = pixel.y;
-        const x2 = pixel.x + xMove * (1 - (Math.random() * randomness));
-        const y2 = pixel.y + yMove * (1 - (Math.random() * randomness));
+        const lenRandom = (1 - (Math.random() * lengthRandomness));
+        const x2 = pixel.x + xMove * lenRandom;
+        const y2 = pixel.y + yMove * lenRandom;
 
         return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: ${displayColor}; stroke-width: ${strokeWidth}" />`;
       }
