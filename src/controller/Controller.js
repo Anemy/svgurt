@@ -18,7 +18,7 @@ class ImageController {
 
 class SvgController {
   amplitude = 5;
-  amplitudeRandomness = 0.01;
+  amplitudeRandomness = 0.5;
   direction = 45;
   directionRandomness = 0.01;
   minColorRecognized = 200;
@@ -27,17 +27,17 @@ class SvgController {
   lengthRandomness = 0.5;
   liveUpdate = true;
   randomSeed = 1;
-  radius = 2;
-  radiusRandomness = 0.01;
+  radius = 1.5;
+  radiusRandomness = 0.75;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   strokeWidth = 1;
   strokeWidthRandomness = 0.01;
   svgRenderType = SVG_RENDER_TYPES.LINE;
-  wavelength = 5;
-  wavelengthRandomness = 0.01;
+  wavelength = 3;
+  wavelengthRandomness = 0.5;
   waves = 3;
-  wavesRandomness = 0.01;
+  wavesRandomness = 0.5;
   chooseSVGRenderType() {}
   downloadSVG() {}
 }

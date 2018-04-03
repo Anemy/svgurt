@@ -43,7 +43,7 @@ function blurImage(imageData, blurAmount, width, height) {
 
 function invertImage(imageData) {
   for (let i = 0; i < imageData.data.length; i++) {
-    if (i % 4 === 0) { // Skip alpha channel.
+    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
       imageData.data[i] = 255 - imageData.data[i];
     }
   }
