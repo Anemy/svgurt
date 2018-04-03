@@ -130,7 +130,7 @@ export default class ImageRenderer extends Component {
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
         this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-        manipulateImageData(this.imageData, this.props.controller.imageSettings, this.width, this.height);
+        manipulateImageData(this.imageData, this.props.controller.settings, this.width, this.height);
 
         ctx.putImageData(this.imageData, 0, 0);
 
@@ -152,7 +152,7 @@ export default class ImageRenderer extends Component {
 
   updateSvgRender() {
     if (this.state.isRendered && this.imageData) {
-      renderSvgString(this.imageData.data, this.props.controller.svgSettings, this.width, this.height, svgString => {
+      renderSvgString(this.imageData.data, this.props.controller.settings, this.width, this.height, svgString => {
         // TODO: Version/cancel this.
         this.setState({
           svgString
@@ -174,7 +174,7 @@ export default class ImageRenderer extends Component {
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-      manipulateImageData(this.imageData, this.props.controller.imageSettings, this.width, this.height);
+      manipulateImageData(this.imageData, this.props.controller.settings, this.width, this.height);
 
       ctx.putImageData(this.imageData, 0, 0);
 

@@ -66,8 +66,4 @@ export function manipulateImageData(imageData, imageSettings, width, height) {
   if (imageSettings.cannyEdgeDetection) {
     cannyEdge(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
   }
-
-  // if (imageSettings.blur && imageSettings.blur > 0) {
-  //   blurImage(imageData, imageSettings.blur, width, height);
-  // }
 }
