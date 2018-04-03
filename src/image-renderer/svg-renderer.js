@@ -69,7 +69,7 @@ function tryToRenderPixel(pixel, svgSettings) {
         const inverseYDir = Math.sin((dir - 90) * (Math.PI / 180));
         const wavelen = wavelength * (1 - Math.random() * wavelengthRandomness);
         const amp = amplitude * (1 - Math.random() * amplitudeRandomness);
-        const wavAmount = waves - Math.round(waves * (1 - Math.random() * wavesRandomness));
+        const wavAmount = Math.round(waves * (1 - Math.random() * wavesRandomness));
         for (let i = 0; i < wavAmount; i++) {
           let points = [{
             x: pixel.x + (((i * wavelen) + wavelen / 4) * xDir + inverseXDir * amp),

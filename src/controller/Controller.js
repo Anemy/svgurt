@@ -18,9 +18,9 @@ class ImageController {
 
 class SvgController {
   amplitude = 5;
-  amplitudeRandomness = 0;
+  amplitudeRandomness = 0.01;
   direction = 45;
-  directionRandomness = 0;
+  directionRandomness = 0.01;
   minColorRecognized = 200;
   maxColorRecognized = 255;
   length = 5;
@@ -32,9 +32,9 @@ class SvgController {
   strokeWidth = 1;
   svgRenderType = SVG_RENDER_TYPES.LINE;
   wavelength = 5;
-  wavelengthRandomness = 0;
+  wavelengthRandomness = 0.01;
   waves = 3;
-  wavesRandomness = 0;
+  wavesRandomness = 0.01;
   chooseSVGRenderType() {}
   downloadSVG() {}
 }

@@ -15,6 +15,7 @@ input[type="file"] {
   color: #333;
   font-size: 16px;
   margin: 30px;
+  outline: none;
   padding: 6px 12px;
   transition-duration: 0.6s;
 }
