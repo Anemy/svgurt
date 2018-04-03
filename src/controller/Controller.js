@@ -27,9 +27,12 @@ class SvgController {
   lengthRandomness = 0.5;
   liveUpdate = true;
   randomSeed = 1;
+  radius = 2;
+  radiusRandomness = 0.01;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   strokeWidth = 1;
+  strokeWidthRandomness = 0.01;
   svgRenderType = SVG_RENDER_TYPES.LINE;
   wavelength = 5;
   wavelengthRandomness = 0.01;
@@ -50,8 +53,18 @@ export function updateRenderType(controller) {
   const svgController = controller.svgSettings;
 
   switch (newRenderType) {
+    case SVG_RENDER_TYPES.CIRCLE: {
+      controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(svgController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(svgController, 'strokeWidthRandomness', 0, 1);
+      controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(svgController, 'renderEveryXPixels', 0, 50).step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(svgController, 'renderEveryYPixels', 0, 50).step(1);
+      controller.svgChangingControls['radius'] = controller.svgFolder.add(svgController, 'radius', 0, 50);
+      controller.svgChangingControls['radiusRandomness'] = controller.svgFolder.add(svgController, 'radiusRandomness', 0, 1);
+      break;
+    }
     case SVG_RENDER_TYPES.CURVE: {
       controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(svgController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(svgController, 'strokeWidthRandomness', 0, 1);
       controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(svgController, 'renderEveryXPixels', 0, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(svgController, 'renderEveryYPixels', 0, 50).step(1);
       controller.svgChangingControls['waves'] = controller.svgFolder.add(svgController, 'waves', 0, 50);
@@ -66,6 +79,7 @@ export function updateRenderType(controller) {
     }
     case SVG_RENDER_TYPES.LINE: {
       controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(svgController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(svgController, 'strokeWidthRandomness', 0, 1);
       controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(svgController, 'renderEveryXPixels', 0, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(svgController, 'renderEveryYPixels', 0, 50).step(1);
       controller.svgChangingControls['length'] = controller.svgFolder.add(svgController, 'length', 0, 50);

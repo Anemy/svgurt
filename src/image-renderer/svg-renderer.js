@@ -1,7 +1,7 @@
 // TODO: Add some randomness factors.
 
 export const SVG_RENDER_TYPES = {
-  // CIRCLE: 'CIRCLE',
+  CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
   // HASH: 'HASH',
   LINE: 'LINE'
@@ -33,17 +33,25 @@ function isPixelInColorThreshhold(pixel, controls) {
          pixel.b <= maxColorRecognized;
 }
 
-/*
-f(x) = A sin(wt + p)
-where
-
-A is the amplitude
-w is the frequency
-p is the phase
-*/
-
 function tryToRenderPixel(pixel, svgSettings) {
   switch (svgSettings.svgRenderType) {
+    case SVG_RENDER_TYPES.CIRCLE: {
+      if (isPixelInGridThreshold(pixel, svgSettings) &&
+          isPixelInColorThreshhold(pixel, svgSettings)) {
+        const {
+          strokeWidth,
+          strokeWidthRandomness,
+          radius,
+          radiusRandomness
+        } = svgSettings;
+
+        const displayColor = 'rgb(28, 32, 38)';
+        const r = radius * (1 - radiusRandomness * Math.random());
+        const strokeW = strokeWidth * (1 - Math.random() * strokeWidthRandomness);
+        return `<circle cx="${pixel.x}" cy="${pixel.y}" r="${r}" style="stroke: ${displayColor}; stroke-width: ${strokeW}; fill: none;" />`;
+      }
+      break;
+    }
     case SVG_RENDER_TYPES.CURVE: {
       if (isPixelInGridThreshold(pixel, svgSettings) &&
           isPixelInColorThreshhold(pixel, svgSettings)) {
@@ -53,6 +61,7 @@ function tryToRenderPixel(pixel, svgSettings) {
           direction,
           directionRandomness,
           strokeWidth,
+          strokeWidthRandomness,
           wavelength,
           wavelengthRandomness,
           waves,
@@ -85,7 +94,8 @@ function tryToRenderPixel(pixel, svgSettings) {
           curvePath += ` C ${points[0].x} ${points[0].y}, ${points[1].x} ${points[1].y}, ${points[2].x} ${points[2].y}`;
         }
 
-        return `<path d="${curvePath}" style="stroke: ${displayColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
+        const strokeW = strokeWidth * (1 - Math.random() * strokeWidthRandomness);
+        return `<path d="${curvePath}" style="stroke: ${displayColor}; stroke-width: ${strokeW}; fill: none;" />`;
       }
       break;
     }
@@ -99,7 +109,8 @@ function tryToRenderPixel(pixel, svgSettings) {
           directionRandomness,
           length,
           lengthRandomness,
-          strokeWidth
+          strokeWidth,
+          strokeWidthRandomness
         } = svgSettings;
 
         const dir = direction + 360 * directionRandomness * Math.random();
@@ -112,7 +123,8 @@ function tryToRenderPixel(pixel, svgSettings) {
         const x2 = pixel.x + xMove * lenRandom;
         const y2 = pixel.y + yMove * lenRandom;
 
-        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: ${displayColor}; stroke-width: ${strokeWidth}" />`;
+        const strokeW = strokeWidth * (1 - Math.random() * strokeWidthRandomness);
+        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: ${displayColor}; stroke-width: ${strokeW}" />`;
       }
       break;
     }
