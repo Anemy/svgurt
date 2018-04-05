@@ -59,9 +59,16 @@ export default class ImageRenderer extends Component {
     // Listen for changes on all of the image changing controls.
     _.each(this.props.controller.imageChangingControls, imageChangingControl => {
       imageChangingControl.onFinishChange(() => {
-        // If live render
         this.updateCanvasRender();
       });
+    });
+
+    this.props.controller.liveUpdate.onFinishChange(() => {
+      if (this.props.controller.settings.liveUpdate) {
+        // TODO: We can make this smarter and not force an update on both if both didn't change.
+        this.updateCanvasRender();
+        this.updateSvgRender();
+      }
     });
 
     this.renderFirstTimeImage();
@@ -151,7 +158,7 @@ export default class ImageRenderer extends Component {
   }
 
   updateSvgRender() {
-    if (this.state.isRendered && this.imageData) {
+    if (this.state.isRendered && this.imageData && this.props.controller.settings.liveUpdate) {
       renderSvgString(this.imageData.data, this.props.controller.settings, this.width, this.height, svgString => {
         // TODO: Version/cancel this.
         this.setState({
@@ -164,7 +171,7 @@ export default class ImageRenderer extends Component {
   updateCanvasRender() {
     // TODO: Offload hard things to web workers.
     // TODO: Version of render management.
-    if (this.renderedImage && !this.state.isRendering) {
+    if (this.renderedImage && !this.state.isRendering && this.props.controller.settings.liveUpdate) {
       this.setState({
         isRendering: true,
         isRendered: false

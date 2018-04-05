@@ -13,7 +13,6 @@ class ControllerControls {
   highThreshold = 50;
   lowLightnessThreshold = 0;
   highLightnessThreshold = 100;
-  liveUpdate = true;
   importNewImage() {}
 
   // SVG Controls
@@ -40,6 +39,9 @@ class ControllerControls {
   wavesRandomness = 0.5;
   chooseSVGRenderType() {}
   downloadSVG() {}
+
+  // General Controls
+  liveUpdate = true;
 }
 
 export function updateRenderType(controller) {
@@ -121,7 +123,6 @@ export function createController() {
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
   controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
-  controller.imageChangingControls['liveUpdate'] = cannyFolder.add(mainController, 'liveUpdate');
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);
@@ -130,6 +131,8 @@ export function createController() {
   controller.svgFolder = svgFolder;
 
   controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
+
+  controller.liveUpdate = gui.add(mainController, 'liveUpdate');
 
   controller.gui = gui;
   controller.settings = mainController;
