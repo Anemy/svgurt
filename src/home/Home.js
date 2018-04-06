@@ -107,6 +107,24 @@ export default class Home extends Component {
         {loadingImage && <p>Importing Image...</p>}
         {imageLoadingError && <p>Failed to load image. Please try again.</p>}
         {imageLoaded && <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>}
+        <div className="svgee-about-section">
+          <a
+            className="svgee-about-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://github.com/Anemy/svgurt"
+          >
+            Code
+          </a>
+          <a
+            className="svgee-about-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://rhyshowell.com"
+          >
+            Creator
+          </a>
+        </div>
       </div>
     );
   }

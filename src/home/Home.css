@@ -20,6 +20,22 @@ input[type="file"] {
   transition-duration: 0.6s;
 }
 
+.svgee-about-section {
+  border: 1px solid #ccc;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  bottom: 0;
+  padding: 4px;
+  position: fixed;
+  right: 10px;
+
+}
+
+.svgee-about-link {
+  font-size: 14px;
+  margin: 4px;
+}
+
 .svgee-image-upload:hover {
   border-color: #bbb;
   animation: glow 5s infinite;

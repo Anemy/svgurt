@@ -17,7 +17,17 @@ export const RECURSIVE_LINE_ALGORITHMS = {
   PEANO_CURVE: 'PEANO_CURVE'
 };
 
+function openLinkInNewTab(url) {
+  Object.assign(document.createElement('a'), {
+    target: '_blank',
+    href: url,
+    rel: 'noopener noreferrer'
+  }).click();
+}
+
 class ControllerControls {
+  comingSoon() {}
+
   // Image Controls
   blur = 0;
   grayscale = false;
@@ -67,6 +77,14 @@ class ControllerControls {
 
   // General Controls
   liveUpdate = true;
+
+  // About
+  codeLink() {
+    openLinkInNewTab('https://github.com/Anemy/svgurt');
+  }
+  creatorLink() {
+    openLinkInNewTab('http://rhyshowell.com');
+  }
 }
 
 export function updateRenderType(controller) {
@@ -115,8 +133,18 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['directionRandomness'] = controller.svgFolder.add(mainController, 'directionRandomness', 0, 1);
       break;
     }
-    case SVG_RENDER_TYPES.RECTANGLE: {
-      controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(mainController, 'strokeWidth', 0, 160);
+    case SVG_RENDER_TYPES.RECURSIVE_LINE: {
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      break;
+    }
+    case SVG_RENDER_TYPES.SPIRAL: {
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
       break;
     }
   }
@@ -170,6 +198,10 @@ export function createController() {
   controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
 
   controller.liveUpdate = gui.add(mainController, 'liveUpdate');
+
+  const aboutFolder = gui.addFolder('About');
+  controller.codeLink = aboutFolder.add(mainController, 'codeLink');
+  controller.creatorLink = aboutFolder.add(mainController, 'creatorLink');
 
   controller.gui = gui;
   controller.settings = mainController;
