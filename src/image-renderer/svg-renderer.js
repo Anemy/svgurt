@@ -1,4 +1,4 @@
-// TODO: Add some randomness factors.
+import noise from '../utils/noise';
 
 import { SVG_RENDER_TYPES } from '../controller/Controller';
 
@@ -27,6 +27,26 @@ function isPixelInColorThreshhold(pixel, controls) {
          pixel.b <= maxColorRecognized;
 }
 
+function applyFractalFieldToPoint(pixel, {
+  applyFractalDisplacement,
+  displacementAmount,
+  fractalRatioX,
+  fractalRatioY,
+  fractalRandomSeed
+}) {
+  if (!applyFractalDisplacement) {
+    return;
+  }
+
+  noise.seed(fractalRandomSeed);
+
+  const angleNoiseValue = Math.abs(noise.simplex2(pixel.x * fractalRatioX, pixel.y * fractalRatioY)) * Math.PI * 2;
+  const displacementNoiseValue = Math.abs(noise.simplex2((pixel.x * fractalRatioX) + 20000, (pixel.y * fractalRatioY) + 20000)) * displacementAmount;
+
+  pixel.x += Math.cos(angleNoiseValue) * displacementNoiseValue;
+  pixel.y += Math.sin(angleNoiseValue) * displacementNoiseValue;
+}
+
 function tryToRenderPixel(pixel, svgSettings) {
   switch (svgSettings.svgRenderType) {
     case SVG_RENDER_TYPES.CIRCLE: {
@@ -38,6 +58,9 @@ function tryToRenderPixel(pixel, svgSettings) {
           radius,
           radiusRandomness
         } = svgSettings;
+
+        // TODO(@Rhys): Avoid mutating functions.
+        applyFractalFieldToPoint(pixel, svgSettings);
 
         const displayColor = 'rgb(28, 32, 38)';
         const r = radius * (1 - radiusRandomness * Math.random());
@@ -61,6 +84,9 @@ function tryToRenderPixel(pixel, svgSettings) {
           waves,
           wavesRandomness
         } = svgSettings;
+
+        // TODO(@Rhys): Avoid mutating functions.
+        applyFractalFieldToPoint(pixel, svgSettings);
 
         const displayColor = 'rgb(28, 32, 38)';
         // While through wavelength to end.
@@ -106,6 +132,9 @@ function tryToRenderPixel(pixel, svgSettings) {
           strokeWidth,
           strokeWidthRandomness
         } = svgSettings;
+
+        // TODO(@Rhys): Avoid mutating functions.
+        applyFractalFieldToPoint(pixel, svgSettings);
 
         const dir = direction + 360 * directionRandomness * Math.random();
         const xMove = length * Math.cos(dir * (Math.PI / 180));

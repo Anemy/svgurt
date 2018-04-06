@@ -57,6 +57,11 @@ class ControllerControls {
   wavelengthRandomness = 0.5;
   waves = 3;
   wavesRandomness = 0.5;
+  applyFractalDisplacement = false;
+  displacementAmount = 5;
+  fractalRatioX = 0.01;
+  fractalRatioY = 0.01;
+  fractalRandomSeed = createRandomSeed();
   chooseSVGRenderType() {}
   downloadSVG() {}
 
@@ -143,18 +148,24 @@ export function createController() {
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
   controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
-  const fractalFolder = imageFolder.addFolder('Fractal Field Opacity');
-  controller.imageChangingControls['applyFractalField'] = fractalFolder.add(mainController, 'applyFractalField');
-  controller.imageChangingControls['fieldOpacity'] = fractalFolder.add(mainController, 'fieldOpacity', 0, 1);
-  controller.imageChangingControls['fieldRatioX'] = fractalFolder.add(mainController, 'fieldRatioX', 0, 1);
-  controller.imageChangingControls['fieldRatioY'] = fractalFolder.add(mainController, 'fieldRatioY', 0, 1);
-  controller.imageChangingControls['fieldRandomSeed'] = fractalFolder.add(mainController, 'fieldRandomSeed', 0, MAX_SEED).step(1);
+  const fieldFolder = imageFolder.addFolder('Fractal Field Opacity');
+  controller.imageChangingControls['applyFractalField'] = fieldFolder.add(mainController, 'applyFractalField');
+  controller.imageChangingControls['fieldOpacity'] = fieldFolder.add(mainController, 'fieldOpacity', 0, 1);
+  controller.imageChangingControls['fieldRatioX'] = fieldFolder.add(mainController, 'fieldRatioX', 0, 1);
+  controller.imageChangingControls['fieldRatioY'] = fieldFolder.add(mainController, 'fieldRatioY', 0, 1);
+  controller.imageChangingControls['fieldRandomSeed'] = fieldFolder.add(mainController, 'fieldRandomSeed', 0, MAX_SEED).step(1);
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);
   controller.svgSettingControls['maxColorRecognized'] = svgFolder.add(mainController, 'maxColorRecognized', 0, 255).step(1);
   controller.svgRenderTypeController = svgFolder.add(mainController, 'svgRenderType', _.keys(SVG_RENDER_TYPES));
   controller.svgFolder = svgFolder;
+  const fractalFolder = svgFolder.addFolder('Displacement Fractal Field');
+  controller.svgSettingControls['applyFractalDisplacement'] = fractalFolder.add(mainController, 'applyFractalDisplacement');
+  controller.svgSettingControls['displacementAmount'] = fractalFolder.add(mainController, 'displacementAmount', 0, 200);
+  controller.svgSettingControls['fractalRatioX'] = fractalFolder.add(mainController, 'fractalRatioX', 0, 1);
+  controller.svgSettingControls['fractalRatioY'] = fractalFolder.add(mainController, 'fractalRatioY', 0, 1);
+  controller.svgSettingControls['fractalRandomSeed'] = fractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
 
   controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
 
