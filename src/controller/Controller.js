@@ -1,18 +1,35 @@
 import _ from 'lodash';
 import dat from 'dat.gui';
 
-import { SVG_RENDER_TYPES } from '../image-renderer/svg-renderer';
+import { createRandomSeed, MAX_SEED } from '../utils/random';
+
+export const SVG_RENDER_TYPES = {
+  CIRCLE: 'CIRCLE',
+  CURVE: 'CURVE',
+  LINE: 'LINE',
+  RECURSIVE_LINE: 'RECURSIVE_LINE',
+  SPIRAL: 'SPIRAL'
+  // RECTANGLE: 'RECTANGLE'
+};
+
+export const RECURSIVE_LINE_ALGORITHMS = {
+  DRAGON_CURVE: 'DRAGON_CURVE',
+  PEANO_CURVE: 'PEANO_CURVE'
+};
 
 class ControllerControls {
   // Image Controls
+  blur = 0;
   grayscale = false;
   invert = false;
-  blur = 0;
   cannyEdgeDetection = false;
   lowThreshold = 20;
   highThreshold = 50;
-  lowLightnessThreshold = 0;
-  highLightnessThreshold = 100;
+  applyFractalField = false;
+  fieldOpacity = 0.5;
+  fieldRatioX = 0.01;
+  fieldRatioY = 0.01;
+  fieldRandomSeed = createRandomSeed();
   importNewImage() {}
 
   // SVG Controls
@@ -25,11 +42,14 @@ class ControllerControls {
   length = 5;
   lengthRandomness = 0.5;
   liveUpdate = true;
-  randomSeed = 1;
+  randomSeed = createRandomSeed();
   radius = 1.5;
   radiusRandomness = 0.75;
+  resurseBehindNonMatching = false;
+  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
+  startAtCenterOfShapes = false;
   strokeWidth = 1;
   strokeWidthRandomness = 0.5;
   svgRenderType = SVG_RENDER_TYPES.CIRCLE;
@@ -123,6 +143,12 @@ export function createController() {
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
   controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
+  const fractalFolder = imageFolder.addFolder('Fractal Field Opacity');
+  controller.imageChangingControls['applyFractalField'] = fractalFolder.add(mainController, 'applyFractalField');
+  controller.imageChangingControls['fieldOpacity'] = fractalFolder.add(mainController, 'fieldOpacity', 0, 1);
+  controller.imageChangingControls['fieldRatioX'] = fractalFolder.add(mainController, 'fieldRatioX', 0, 1);
+  controller.imageChangingControls['fieldRatioY'] = fractalFolder.add(mainController, 'fieldRatioY', 0, 1);
+  controller.imageChangingControls['fieldRandomSeed'] = fractalFolder.add(mainController, 'fieldRandomSeed', 0, MAX_SEED).step(1);
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);

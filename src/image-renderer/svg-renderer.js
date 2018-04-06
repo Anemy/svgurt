@@ -1,12 +1,6 @@
 // TODO: Add some randomness factors.
 
-export const SVG_RENDER_TYPES = {
-  CIRCLE: 'CIRCLE',
-  CURVE: 'CURVE',
-  // HASH: 'HASH',
-  LINE: 'LINE'
-  // RECTANGLE: 'RECTANGLE'
-};
+import { SVG_RENDER_TYPES } from '../controller/Controller';
 
 // How to fill - recursive filling functions.
 

@@ -1,4 +1,5 @@
 import jsfeat from 'jsfeat';
+import noise from '../utils/noise';
 import StackBlur from 'stackblur-canvas';
 
 function grayScale(imageData, width, height) {
@@ -49,6 +50,22 @@ function invertImage(imageData) {
   }
 }
 
+function fractalField(imageData, {
+  fieldOpacity,
+  fieldRatioX,
+  fieldRatioY,
+  fieldRandomSeed
+}, width) {
+  noise.seed(fieldRandomSeed);
+
+  for (let i = 0; i < imageData.data.length; i++) {
+    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
+      const noiseValue = noise.simplex2(((Math.floor(i / 4) % width) * fieldRatioX), Math.floor((i / 4) / width) * fieldRatioY);
+      imageData.data[i] = imageData.data[i] * (1 - Math.abs(noiseValue) * fieldOpacity);
+    }
+  }
+}
+
 // This mutates imageData according to the passed settings.
 export function manipulateImageData(imageData, imageSettings, width, height) {
   if (imageSettings.grayscale) {
@@ -65,5 +82,9 @@ export function manipulateImageData(imageData, imageSettings, width, height) {
 
   if (imageSettings.cannyEdgeDetection) {
     cannyEdge(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
+  }
+
+  if (imageSettings.applyFractalField) {
+    fractalField(imageData, imageSettings, width);
   }
 }

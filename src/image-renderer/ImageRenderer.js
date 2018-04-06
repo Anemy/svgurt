@@ -67,7 +67,6 @@ export default class ImageRenderer extends Component {
       if (this.props.controller.settings.liveUpdate) {
         // TODO: We can make this smarter and not force an update on both if both didn't change.
         this.updateCanvasRender();
-        this.updateSvgRender();
       }
     });
 
