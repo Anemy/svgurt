@@ -9,6 +9,7 @@ input[type="file"] {
 }
 
 .svgee-image-upload {
+  background-color: white;
   border: 1px solid #ddd;
   box-shadow: 0px 0px 20px 10px rgb(255, 255, 255)q;
   border-radius: 2px;
