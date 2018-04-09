@@ -1,4 +1,4 @@
-Work in Progress. Demo @ [svgurt.com](https://svgurt.com)
+Work in Progress. Demo @ [svgurt.com](http://svgurt.com)
 
 ## Installation
 
