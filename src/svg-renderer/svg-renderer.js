@@ -119,39 +119,11 @@ function tryToRenderPixel(pixel, svgSettings) {
       }
       break;
     }
-    case SVG_RENDER_TYPES.LINE: {
-      if (isPixelInGridThreshold(pixel, svgSettings) &&
-          isPixelInColorThreshhold(pixel, svgSettings)) {
-        const displayColor = 'rgb(28, 32, 38)';
-
-        const {
-          direction,
-          directionRandomness,
-          length,
-          lengthRandomness,
-          strokeWidth,
-          strokeWidthRandomness
-        } = svgSettings;
-
-        // TODO(@Rhys): Avoid mutating functions.
-        applyFractalFieldToPoint(pixel, svgSettings);
-
-        const dir = direction + 360 * directionRandomness * Math.random();
-        const xMove = length * Math.cos(dir * (Math.PI / 180));
-        const yMove = length * Math.sin(dir * (Math.PI / 180));
-
-        const x1 = pixel.x;
-        const y1 = pixel.y;
-        const lenRandom = (1 - (Math.random() * lengthRandomness));
-        const x2 = pixel.x + xMove * lenRandom;
-        const y2 = pixel.y + yMove * lenRandom;
-
-        const strokeW = strokeWidth * (1 - Math.random() * strokeWidthRandomness);
-        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: ${displayColor}; stroke-width: ${strokeW}" />`;
-      }
-      break;
-    }
   }
+}
+
+function createRenderShapes() {
+
 }
 
 export function renderSvgString(imageData, svgSettings, width, height, done) {
@@ -160,6 +132,10 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
       height="${width}"
       width="${height}"
     >`;
+
+    if (svgSettings.continuous) {
+      
+    }
 
     for (let i = 0; i < imageData.length / 4; i++) {
       const pixelIndex = i * 4;

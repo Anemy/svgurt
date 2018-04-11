@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { updateRenderType } from '../controller/Controller';
 
 import { manipulateImageData } from './image-manipulator';
-import { renderSvgString } from './svg-renderer';
+import { renderSvgString } from '../svg-renderer/svg-renderer';
 import { downloadSVGString } from './downloader';
 
 export default class ImageRenderer extends Component {
@@ -28,33 +28,7 @@ export default class ImageRenderer extends Component {
       this.hiddenImageChooser.click();
     });
 
-    this.props.controller.downloadSvgButton.onChange(() => {
-      downloadSVGString(this.state.svgString);
-    });
-
-    this.props.controller.svgRenderTypeController.onChange(() => {
-      updateRenderType(this.props.controller);
-
-      this.updateSvgRender();
-      
-      _.each(this.props.controller.svgChangingControls, svgSettingControl => {
-        svgSettingControl.onFinishChange(() => {
-          this.updateSvgRender();
-        });
-      });
-    });
-
-    _.each(this.props.controller.svgChangingControls, svgSettingControl => {
-      svgSettingControl.onFinishChange(() => {
-        this.updateSvgRender();
-      });
-    });
-
-    _.each(this.props.controller.svgSettingControls, svgSettingControl => {
-      svgSettingControl.onFinishChange(() => {
-        this.updateSvgRender();
-      });
-    });
+    this.listenToSvgControls();
 
     // Listen for changes on all of the image changing controls.
     _.each(this.props.controller.imageChangingControls, imageChangingControl => {
@@ -71,6 +45,41 @@ export default class ImageRenderer extends Component {
     });
 
     this.renderFirstTimeImage();
+  }
+
+  // These are controls which change on each change of a control.
+  // Because they change often, we have to re-apply listeners on each change.
+  updateSvgControlListeners = () => {
+    const { controller } = this.props;
+    _.each(controller.svgRenderChangingControls, svgRenderChangingControl => {
+      svgRenderChangingControl.onChange(() => {
+        updateRenderType(this.props.controller);
+  
+        this.updateSvgRender();
+  
+        this.updateSvgControlListeners();
+      });
+    });
+
+    _.each(this.props.controller.svgChangingControls, svgSettingControl => {
+      svgSettingControl.onFinishChange(() => {
+        this.updateSvgRender();
+      });
+    });
+  }
+
+  listenToSvgControls = () => {
+    this.props.controller.downloadSvgButton.onChange(() => {
+      downloadSVGString(this.state.svgString);
+    });
+
+    this.updateSvgControlListeners();
+
+    _.each(this.props.controller.svgSettingControls, svgSettingControl => {
+      svgSettingControl.onFinishChange(() => {
+        this.updateSvgRender();
+      });
+    });
   }
 
   canvasRef = null;

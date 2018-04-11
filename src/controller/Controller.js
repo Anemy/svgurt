@@ -45,8 +45,11 @@ class ControllerControls {
   // SVG Controls
   amplitude = 5;
   amplitudeRandomness = 0.5;
+  continuous = false;
+  crossHatch = false;
   direction = 45;
   directionRandomness = 0.01;
+  displaceOrigin = false;
   minColorRecognized = 200;
   maxColorRecognized = 255;
   length = 5;
@@ -60,6 +63,7 @@ class ControllerControls {
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   startAtCenterOfShapes = false;
+  strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;
   strokeWidthRandomness = 0.5;
   svgRenderType = SVG_RENDER_TYPES.CIRCLE;
@@ -89,62 +93,72 @@ class ControllerControls {
 
 export function updateRenderType(controller) {
   const newRenderType = controller.settings.svgRenderType;
+  const svgFolder = controller.svgFolder;
 
   _.each(controller.svgChangingControls, svgRenderSettingController => {
-    controller.svgFolder.remove(svgRenderSettingController);
+    svgFolder.remove(svgRenderSettingController);
   });
   controller.svgChangingControls = {};
+  _.each(controller.svgRenderChangingControls, svgRenderChangingController => {
+    svgFolder.remove(svgRenderChangingController);
+  });
+  controller.svgRenderChangingControls = {};
 
   const mainController = controller.settings;
 
+  controller.svgRenderChangingControls.svgRenderType = svgFolder.add(mainController, 'svgRenderType', _.keys(SVG_RENDER_TYPES));
+
   switch (newRenderType) {
     case SVG_RENDER_TYPES.CIRCLE: {
-      controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(mainController, 'strokeWidth', 0, 20);
-      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
-      controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(mainController, 'renderEveryXPixels', 0, 50).step(1);
-      controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(mainController, 'renderEveryYPixels', 0, 50).step(1);
-      controller.svgChangingControls['radius'] = controller.svgFolder.add(mainController, 'radius', 0, 50);
-      controller.svgChangingControls['radiusRandomness'] = controller.svgFolder.add(mainController, 'radiusRandomness', 0, 1);
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
+      controller.svgChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      controller.svgChangingControls['radius'] = svgFolder.add(mainController, 'radius', 0, 50);
+      controller.svgChangingControls['radiusRandomness'] = svgFolder.add(mainController, 'radiusRandomness', 0, 1);
       break;
     }
     case SVG_RENDER_TYPES.CURVE: {
-      controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(mainController, 'strokeWidth', 0, 20);
-      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
-      controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(mainController, 'renderEveryXPixels', 0, 50).step(1);
-      controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(mainController, 'renderEveryYPixels', 0, 50).step(1);
-      controller.svgChangingControls['waves'] = controller.svgFolder.add(mainController, 'waves', 0, 50);
-      controller.svgChangingControls['wavesRandomness'] = controller.svgFolder.add(mainController, 'wavesRandomness', 0, 1);
-      controller.svgChangingControls['direction'] = controller.svgFolder.add(mainController, 'direction', 0, 360);
-      controller.svgChangingControls['directionRandomness'] = controller.svgFolder.add(mainController, 'directionRandomness', 0, 1);
-      controller.svgChangingControls['amplitude'] = controller.svgFolder.add(mainController, 'amplitude', 0, 50);
-      controller.svgChangingControls['amplitudeRandomness'] = controller.svgFolder.add(mainController, 'amplitudeRandomness', 0, 1);
-      controller.svgChangingControls['wavelength'] = controller.svgFolder.add(mainController, 'wavelength', 0, 50);
-      controller.svgChangingControls['wavelengthRandomness'] = controller.svgFolder.add(mainController, 'wavelengthRandomness', 0, 1);
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
+      controller.svgChangingControls['waves'] = svgFolder.add(mainController, 'waves', 0, 50);
+      controller.svgChangingControls['wavesRandomness'] = svgFolder.add(mainController, 'wavesRandomness', 0, 1);
+      controller.svgChangingControls['direction'] = svgFolder.add(mainController, 'direction', 0, 360);
+      controller.svgChangingControls['directionRandomness'] = svgFolder.add(mainController, 'directionRandomness', 0, 1);
+      controller.svgChangingControls['amplitude'] = svgFolder.add(mainController, 'amplitude', 0, 50);
+      controller.svgChangingControls['amplitudeRandomness'] = svgFolder.add(mainController, 'amplitudeRandomness', 0, 1);
+      controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      if (!mainController.continuous) {
+        controller.svgChangingControls['wavelength'] = svgFolder.add(mainController, 'wavelength', 0, 50);
+        controller.svgChangingControls['wavelengthRandomness'] = svgFolder.add(mainController, 'wavelengthRandomness', 0, 1);
+      }
       break;
     }
     case SVG_RENDER_TYPES.LINE: {
-      controller.svgChangingControls['strokeWidth'] = controller.svgFolder.add(mainController, 'strokeWidth', 0, 20);
-      controller.svgChangingControls['strokeWidthRandomness'] = controller.svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
-      controller.svgChangingControls['renderEveryXPixels'] = controller.svgFolder.add(mainController, 'renderEveryXPixels', 0, 50).step(1);
-      controller.svgChangingControls['renderEveryYPixels'] = controller.svgFolder.add(mainController, 'renderEveryYPixels', 0, 50).step(1);
-      controller.svgChangingControls['length'] = controller.svgFolder.add(mainController, 'length', 0, 50);
-      controller.svgChangingControls['lengthRandomness'] = controller.svgFolder.add(mainController, 'lengthRandomness', 0, 1);
-      controller.svgChangingControls['direction'] = controller.svgFolder.add(mainController, 'direction', 0, 360);
-      controller.svgChangingControls['directionRandomness'] = controller.svgFolder.add(mainController, 'directionRandomness', 0, 1);
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
+      controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      if (!mainController.continuous) {
+        controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
+        controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
+      } else {
+        controller.svgChangingControls['crossHatch'] = svgFolder.add(mainController, 'crossHatch');
+      }
+      controller.svgChangingControls['direction'] = svgFolder.add(mainController, 'direction', 0, 360);
+      controller.svgChangingControls['directionRandomness'] = svgFolder.add(mainController, 'directionRandomness', 0, 1);
       break;
     }
     case SVG_RENDER_TYPES.RECURSIVE_LINE: {
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = svgFolder.add(mainController, 'comingSoon');
       break;
     }
     case SVG_RENDER_TYPES.SPIRAL: {
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
-      controller.svgChangingControls['comingSoon'] = controller.svgFolder.add(mainController, 'comingSoon');
+      controller.svgChangingControls['comingSoon'] = svgFolder.add(mainController, 'comingSoon');
       break;
     }
   }
@@ -184,13 +198,13 @@ export function createController() {
   controller.imageChangingControls['fieldRandomSeed'] = fieldFolder.add(mainController, 'fieldRandomSeed', 0, MAX_SEED).step(1);
 
   const svgFolder = gui.addFolder('SVG Controls');
+  controller.svgFolder = svgFolder;
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);
   controller.svgSettingControls['maxColorRecognized'] = svgFolder.add(mainController, 'maxColorRecognized', 0, 255).step(1);
-  controller.svgRenderTypeController = svgFolder.add(mainController, 'svgRenderType', _.keys(SVG_RENDER_TYPES));
-  controller.svgFolder = svgFolder;
   const fractalFolder = svgFolder.addFolder('Displacement Fractal Field');
   controller.svgSettingControls['applyFractalDisplacement'] = fractalFolder.add(mainController, 'applyFractalDisplacement');
   controller.svgSettingControls['displacementAmount'] = fractalFolder.add(mainController, 'displacementAmount', 0, 200);
+  controller.svgSettingControls['displaceOrigin'] = fractalFolder.add(mainController, 'displaceOrigin');
   controller.svgSettingControls['fractalRatioX'] = fractalFolder.add(mainController, 'fractalRatioX', 0, 1);
   controller.svgSettingControls['fractalRatioY'] = fractalFolder.add(mainController, 'fractalRatioY', 0, 1);
   controller.svgSettingControls['fractalRandomSeed'] = fractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
