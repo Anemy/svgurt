@@ -54,9 +54,9 @@ export default class ImageRenderer extends Component {
     _.each(controller.svgRenderChangingControls, svgRenderChangingControl => {
       svgRenderChangingControl.onChange(() => {
         updateRenderType(this.props.controller);
-  
+
         this.updateSvgRender();
-  
+
         this.updateSvgControlListeners();
       });
     });
@@ -138,8 +138,6 @@ export default class ImageRenderer extends Component {
         this.height = htmlRenderedImage.height;
         this.width = htmlRenderedImage.width;
 
-        console.log('Loaded image with resolution', this.width, this.height);
-
         const ctx =  this.canvasRef.getContext('2d');
         this.renderedImage = htmlRenderedImage;
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
@@ -157,8 +155,6 @@ export default class ImageRenderer extends Component {
         });
 
         this.updateSvgRender();
-
-        console.log('Done rendering new image.');
       };
 
       htmlRenderedImage.src = this.imageURI;
@@ -199,8 +195,6 @@ export default class ImageRenderer extends Component {
         isRendering: false
       });
 
-      console.log('Done rendering the updated image.');
-
       this.updateSvgRender();
     }
   }
@@ -210,7 +204,6 @@ export default class ImageRenderer extends Component {
 
     return (
       <div className="svgee-image-renderer">
-        {/* {!isRendered && !isRendering} We should do something... */}
         <input
           accept="image/*"
           onChange={() => this.handleImageChange()}

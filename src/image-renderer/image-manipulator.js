@@ -50,6 +50,17 @@ function invertImage(imageData) {
   }
 }
 
+function posterizeImage(imageData, posterizeLevels) {
+  const numOfAreas = 256 / posterizeLevels;
+  const numOfValues = 255 / (posterizeLevels - 1);
+
+  for (let i = 0; i < imageData.data.length; i++) {
+    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
+      imageData.data[i] = Math.floor(Math.floor(imageData.data[i] / numOfAreas) * numOfValues);
+    }
+  }
+}
+
 function fractalField(imageData, {
   fieldOpacity,
   fieldRatioX,
@@ -80,11 +91,19 @@ export function manipulateImageData(imageData, imageSettings, width, height) {
     blurImage(imageData, imageSettings.blur, width, height);
   }
 
+  if (imageSettings.posterize) {
+    posterizeImage(imageData, imageSettings.posterizeLevels);
+  }
+
   if (imageSettings.cannyEdgeDetection) {
     cannyEdge(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
   }
 
   if (imageSettings.applyFractalField) {
     fractalField(imageData, imageSettings, width);
+  }
+
+  if (imageSettings.postBlur && imageSettings.postBlur > 0) {
+    blurImage(imageData, imageSettings.postBlur, width, height);
   }
 }

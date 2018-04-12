@@ -33,20 +33,45 @@ function createContinuousLineBetweenPoints(startX, startY, width, height, settin
     strokeWidth,
     strokeWidthRandomness
   } = settings;
-  // const dir = direction + 360 * directionRandomness * Math.random();
-  // TODO: Ensure the dir is always down to the right.
+  const dir = direction + 360 * directionRandomness * Math.random();
+  const run = Math.cos(dir * (Math.PI / 180));
+  const rise = Math.sin(dir * (Math.PI / 180));
+  const slope = run !== 0 ? Math.abs(rise / run) : 0;
 
-  // if () {
-    // Line will hit the
-  // }
+  if (slope === 0) {
+    // TODO
+    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+  }
+
+  // const rightSlope = 0; // Infinite?
+  // const bottomSlope = 0; // Constant - not linear
+
+  const rayIntersectionWithBottomLineX = (height - startY) / slope;
+  const rayIntersectionWithRightLineY = (width - startX) * slope;
+
+  let endX;
+  let endY;
+
+  if (rayIntersectionWithBottomLineX <= width) {
+    endX = rayIntersectionWithBottomLineX;
+    endY = height;
+  } else if (rayIntersectionWithRightLineY <= height) {
+    endX = width;
+    endY = rayIntersectionWithRightLineY;
+  } else {
+    // Straight line or something?!
+
+    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+  }
 
   // const intersectionWithBottomLine = { x: , y: height };
-  // const bottomLine = { x1: 0, y1: height, x2: width, y2 };
   // const end = getLineIntersection(bottomLine);
-  const endX = width; // lineIntersection(startX);
-  const endY = height; // lineIntersection();
+  // const endX = width; // lineIntersection(startX);
+  // const endY = height; // lineIntersection();
 
   // Calculate intersection point between the side of the rectangle and ray from line.
+  // const bottomLine = { x1: 0, y1: height, x2: width, y2 };
+  // const rightLine = { x1: width, y1: 0, x2: width, y2: height };
 
   const x1 = startX;
   const y1 = startY;

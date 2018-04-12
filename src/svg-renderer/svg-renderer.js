@@ -49,6 +49,7 @@ function applyFractalFieldToPoint(pixel, {
 }
 
 function tryToRenderPixel(pixel, svgSettings) {
+  // eslint-disable-next-line default-case
   switch (svgSettings.svgRenderType) {
     case SVG_RENDER_TYPES.CIRCLE: {
       if (isPixelInGridThreshold(pixel, svgSettings) &&
@@ -131,6 +132,7 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
     >`;
 
     let isLine = false;
+    // eslint-disable-next-line default-case
     switch (svgSettings.svgRenderType) {
       case SVG_RENDER_TYPES.LINE: {
         const lines = createLines(svgSettings, imageData, width, height);

@@ -33,6 +33,9 @@ class ControllerControls {
   grayscale = false;
   invert = false;
   cannyEdgeDetection = false;
+  postBlur = 0;
+  posterize = false;
+  posterizeLevels = 5;
   lowThreshold = 20;
   highThreshold = 50;
   applyFractalField = false;
@@ -60,8 +63,8 @@ class ControllerControls {
   radiusRandomness = 0.75;
   resurseBehindNonMatching = false;
   recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
-  renderEveryXPixels = 25;
-  renderEveryYPixels = 25;
+  renderEveryXPixels = 10;
+  renderEveryYPixels = 10;
   startAtCenterOfShapes = false;
   strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;
@@ -108,6 +111,7 @@ export function updateRenderType(controller) {
 
   controller.svgRenderChangingControls.svgRenderType = svgFolder.add(mainController, 'svgRenderType', _.keys(SVG_RENDER_TYPES));
 
+  // eslint-disable-next-line default-case
   switch (newRenderType) {
     case SVG_RENDER_TYPES.CIRCLE: {
       controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
@@ -186,6 +190,9 @@ export function createController() {
   controller.imageChangingControls['grayscale'] = imageFolder.add(mainController, 'grayscale');
   controller.imageChangingControls['blur'] = imageFolder.add(mainController, 'blur', 0, 30).step(1);
   controller.imageChangingControls['invert'] = imageFolder.add(mainController, 'invert');
+  const posterizeFolder = imageFolder.addFolder('Posterize');
+  controller.imageChangingControls['posterize'] = posterizeFolder.add(mainController, 'posterize');
+  controller.imageChangingControls['posterizeLevels'] = posterizeFolder.add(mainController, 'posterizeLevels', 1, 30).step(1);
   const cannyFolder = imageFolder.addFolder('Canny Edge Detection');
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
@@ -196,6 +203,7 @@ export function createController() {
   controller.imageChangingControls['fieldRatioX'] = fieldFolder.add(mainController, 'fieldRatioX', 0, 1);
   controller.imageChangingControls['fieldRatioY'] = fieldFolder.add(mainController, 'fieldRatioY', 0, 1);
   controller.imageChangingControls['fieldRandomSeed'] = fieldFolder.add(mainController, 'fieldRandomSeed', 0, MAX_SEED).step(1);
+  controller.imageChangingControls['postBlur'] = imageFolder.add(mainController, 'postBlur', 0, 30).step(1);
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgFolder = svgFolder;
