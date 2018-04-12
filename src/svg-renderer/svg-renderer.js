@@ -1,6 +1,7 @@
 import noise from '../utils/noise';
 
 import { SVG_RENDER_TYPES } from '../controller/Controller';
+import { createLines, renderLines } from './line';
 
 // How to fill - recursive filling functions.
 
@@ -122,10 +123,6 @@ function tryToRenderPixel(pixel, svgSettings) {
   }
 }
 
-function createRenderShapes() {
-
-}
-
 export function renderSvgString(imageData, svgSettings, width, height, done) {
   setImmediate(() => {
     let svgString = `<svg
@@ -133,24 +130,32 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
       width="${height}"
     >`;
 
-    if (svgSettings.continuous) {
-      
+    let isLine = false;
+    switch (svgSettings.svgRenderType) {
+      case SVG_RENDER_TYPES.LINE: {
+        const lines = createLines(svgSettings, imageData, width, height);
+
+        svgString += renderLines(svgSettings, lines);
+        isLine = true;
+      }
     }
 
-    for (let i = 0; i < imageData.length / 4; i++) {
-      const pixelIndex = i * 4;
-      const pixel = {
-        x: i % width,
-        y: Math.floor(i / width),
-        r: imageData[pixelIndex],
-        g: imageData[pixelIndex + 1],
-        b: imageData[pixelIndex + 2],
-        a: imageData[pixelIndex + 3] / 255
-      };
+    if (!isLine) {
+      for (let i = 0; i < imageData.length / 4; i++) {
+        const pixelIndex = i * 4;
+        const pixel = {
+          x: i % width,
+          y: Math.floor(i / width),
+          r: imageData[pixelIndex],
+          g: imageData[pixelIndex + 1],
+          b: imageData[pixelIndex + 2],
+          a: imageData[pixelIndex + 3] / 255
+        };
 
-      const svgPixelString = tryToRenderPixel(pixel, svgSettings);
-      if (svgPixelString) {
-        svgString += svgPixelString;
+        const svgPixelString = tryToRenderPixel(pixel, svgSettings);
+        if (svgPixelString) {
+          svgString += svgPixelString;
+        }
       }
     }
 

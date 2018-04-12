@@ -60,8 +60,8 @@ class ControllerControls {
   radiusRandomness = 0.75;
   resurseBehindNonMatching = false;
   recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
-  renderEveryXPixels = 5;
-  renderEveryYPixels = 5;
+  renderEveryXPixels = 25;
+  renderEveryYPixels = 25;
   startAtCenterOfShapes = false;
   strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;

@@ -1,4 +1,4 @@
-export function getPixelColorAtDataIndex(dataIndex, imageData) {
+export function getPixelColorAtDataIndex(imageData, dataIndex) {
   return {
     r: imageData[dataIndex],
     g: imageData[dataIndex + 1],
