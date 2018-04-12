@@ -126,8 +126,8 @@ function tryToRenderPixel(pixel, svgSettings) {
 export function renderSvgString(imageData, svgSettings, width, height, done) {
   setImmediate(() => {
     let svgString = `<svg
-      height="${width}"
-      width="${height}"
+      height="${height}"
+      width="${width}"
     >`;
 
     let isLine = false;
