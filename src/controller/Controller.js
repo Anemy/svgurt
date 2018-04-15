@@ -7,8 +7,8 @@ export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
   LINE: 'LINE',
-  RECURSIVE_LINE: 'RECURSIVE_LINE',
-  SPIRAL: 'SPIRAL'
+  RECURSIVE_LINE: 'RECURSIVE_LINE-COMING_SOON',
+  SPIRAL: 'SPIRAL-COMING_SOON'
   // RECTANGLE: 'RECTANGLE'
 };
 
@@ -63,8 +63,8 @@ class ControllerControls {
   radiusRandomness = 0.75;
   resurseBehindNonMatching = false;
   recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
-  renderEveryXPixels = 10;
-  renderEveryYPixels = 10;
+  renderEveryXPixels = 5;
+  renderEveryYPixels = 5;
   startAtCenterOfShapes = false;
   strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;
@@ -118,7 +118,7 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
       controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
-      controller.svgChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      // controller.svgChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
       controller.svgChangingControls['radius'] = svgFolder.add(mainController, 'radius', 0, 50);
       controller.svgChangingControls['radiusRandomness'] = svgFolder.add(mainController, 'radiusRandomness', 0, 1);
       break;
@@ -134,7 +134,7 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['directionRandomness'] = svgFolder.add(mainController, 'directionRandomness', 0, 1);
       controller.svgChangingControls['amplitude'] = svgFolder.add(mainController, 'amplitude', 0, 50);
       controller.svgChangingControls['amplitudeRandomness'] = svgFolder.add(mainController, 'amplitudeRandomness', 0, 1);
-      controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      // controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
       if (!mainController.continuous) {
         controller.svgChangingControls['wavelength'] = svgFolder.add(mainController, 'wavelength', 0, 50);
         controller.svgChangingControls['wavelengthRandomness'] = svgFolder.add(mainController, 'wavelengthRandomness', 0, 1);
@@ -146,7 +146,7 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
       controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
       controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
-      controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      // controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
       if (!mainController.continuous) {
         controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
         controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
