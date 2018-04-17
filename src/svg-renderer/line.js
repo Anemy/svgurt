@@ -1,5 +1,5 @@
 import { getFractalDispacementForPoint } from './fractal';
-import { getPixelColorAtDataIndex, isInColorThreshhold } from './color';
+import { getPixelColorAtXY, isInColorThreshhold } from './color';
 
 export function renderLines(svgSettings, lines) {
   let renderString = '';
@@ -12,90 +12,112 @@ export function renderLines(svgSettings, lines) {
   return renderString;
 }
 
-function lineIntersection(m1, b1, m2, b2) {
-  if (m1 === m2) {
-    throw new Error('parallel slopes');
-  }
-  const x = (b2 - b1) / (m1 - m2);
-  return {
-    x,
-    y: m1 * x + b1
-  };
-}
-
-function createContinuousLineBetweenPoints(startX, startY, width, height, settings, imageData) {
+const VERTICAL_THRESHOLD = 100000;
+const HORIZONTAL_THRESHOLD = 0.000001;
+function createContinuousLine(lineNumber, width, height, dir, settings) {
   const {
-    applyFractalFieldToPoint,
-    displaceOrigin,
-    direction,
-    directionRandomness,
+    amountOfLines,
+    offset = 0,
     strokeColor,
     strokeWidth,
     strokeWidthRandomness
   } = settings;
-  const dir = direction + 360 * directionRandomness * Math.random();
+
   const run = Math.cos(dir * (Math.PI / 180));
   const rise = Math.sin(dir * (Math.PI / 180));
-  const slope = run !== 0 ? Math.abs(rise / run) : 0;
+  const slope = run !== 0 ? rise / run : 0;
 
-  if (slope === 0) {
-    // TODO
-    return { x1: 0, y1: 0, x2: 0, y2: 0 };
-  }
+  const lineIteration = lineNumber / amountOfLines;
 
-  // const rightSlope = 0; // Infinite?
-  // const bottomSlope = 0; // Constant - not linear
+  let x1;
+  let y1;
+  let x2;
+  let y2;
 
-  const rayIntersectionWithBottomLineX = (height - startY) / slope;
-  const rayIntersectionWithRightLineY = (width - startX) * slope;
+  if (Math.abs(slope) > VERTICAL_THRESHOLD) {
+    // Super high or negative slope is vertical.
+    x1 = lineIteration * width;
+    y1 = height;
+    x2 = lineIteration * width;
+    y2 = 0;
+  } else if (slope > 0) {
+    // Positive will go to the bottom right. LEFT & TOP Origins
+    const linesStartX = -height / slope;
+    const distanceToWidth = Math.abs(linesStartX) + width;
+    const startX = ((lineIteration * distanceToWidth) + linesStartX) + offset;
 
-  let endX;
-  let endY;
+    if (startX + height / slope > width) {
+      x1 = width;
+      y1 = Math.max(0, (-startX + width) * slope);
+    } else {
+      x1 = Math.max(0, startX + height / slope);
+      y1 = height;
+    }
 
-  if (rayIntersectionWithBottomLineX <= width) {
-    endX = rayIntersectionWithBottomLineX;
-    endY = height;
-  } else if (rayIntersectionWithRightLineY <= height) {
-    endX = width;
-    endY = rayIntersectionWithRightLineY;
+    if (startX < 0) {
+      x2 = 0;
+      y2 = Math.min(height, -startX * slope);
+    } else {
+      x2 = startX;
+      y2 = 0;
+    }
+  } else if (slope < 0) {
+    // Negative will go to the top right. LEFT & BOTTOM Origins
+    const linesStartX = height / slope;
+    const distanceToWidth = Math.abs(linesStartX) + width;
+    const startX = ((lineIteration * distanceToWidth) + linesStartX) + offset;
+
+    if (startX < 0) {
+      x1 = 0;
+      y1 = Math.max(0, height - (startX * slope));
+    } else {
+      x1 = startX;
+      y1 = height;
+    }
+
+    if (startX - height / slope > width) {
+      x2 = width;
+      y2 = Math.min(height, height - (-(-startX + width) * slope));
+    } else {
+      x2 = Math.max(0, startX - height / slope);
+      y2 = 0;
+    }
   } else {
-    // Straight line or something?!
-
-    return { x1: 0, y1: 0, x2: 0, y2: 0 };
+    // Horizontal.
+    x1 = 0;
+    y1 = lineIteration * height;
+    x2 = width;
+    y2 = lineIteration * height;
   }
-
-  // const intersectionWithBottomLine = { x: , y: height };
-  // const end = getLineIntersection(bottomLine);
-  // const endX = width; // lineIntersection(startX);
-  // const endY = height; // lineIntersection();
-
-  // Calculate intersection point between the side of the rectangle and ray from line.
-  // const bottomLine = { x1: 0, y1: height, x2: width, y2 };
-  // const rightLine = { x1: width, y1: 0, x2: width, y2: height };
-
-  const x1 = startX;
-  const y1 = startY;
-  const x2 = endX;
-  const y2 = endY;
 
   const line = { x1, y1, x2, y2,
+    dir,
     strokeColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 
-  if (applyFractalFieldToPoint) {
-    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(x1, y1, settings);
+  return line;
+}
 
-    if (displaceOrigin) {
-      line.x += xDisplacement;
-      line.y += yDisplacement;
-    }
+function createContinuousLines(lineNumber, width, height, settings) {
+  const {
+    crossHatch,
+    direction,
+    directionRandomness
+  } = settings;
 
-    line.x2 += xDisplacement;
-    line.y2 += yDisplacement;
+  const lines = [];
+
+  const dir = (-direction) + 180 * directionRandomness * Math.random();
+
+  lines.push(createContinuousLine(lineNumber, width, height, dir, settings));
+
+  if (crossHatch) {
+    let perpendicularDir = dir > -90 ? dir - 90 : dir + 90;
+    lines.push(createContinuousLine(lineNumber, width, height, perpendicularDir, settings));
   }
 
-  return line;
+  return lines;
 }
 
 function createLineAtPoint(x, y, settings) {
@@ -114,7 +136,7 @@ function createLineAtPoint(x, y, settings) {
   const x1 = x;
   const y1 = y;
 
-  const dir = direction + 360 * directionRandomness * Math.random();
+  const dir = (-direction) + 180 * directionRandomness * Math.random();
   const xMove = length * Math.cos(dir * (Math.PI / 180));
   const yMove = length * Math.sin(dir * (Math.PI / 180));
 
@@ -142,8 +164,78 @@ function createLineAtPoint(x, y, settings) {
   return line;
 }
 
+function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
+  const {
+    minLineLength = 1
+  } = settings;
+  // TODO: Some sort of fuzziness knob
+
+  const {
+    dir,
+    strokeColor,
+    strokeWidth
+  } = guidingLine;
+
+  const linesAlongLine = [];
+
+  let currentX = guidingLine.x1;
+  let currentY = guidingLine.y1;
+  let pixelInThreshold;
+  let lastPixelInThreshold;
+  let lastX = currentX;
+  let lastY = currentY;
+  let x1 = currentX;
+  let y1 = currentY;
+
+  const tick = 1;
+  let tickX = tick * Math.cos(dir * (Math.PI / 180));
+  let tickY = tick * Math.sin(dir * (Math.PI / 180));
+
+  if (Math.abs(tickX) > VERTICAL_THRESHOLD) {
+    tickX = width;
+  }
+  if (Math.abs(tickX) < HORIZONTAL_THRESHOLD) {
+    tickX = 0;
+  }
+  if (Math.abs(tickY) > VERTICAL_THRESHOLD) {
+    tickY = height;
+  }
+  if (Math.abs(tickY) < HORIZONTAL_THRESHOLD) {
+    tickY = 0;
+  }
+
+  let amountOfPixelsInLine = Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) + Math.abs(Math.abs(guidingLine.y1) - Math.abs(guidingLine.y2));
+  for (let i = 0; i < amountOfPixelsInLine; i ++) {
+    const pixelColor = getPixelColorAtXY(imageData, currentX, currentY, width);
+    pixelInThreshold = isInColorThreshhold(pixelColor, settings);
+    if (!pixelInThreshold) {
+      if (lastPixelInThreshold && Math.abs(Math.abs(x1) - Math.abs(lastX)) + Math.abs(Math.abs(y1) - Math.abs(lastY)) > minLineLength) {
+        linesAlongLine.push({
+          x1, y1, x2: lastX, y2: lastY, strokeColor, strokeWidth
+        });
+      }
+      x1 = currentX;
+      y1 = currentY;
+    }
+    lastPixelInThreshold = pixelInThreshold;
+    lastX = currentX;
+    lastY = currentY;
+    currentX += tickX;
+    currentY += tickY;
+  }
+
+  if (lastPixelInThreshold && Math.abs(x1 - lastX) + Math.abs(y1 - lastY) > minLineLength) {
+    linesAlongLine.push({
+      x1, y1, x2: lastX, y2: lastY, strokeColor, strokeWidth
+    });
+  }
+
+  return linesAlongLine;
+}
+
 export function createLines(settings, imageData, width, height) {
   const {
+    amountOfLines,
     continuous,
     renderEveryXPixels,
     renderEveryYPixels
@@ -154,18 +246,22 @@ export function createLines(settings, imageData, width, height) {
   let x = 0;
   let y = 0;
   if (continuous) {
-    for (let x = 0; x < width; x += renderEveryXPixels) {
-      lines.push(createContinuousLineBetweenPoints(x, 0, width, height, settings, imageData));
-    }
+    for (let i = 0; i < amountOfLines; i++) {
+      const continuousLines = createContinuousLines(i, width, height, settings, imageData);
 
-    for (let y = 0; y < height; y += renderEveryYPixels) {
-      lines.push(createContinuousLineBetweenPoints(0, y, width, height, settings, imageData));
+      for (let m = 0; m < continuousLines.length; m++) {
+        const linesAlongLine = getLinesAlongLine(continuousLines[m], width, height, settings, imageData);
+
+        for (let k = 0; k < linesAlongLine.length; k++) {
+          lines.push(linesAlongLine[k]);
+        }
+        // lines.push(continuousLines[m]);
+      }
     }
   } else {
     for (x = 0; x < width; x += renderEveryXPixels) {
       for (y = 0; y < height; y += renderEveryYPixels) {
-        const dataIndex = (x + (y * width)) * 4;
-        const pixelColor = getPixelColorAtDataIndex(imageData, dataIndex);
+        const pixelColor = getPixelColorAtXY(imageData, x, y, width);
         if (!isInColorThreshhold(pixelColor, settings)) {
           continue;
         }

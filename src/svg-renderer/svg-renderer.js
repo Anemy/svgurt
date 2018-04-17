@@ -93,7 +93,7 @@ function tryToRenderPixel(pixel, svgSettings) {
         const displayColor = 'rgb(28, 32, 38)';
         // While through wavelength to end.
         let curvePath = `M ${pixel.x} ${pixel.y}`;
-        const dir = direction + 360 * directionRandomness * Math.random();
+        const dir = (-direction) + 180 * directionRandomness * Math.random();
         const xDir = Math.cos(dir * (Math.PI / 180));
         const yDir = Math.sin(dir * (Math.PI / 180));
         const inverseXDir = Math.cos((dir - 90) * (Math.PI / 180));
