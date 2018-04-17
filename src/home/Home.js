@@ -83,6 +83,14 @@ export default class Home extends Component {
       <div className="svgee-home">
         {!imageLoaded &&
           <div className="import-image-prompt">
+            <h1>Svgurt</h1>
+            <h2>PNG -&gt; SVG Vectorizing Tool</h2>
+            <h3>Free &amp; Open Source</h3>
+            <button
+              onClick={this.handleExampleImageClicked}
+              className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
+            >Use Example Image</button>
+            <br />
             <label
               htmlFor="image-upload"
               className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
@@ -97,11 +105,6 @@ export default class Home extends Component {
               ref={ref => { this.imageInputRef = ref; }}
               type="file"
             />
-            <br />
-            <button
-              onClick={this.handleExampleImageClicked}
-              className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
-            >Use Example Image</button>
           </div>
         }
         {loadingImage && <p>Importing Image...</p>}
