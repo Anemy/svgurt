@@ -48,17 +48,18 @@ class ControllerControls {
   // SVG Controls
   amplitude = 5;
   amplitudeRandomness = 0.5;
-  amountOfLines = 20;
+  amountOfLines = 150;
   continuous = true;
-  crossHatch = false;
-  direction = 110;
+  crossHatch = true;
+  direction = 30;
   directionRandomness = 0.01;
   displaceOrigin = false;
-  minColorRecognized = 200;
-  maxColorRecognized = 255;
   length = 5;
   lengthRandomness = 0.5;
   liveUpdate = true;
+  minColorRecognized = 200;
+  maxColorRecognized = 255;
+  minLineLength = 1;
   randomSeed = createRandomSeed();
   radius = 1.5;
   radiusRandomness = 0.75;
@@ -136,10 +137,10 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['amplitude'] = svgFolder.add(mainController, 'amplitude', 0, 50);
       controller.svgChangingControls['amplitudeRandomness'] = svgFolder.add(mainController, 'amplitudeRandomness', 0, 1);
       // controller.svgRenderChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
-      if (!mainController.continuous) {
+      // if (!mainController.continuous) {
         controller.svgChangingControls['wavelength'] = svgFolder.add(mainController, 'wavelength', 0, 50);
         controller.svgChangingControls['wavelengthRandomness'] = svgFolder.add(mainController, 'wavelengthRandomness', 0, 1);
-      }
+      // }
       break;
     }
     case SVG_RENDER_TYPES.LINE: {
@@ -152,6 +153,7 @@ export function updateRenderType(controller) {
         controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
         controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
       } else {
+        controller.svgChangingControls['minLineLength'] = svgFolder.add(mainController, 'minLineLength', 1, 50).step(1);
         controller.svgChangingControls['crossHatch'] = svgFolder.add(mainController, 'crossHatch');
         controller.svgChangingControls['amountOfLines'] = svgFolder.add(mainController, 'amountOfLines', 1, 5000).step(1);
       }
