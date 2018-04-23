@@ -122,7 +122,7 @@ function createContinuousLines(lineNumber, width, height, settings) {
 
 function createLineAtPoint(x, y, settings) {
   const {
-    applyFractalFieldToPoint,
+    applyFractalDisplacement,
     displaceOrigin,
     direction,
     directionRandomness,
@@ -149,13 +149,15 @@ function createLineAtPoint(x, y, settings) {
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 
-  if (applyFractalFieldToPoint) {
-    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(x1, y1, settings);
-
+  if (applyFractalDisplacement) {
     if (displaceOrigin) {
+      const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(line.x1, line.y1, settings);
+
       line.x1 += xDisplacement;
-      line.y2 += yDisplacement;
+      line.y1 += yDisplacement;
     }
+
+    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(line.x2, line.y2, settings);
 
     line.x2 += xDisplacement;
     line.y2 += yDisplacement;
@@ -166,9 +168,10 @@ function createLineAtPoint(x, y, settings) {
 
 function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
   const {
-    minLineLength = 1
+    applyFractalDisplacement,
+    displaceOrigin,
+    minLineLength
   } = settings;
-  // TODO: Some sort of fuzziness knob
 
   const {
     dir,
@@ -210,6 +213,18 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
     pixelInThreshold = isInColorThreshhold(pixelColor, settings);
     if (!pixelInThreshold) {
       if (lastPixelInThreshold && Math.abs(Math.abs(x1) - Math.abs(lastX)) + Math.abs(Math.abs(y1) - Math.abs(lastY)) > minLineLength) {
+        if (applyFractalDisplacement) {
+          if (displaceOrigin) {
+            const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(x1, y1, settings);
+            x1 += xDisplacement;
+            y1 += yDisplacement;
+          }
+
+          const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(lastX, lastY, settings);
+          lastX += xDisplacement;
+          lastY += yDisplacement;
+        }
+
         linesAlongLine.push({
           x1, y1, x2: lastX, y2: lastY, strokeColor, strokeWidth
         });
@@ -255,7 +270,6 @@ export function createLines(settings, imageData, width, height) {
         for (let k = 0; k < linesAlongLine.length; k++) {
           lines.push(linesAlongLine[k]);
         }
-        // lines.push(continuousLines[m]);
       }
     }
   } else {
