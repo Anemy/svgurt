@@ -4,10 +4,14 @@ import { createCurves, renderCurves } from './curve';
 import { createLines, renderLines } from './line';
 
 export function renderSvgString(imageData, svgSettings, width, height, done) {
+  const {
+    outputScale
+  } = svgSettings;
+
   setImmediate(() => {
     let svgString = `<svg
-      height="${height}"
-      width="${width}"
+      height="${height * outputScale}"
+      width="${width * outputScale}"
     >`;
 
     // eslint-disable-next-line default-case

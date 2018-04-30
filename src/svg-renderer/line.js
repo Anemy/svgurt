@@ -6,11 +6,15 @@ import {
 } from './color';
 
 export function renderLines(svgSettings, lines) {
+  const {
+    outputScale
+  } = svgSettings;
+
   let renderString = '';
   let i = 0;
   for (i = 0; i < lines.length; i++) {
     const { x1, y1, x2, y2, strokeWidth, strokeColor } = lines[i];
-    renderString += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}" />`;
+    renderString += `<line x1="${x1 * outputScale}" y1="${y1 * outputScale}" x2="${x2 * outputScale}" y2="${y2 * outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}" />`;
   }
 
   return renderString;

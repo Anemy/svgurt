@@ -61,6 +61,7 @@ class ControllerControls {
   minColorRecognized = 50;
   maxColorRecognized = 255;
   minLineLength = 1;
+  outputScale = 1;
   randomSeed = createRandomSeed();
   radius = 1.5;
   radiusOnColor = false;
@@ -224,7 +225,7 @@ export function createController() {
   controller.svgSettingControls['fractalRatioX'] = fractalFolder.add(mainController, 'fractalRatioX', 0, 1);
   controller.svgSettingControls['fractalRatioY'] = fractalFolder.add(mainController, 'fractalRatioY', 0, 1);
   controller.svgSettingControls['fractalRandomSeed'] = fractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
-
+  controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
   controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
 
   controller.liveUpdate = gui.add(mainController, 'liveUpdate');

@@ -6,11 +6,15 @@ import {
 } from './color';
 
 export function renderCircles(svgSettings, circles) {
+  const {
+    outputScale
+  } = svgSettings;
+
   let renderString = '';
   let i = 0;
   for (i = 0; i < circles.length; i++) {
     const { x, y, r, strokeWidth, strokeColor } = circles[i];
-    renderString += `<circle cx="${x}" cy="${y}" r="${r}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
+    renderString += `<circle cx="${x * outputScale}" cy="${y * outputScale}" r="${r * outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
   }
 
   return renderString;

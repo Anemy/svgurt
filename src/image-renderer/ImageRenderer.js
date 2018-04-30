@@ -181,7 +181,7 @@ export default class ImageRenderer extends Component {
         isRendered: false
       });
 
-      const ctx =  this.canvasRef.getContext('2d');
+      const ctx = this.canvasRef.getContext('2d');
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 

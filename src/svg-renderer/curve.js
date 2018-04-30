@@ -7,13 +7,17 @@ import {
 } from './color';
 
 export function renderCurves(svgSettings, curves) {
+  const {
+    outputScale
+  } = svgSettings;
+
   let renderString = '';
   for (let i = 0; i < curves.length; i++) {
     const { x, y, controlPoints, strokeWidth, strokeColor } = curves[i];
 
-    let curvePath = `M ${x} ${y} C`;
+    let curvePath = `M ${x * outputScale} ${y * outputScale} C`;
     _.each(controlPoints, (point, index) => {
-      curvePath += ` ${point.x} ${point.y}` + (index === controlPoints.length - 1 ? '' : ',');
+      curvePath += ` ${point.x * outputScale} ${point.y * outputScale}` + (index === controlPoints.length - 1 ? '' : ',');
     });
 
     renderString += `<path d="${curvePath}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
