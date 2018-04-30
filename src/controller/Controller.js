@@ -55,6 +55,7 @@ class ControllerControls {
   directionRandomness = 0.01;
   displaceOrigin = false;
   length = 5;
+  lengthOnColor = false;
   lengthRandomness = 0.5;
   liveUpdate = true;
   minColorRecognized = 200;
@@ -62,11 +63,12 @@ class ControllerControls {
   minLineLength = 1;
   randomSeed = createRandomSeed();
   radius = 1.5;
+  radiusOnColor = false;
   radiusRandomness = 0.75;
   resurseBehindNonMatching = false;
   recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
-  renderEveryXPixels = 10;
-  renderEveryYPixels = 10;
+  renderEveryXPixels = 5;
+  renderEveryYPixels = 5;
   startAtCenterOfShapes = false;
   strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;
@@ -122,6 +124,7 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
       // controller.svgChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
       controller.svgChangingControls['radius'] = svgFolder.add(mainController, 'radius', 0, 50);
+      controller.svgChangingControls['radiusOnColor'] = svgFolder.add(mainController, 'radiusOnColor');
       controller.svgChangingControls['radiusRandomness'] = svgFolder.add(mainController, 'radiusRandomness', 0, 1);
       break;
     }
@@ -151,6 +154,7 @@ export function updateRenderType(controller) {
         controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
         controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
         controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
+        controller.svgChangingControls['lengthOnColor'] = svgFolder.add(mainController, 'lengthOnColor');
         controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
       } else {
         controller.svgChangingControls['minLineLength'] = svgFolder.add(mainController, 'minLineLength', 1, 50).step(1);

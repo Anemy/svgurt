@@ -1,6 +1,7 @@
 import noise from '../utils/noise';
 
 import { SVG_RENDER_TYPES } from '../controller/Controller';
+import { createCircles, renderCircles } from './circle';
 import { createLines, renderLines } from './line';
 
 // How to fill - recursive filling functions.
@@ -51,26 +52,6 @@ function applyFractalFieldToPoint(pixel, {
 function tryToRenderPixel(pixel, svgSettings) {
   // eslint-disable-next-line default-case
   switch (svgSettings.svgRenderType) {
-    case SVG_RENDER_TYPES.CIRCLE: {
-      if (isPixelInGridThreshold(pixel, svgSettings) &&
-          isPixelInColorThreshhold(pixel, svgSettings)) {
-        const {
-          strokeWidth,
-          strokeWidthRandomness,
-          radius,
-          radiusRandomness
-        } = svgSettings;
-
-        // TODO(@Rhys): Avoid mutating functions.
-        applyFractalFieldToPoint(pixel, svgSettings);
-
-        const displayColor = 'rgb(28, 32, 38)';
-        const r = radius * (1 - radiusRandomness * Math.random());
-        const strokeW = strokeWidth * (1 - Math.random() * strokeWidthRandomness);
-        return `<circle cx="${pixel.x}" cy="${pixel.y}" r="${r}" style="stroke: ${displayColor}; stroke-width: ${strokeW}; fill: none;" />`;
-      }
-      break;
-    }
     case SVG_RENDER_TYPES.CURVE: {
       if (isPixelInGridThreshold(pixel, svgSettings) &&
           isPixelInColorThreshhold(pixel, svgSettings)) {
@@ -131,18 +112,23 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
       width="${width}"
     >`;
 
-    let isLine = false;
     // eslint-disable-next-line default-case
     switch (svgSettings.svgRenderType) {
+      case SVG_RENDER_TYPES.CIRCLE: {
+        const circles = createCircles(svgSettings, imageData, width, height);
+
+        svgString += renderCircles(svgSettings, circles);
+        break;
+      }
       case SVG_RENDER_TYPES.LINE: {
         const lines = createLines(svgSettings, imageData, width, height);
 
         svgString += renderLines(svgSettings, lines);
-        isLine = true;
+        break;
       }
     }
 
-    if (!isLine) {
+    if (svgSettings.svgRenderType === SVG_RENDER_TYPES.CURVE) {
       for (let i = 0; i < imageData.length / 4; i++) {
         const pixelIndex = i * 4;
         const pixel = {

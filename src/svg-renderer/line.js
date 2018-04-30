@@ -1,5 +1,9 @@
 import { getFractalDispacementForPoint } from './fractal';
-import { getPixelColorAtXY, isInColorThreshhold } from './color';
+import {
+  getPixelColorAtXY,
+  isInColorThreshhold,
+  getPixelColorIntensity
+} from './color';
 
 export function renderLines(svgSettings, lines) {
   let renderString = '';
@@ -120,13 +124,14 @@ function createContinuousLines(lineNumber, width, height, settings) {
   return lines;
 }
 
-function createLineAtPoint(x, y, settings) {
+function createLineAtPoint(x, y, settings, pixelColor) {
   const {
     applyFractalDisplacement,
     displaceOrigin,
     direction,
     directionRandomness,
     length,
+    lengthOnColor,
     lengthRandomness,
     strokeColor,
     strokeWidth,
@@ -136,9 +141,14 @@ function createLineAtPoint(x, y, settings) {
   const x1 = x;
   const y1 = y;
 
+  let lineLength = length;
+  if (lengthOnColor) {
+    lineLength = getPixelColorIntensity(pixelColor, settings) * length;
+  }
+
   const dir = (-direction) + 180 * directionRandomness * Math.random();
-  const xMove = length * Math.cos(dir * (Math.PI / 180));
-  const yMove = length * Math.sin(dir * (Math.PI / 180));
+  const xMove = lineLength * Math.cos(dir * (Math.PI / 180));
+  const yMove = lineLength * Math.sin(dir * (Math.PI / 180));
 
   const lenRandom = (1 - (Math.random() * lengthRandomness));
   const x2 = x1 + xMove * lenRandom;
@@ -207,7 +217,8 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
     tickY = 0;
   }
 
-  let amountOfPixelsInLine = Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) + Math.abs(Math.abs(guidingLine.y1) - Math.abs(guidingLine.y2));
+  let amountOfPixelsInLine = Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) +
+    Math.abs(Math.abs(guidingLine.y1) - Math.abs(guidingLine.y2));
   for (let i = 0; i < amountOfPixelsInLine; i ++) {
     const pixelColor = getPixelColorAtXY(imageData, currentX, currentY, width);
     pixelInThreshold = isInColorThreshhold(pixelColor, settings);
@@ -215,12 +226,18 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
       if (lastPixelInThreshold && Math.abs(Math.abs(x1) - Math.abs(lastX)) + Math.abs(Math.abs(y1) - Math.abs(lastY)) > minLineLength) {
         if (applyFractalDisplacement) {
           if (displaceOrigin) {
-            const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(x1, y1, settings);
+            const {
+              xDisplacement,
+              yDisplacement
+            } = getFractalDispacementForPoint(x1, y1, settings);
             x1 += xDisplacement;
             y1 += yDisplacement;
           }
 
-          const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(lastX, lastY, settings);
+          const {
+            xDisplacement,
+            yDisplacement
+          } = getFractalDispacementForPoint(lastX, lastY, settings);
           lastX += xDisplacement;
           lastY += yDisplacement;
         }
@@ -280,7 +297,7 @@ export function createLines(settings, imageData, width, height) {
           continue;
         }
 
-        lines.push(createLineAtPoint(x, y, settings));
+        lines.push(createLineAtPoint(x, y, settings, pixelColor));
       }
     }
   }

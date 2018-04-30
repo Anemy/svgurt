@@ -13,16 +13,32 @@ export function getPixelColorAtXY(imageData, x, y, width) {
   return getPixelColorAtDataIndex(imageData, dataIndex);
 }
 
-export function isInColorThreshhold(color, controls) {
+export function isInColorThreshhold(pixel, controls) {
   const {
     minColorRecognized,
     maxColorRecognized
   } = controls;
 
-  return color.r >= minColorRecognized &&
-         color.g >= minColorRecognized &&
-         color.b >= minColorRecognized &&
-         color.r <= maxColorRecognized &&
-         color.g <= maxColorRecognized &&
-         color.b <= maxColorRecognized;
+  return pixel.r >= minColorRecognized &&
+    pixel.g >= minColorRecognized &&
+    pixel.b >= minColorRecognized &&
+    pixel.r <= maxColorRecognized &&
+    pixel.g <= maxColorRecognized &&
+    pixel.b <= maxColorRecognized;
+}
+
+export function getPixelColorIntensity(pixel, settings) {
+  const {
+    minColorRecognized,
+    maxColorRecognized
+  } = settings;
+
+  const r = pixel.r - minColorRecognized;
+  const g = pixel.g - minColorRecognized;
+  const b = pixel.b - minColorRecognized;
+  const colorSum = Math.max(1, (r + g + b));
+
+  const outOf = Math.max(1, Math.abs(maxColorRecognized - minColorRecognized));
+
+  return (colorSum / 3) / outOf;
 }
