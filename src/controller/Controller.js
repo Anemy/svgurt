@@ -6,15 +6,15 @@ import { createRandomSeed, MAX_SEED } from '../utils/random';
 export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
-  LINE: 'LINE'
-  // RECURSIVE_LINE: 'RECURSIVE_LINE-COMING_SOON',
-  // SPIRAL: 'SPIRAL-COMING_SOON'
-  // RECTANGLE: 'RECTANGLE'
+  LINE: 'LINE',
+  RECURSIVE: 'RECURSIVE'
 };
 
 export const RECURSIVE_LINE_ALGORITHMS = {
-  DRAGON_CURVE: 'DRAGON_CURVE',
-  PEANO_CURVE: 'PEANO_CURVE'
+  first: 'first',
+  second: 'second',
+  third: 'third',
+  fourth: 'fourth'
 };
 
 function openLinkInNewTab(url) {
@@ -60,6 +60,7 @@ class ControllerControls {
   liveUpdate = true;
   minColorRecognized = 50;
   maxColorRecognized = 255;
+  maxRecursiveDepth = 150;
   minLineLength = 1;
   outputScale = 1;
   randomSeed = createRandomSeed();
@@ -67,14 +68,14 @@ class ControllerControls {
   radiusOnColor = false;
   radiusRandomness = 0.25;
   resurseBehindNonMatching = false;
-  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.PEANO_CURVE;
-  renderEveryXPixels = 3;
-  renderEveryYPixels = 3;
+  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.first;
+  renderEveryXPixels = 5;
+  renderEveryYPixels = 5;
   startAtCenterOfShapes = false;
   strokeColor = 'rgb(28, 32, 38)';
   strokeWidth = 1;
   strokeWidthRandomness = 0.1;
-  svgRenderType = SVG_RENDER_TYPES.LINE;
+  svgRenderType = SVG_RENDER_TYPES.RECURSIVE;
   wavelength = 3;
   wavelengthRandomness = 0.5;
   waves = 3;
@@ -166,12 +167,13 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['directionRandomness'] = svgFolder.add(mainController, 'directionRandomness', 0, 1);
       break;
     }
-    case SVG_RENDER_TYPES.RECURSIVE_LINE: {
-      controller.svgChangingControls['comingSoon'] = svgFolder.add(mainController, 'comingSoon');
-      break;
-    }
-    case SVG_RENDER_TYPES.SPIRAL: {
-      controller.svgChangingControls['comingSoon'] = svgFolder.add(mainController, 'comingSoon');
+    case SVG_RENDER_TYPES.RECURSIVE: {
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
+      controller.svgChangingControls['recursiveAlgorithm'] = svgFolder.add(mainController, 'recursiveAlgorithm', _.keys(RECURSIVE_LINE_ALGORITHMS));
+      controller.svgChangingControls['maxRecursiveDepth'] = svgFolder.add(mainController, 'maxRecursiveDepth', 1, 1000).step(1);
       break;
     }
   }
