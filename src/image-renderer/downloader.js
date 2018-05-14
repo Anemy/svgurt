@@ -23,6 +23,8 @@ export function downloadSVGString(svgString) {
     const blob = new Blob([svgString], {type: 'image/svg+xml'});
     const uri = window.URL.createObjectURL(blob);
 
-    downloadURI(uri, `${Date.now()}.svg`);
+    const fileName = window.prompt('File name', 'svgurt-output');
+
+    downloadURI(uri, `${fileName}.svg`);
   }
 }
