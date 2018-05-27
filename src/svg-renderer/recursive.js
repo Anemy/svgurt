@@ -86,18 +86,23 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.second: {
-          xMove = xBase - (renderEveryXPixels * i);
+          xMove = xBase + Math.abs(renderEveryXPixels * i);
           yMove = yBase - (renderEveryYPixels * k);
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.third: {
           xMove = xBase + Math.abs(renderEveryXPixels * i);
-          yMove = yBase - (renderEveryYPixels * k);
+          yMove = yBase - Math.abs(renderEveryYPixels * k);
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.fourth: {
+          xMove = xBase + (renderEveryXPixels * i);
+          yMove = yBase + (renderEveryYPixels * k);
+          break;
+        }
+        case RECURSIVE_LINE_ALGORITHMS.fifth: {
           xMove = xBase + Math.abs(renderEveryXPixels * i);
-          yMove = yBase - Math.abs(renderEveryYPixels * k);
+          yMove = yBase + Math.abs(renderEveryYPixels * k);
           break;
         }
       }
@@ -112,6 +117,12 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
         }
 
         pathString += pathAddition;
+
+        if (recursiveAlgorithm ===  RECURSIVE_LINE_ALGORITHMS.fifth ||
+          recursiveAlgorithm ===  RECURSIVE_LINE_ALGORITHMS.fourth
+        ) {
+          return pathString;
+        }
       }
     }
   }

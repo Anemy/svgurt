@@ -14,7 +14,8 @@ export const RECURSIVE_LINE_ALGORITHMS = {
   first: 'first',
   second: 'second',
   third: 'third',
-  fourth: 'fourth'
+  fourth: 'fourth',
+  fifth: 'fifth'
 };
 
 function openLinkInNewTab(url) {
@@ -68,7 +69,7 @@ class ControllerControls {
   radiusOnColor = false;
   radiusRandomness = 0.25;
   resurseBehindNonMatching = false;
-  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.first;
+  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.fifth;
   renderEveryXPixels = 5;
   renderEveryYPixels = 5;
   startAtCenterOfShapes = false;
