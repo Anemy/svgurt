@@ -80,12 +80,36 @@ input[type="file"] {
   cursor: not-allowed;
 }
 
-.import-image-prompt {
-  padding-top: 200px;
+.svgee-import-image-prompt {
+  padding-top: 100px;
 }
 
 .svgee-home-item {
   border: 1px solid #eee;
   height: 100vh;
   overflow: auto;
+}
+
+.svgee-import-image-example {
+  margin-top: 24px;
+}
+
+.svgee-example-image {
+  border: 1px solid;
+  display: inline-block;
+  height: 200px;
+  margin-top: 50px;
+  vertical-align: top;
+}
+
+.svgee-example-text {
+  display: inline-block;
+  margin: 10px;
+  margin-top: 150px;
+  vertical-align: top;
+}
+
+.svgee-example-svg {
+  border: 1px solid;
+  display: inline-block;
 }

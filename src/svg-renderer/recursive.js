@@ -42,8 +42,8 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
     recursiveAlgorithm
   } = settings;
 
-  let xPos = x * outputScale;
-  let yPos = y * outputScale;
+  let xPos = x;
+  let yPos = y;
 
   let xBase = x;
   let yBase = y;
@@ -62,7 +62,7 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
     yPos += yDisplacement;
   }
 
-  let pathString = ` L ${xPos} ${yPos}`;
+  let pathString = ` L ${xPos * outputScale} ${yPos * outputScale}`;
   travelled[x][y] = true;
 
   if (stack > maxRecursiveDepth) {
@@ -79,6 +79,7 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
       let xMove;
       let yMove;
 
+      // eslint-disable-next-line default-case
       switch (recursiveAlgorithm) {
         case RECURSIVE_LINE_ALGORITHMS.first: {
           xMove = xBase + (renderEveryXPixels * i);
@@ -111,7 +112,7 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
 
       if (pathAddition) {
         if (moved) {
-          pathString += ` M ${xPos} ${yPos}`;
+          pathString += ` M ${xPos * outputScale} ${yPos * outputScale}`;
         } else {
           moved = true;
         }
@@ -132,6 +133,7 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
 
 export function createRecursivePaths(settings, imageData, width, height) {
   const {
+    outputScale,
     renderEveryXPixels,
     renderEveryYPixels,
     strokeColor,
@@ -152,7 +154,7 @@ export function createRecursivePaths(settings, imageData, width, height) {
 
       if (pathString && pathString.length > 0) {
         paths.push({
-          pathString: `M ${x} ${y} ${pathString}`,
+          pathString: `M ${x * outputScale} ${y * outputScale} ${pathString}`,
           strokeColor,
           strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
         });
