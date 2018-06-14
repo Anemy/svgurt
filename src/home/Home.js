@@ -83,6 +83,13 @@ export default class Home extends Component {
       <div className="svgee-home">
         {!imageLoaded &&
           <div className="svgee-import-image-prompt">
+            <a href="https://github.com/Anemy/svgurt">
+              <img
+                className="svgee-github-banner"
+                src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+                alt="Fork me on GitHub"
+              />
+            </a>
             <h1>Svgurt</h1>
             <h2>PNG -&gt; SVG Vectorizing Tool</h2>
             <h3>Free &amp; Open Source</h3>

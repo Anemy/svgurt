@@ -113,3 +113,10 @@ input[type="file"] {
   border: 1px solid;
   display: inline-block;
 }
+
+.svgee-github-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+}
