@@ -137,14 +137,6 @@ export default class Home extends Component {
           >
             Code
           </a>
-          <a
-            className="svgee-about-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://rhyshowell.com"
-          >
-            Creator
-          </a>
         </div>
       </div>
     );
