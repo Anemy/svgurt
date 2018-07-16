@@ -91,7 +91,7 @@ export default class Home extends Component {
               />
             </a>
             <h1>Svgurt</h1>
-            <h2>PNG -&gt; SVG Vectorizing Tool</h2>
+            <h2>SVG Vectorizing Tool</h2>
             <h3>Free &amp; Open Source</h3>
             <button
               onClick={this.handleExampleImageClicked}
