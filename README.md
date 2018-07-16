@@ -4,40 +4,57 @@ Live @ [svgurt.com](http://svgurt.com)
 
 ### Installation
 
-Using NPM, install svgurt, and add it to your package.json dependencies:
+Install svgurt using [NPM](https://nodejs.org/en/download), and add it to your package.json dependencies:
+
 `npm install svgurt --save`
 
 Svgurt can then be used from the command line or programmatically as a module.
 
-### CLI
+### Using Svgurt Programatically
 
-Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli)
+Svgurt can be used in node js or clientside.
 
-To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
-`svgurt config.json`. (Config documentation)[https://github.com/Anemy/svgurt#config].
+ES5 module:
 
-### Programatically
-
-The inside one of your javascript files use svgurt:
-ES6 module:
-`import svgurt from 'svgurt';`
-
-Vanilla node:
 `const svgurt = require('svgurt');`
 
-### Config
+ES6 module:
+
+`import svgurt from 'svgurt';`
+
+Next call svgurt with a [config](https://github.com/Anemy/svgurt#config) object:
+
+```js
+svgurt({
+  input: "someImage.jpg",
+  output: "output file name",
+  blur: 2
+});
+```
+
+### CLI
+
+Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli).
+
+To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
+`svgurt config.json`.
+[Config documentation](https://github.com/Anemy/svgurt#config).
+
+### Default Config
+
+When using Svgurt programatically or through the command line, you need to supply a config. Any fields in your configuration that are omitted will default to the following:
 
 ```js
 {
-  input: "someImage.jpg",
-  output: "output file name",
+  input: "image.jpg",
+  output: "svgurt-output",
   blur: 0,
   grayscale: false
   // TODO: Add the rest of the config options here and in the cli config.
 }
 ```
 
-# Local Development of Svgurt
+## Local Development of Svgurt
 
 ### Installation
 
