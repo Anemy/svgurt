@@ -1,0 +1,75 @@
+.svgee-top-control-bar {
+  background-color: #fafafa;
+  border-bottom: 1px solid #555;
+  clear: both;
+  height: 32px;
+  position: relative;
+  width: 100%;
+}
+
+.svgee-control-bar-left {
+  float: left;
+  height: 32px;
+  margin-left: 10px;
+}
+
+.svgee-control-bar-left:after {
+  clear: both;
+}
+
+.svgee-control-bar-right {
+  float: right;
+  margin-right: 10px;
+}
+
+.svgee-control-bar-button {
+  border: 1px solid #777;
+  border-radius: 2px;
+  display: inline-block;
+  font-size: 14px;
+  margin: 3px;
+  top: 10px;
+  padding: 4px 8px;
+  transition: all 100ms ease;
+}
+
+.svgee-control-bar-button:hover {
+  border-color: #111;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.svgee-control-bar-config-selector-container {
+  display: inline-block;
+  margin: 2px 4px;
+}
+
+.svgee-control-bar-config-selector {
+  height: 17px !important;
+  width: 220px;
+}
+
+.svgee-control-bar-config-selector .Select-menu-outer {
+  margin-top: 10px;
+}
+
+.svgee-control-bar-config-selector .Select-control {
+  height: 26px !important;
+}
+
+.svgee-control-bar-config-selector .Select-input {
+  height: 26px !important;
+}
+
+.svgee-control-bar-config-selector .Select-input > input {
+  font-size: 16px !important;
+  height: 16px;
+  line-height: 16px !important;
+  padding: 6px 0;
+}
+
+.svgee-control-bar-config-item {
+  font-size: 16px;
+  line-height: 16px !important;
+  padding: 6px 0;
+}

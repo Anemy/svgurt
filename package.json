@@ -27,6 +27,7 @@
     "react-markdown": "^3.3.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.4",
+    "react-select": "^1.2.1",
     "shelljs": "^0.8.2",
     "stackblur-canvas": "^1.4.1"
   },

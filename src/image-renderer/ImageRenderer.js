@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 
+import './ImageRenderer.css';
+
+import ControlBar from './control-bar/ControlBar';
+
 import { updateRenderType } from '../controller/Controller';
 
 import { manipulateImageData } from './image-manipulator';
@@ -23,11 +27,6 @@ export default class ImageRenderer extends Component {
   }
 
   componentDidMount() {
-    this.props.controller['Import New Image'].onChange(() => {
-      this.hiddenImageChooser.focus();
-      this.hiddenImageChooser.click();
-    });
-
     this.listenToSvgControls();
 
     // Listen for changes on all of the image changing controls.
@@ -75,10 +74,6 @@ export default class ImageRenderer extends Component {
   }
 
   listenToSvgControls = () => {
-    this.props.controller.downloadSvgButton.onChange(() => {
-      downloadSVGString(this.state.svgString);
-    });
-
     this.updateSvgControlListeners();
 
     _.each(this.props.controller.svgSettingControls, svgSettingControl => {
@@ -86,6 +81,19 @@ export default class ImageRenderer extends Component {
         this.updateSvgRender();
       });
     });
+  }
+
+  onConfigChange = () => {
+    console.log('oh ok.');
+  }
+
+  onImportNewImageClicked = () => {
+    this.hiddenImageChooser.focus();
+    this.hiddenImageChooser.click();
+  }
+
+  onDownloadSVGClicked = () => {
+    downloadSVGString(this.state.svgString);;
   }
 
   canvasRef = null;
@@ -210,6 +218,13 @@ export default class ImageRenderer extends Component {
 
     return (
       <div className="svgee-image-renderer">
+        <ControlBar
+          currentConfigName={'Default'}
+          configNames={['Default', 'Some other settings', 'colorful']}
+          onConfigChange={this.onConfigChange}
+          onDownloadSVGClicked={this.onDownloadSVGClicked}
+          onImportNewImageClicked={this.onImportNewImageClicked}
+        />
         <input
           accept="image/*"
           onChange={() => this.handleImageChange()}

@@ -166,6 +166,7 @@ export default class Home extends Component {
         {loadingImage && <p>Importing Image...</p>}
         {imageLoadingError && <p>Failed to load image. Please try again.</p>}
         {imageLoaded && <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>}
+        <div id="js-dat-gui-container" className="svgee-dat-gui-container" />
       </div>
     );
   }

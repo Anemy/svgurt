@@ -20,17 +20,10 @@ export const RECURSIVE_LINE_ALGORITHMS = {
   fifth: 'fifth'
 };
 
-function openLinkInNewTab(url) {
-  Object.assign(document.createElement('a'), {
-    target: '_blank',
-    href: url,
-    rel: 'noopener noreferrer'
-  }).click();
-}
-
 const controllerConfig = {
-  'Import New Image': {
-    default: function() {}
+  // General Controls
+  'Live Update': {
+    default: true
   },
 
   // Image Controls
@@ -198,21 +191,6 @@ const controllerConfig = {
   },
   autoColor: {
     default: false
-  },
-  'Download SVG': {
-    default: function() {}
-  },
-
-  // General Controls
-  'Live Update': {
-    default: true
-  },
-
-  // About
-  Github: {
-    default: function() {
-      openLinkInNewTab('https://github.com/Anemy/svgurt');
-    }
   }
 };
 
@@ -318,12 +296,16 @@ export function updateRenderType(controller) {
 }
 
 const datConfig = {
+  autoPlace: false
   // load: JSON, // When we have some states.
-  useLocalStorage: true
+  // useLocalStorage: true
 };
 
 export function createController() {
   const gui = new dat.GUI(datConfig);
+
+  const guiContainer = document.getElementById('js-dat-gui-container');
+  guiContainer.appendChild(gui.domElement);
 
   const controller = {
     imageChangingControls: {},
@@ -333,7 +315,7 @@ export function createController() {
 
   const mainController = new ControllerControls();
 
-  controller['Import New Image'] = gui.add(mainController, 'Import New Image');
+  controller['Live Update'] = gui.add(mainController, 'Live Update');
 
   const imageFolder = gui.addFolder('Image Controls');
 
@@ -362,12 +344,6 @@ export function createController() {
   controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
   controller.svgSettingControls['strokeColor'] = svgFolder.addColor(mainController, 'strokeColor');
   controller.svgSettingControls['autoColor'] = svgFolder.add(mainController, 'autoColor');
-  controller.downloadSvgButton = gui.add(mainController, 'Download SVG');
-
-  controller['Live Update'] = gui.add(mainController, 'Live Update');
-
-  const aboutFolder = gui.addFolder('About');
-  controller.Github = aboutFolder.add(mainController, 'Github');
 
   controller.gui = gui;
   controller.settings = mainController;
