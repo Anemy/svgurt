@@ -113,7 +113,7 @@ export default class Home extends Component {
                 />
               </a>
               <h1>Svgurt</h1>
-              <h2>PNG -&gt; SVG Vectorizing Tool</h2>
+              <h2>Image -&gt; SVG Vectorizing Tool</h2>
               <h3>Free &amp;&nbsp;
                 <a
                   href="https://github.com/Anemy/svgurt"
