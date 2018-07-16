@@ -26,8 +26,9 @@ export function renderCurves(svgSettings, curves) {
   return renderString;
 }
 
-function createCurveAtPoint(baseX, baseY, settings) {
+function createCurveAtPoint(baseX, baseY, settings, pixelColor) {
   const {
+    autoColor,
     amplitude,
     amplitudeRandomness,
     applyFractalDisplacement,
@@ -45,6 +46,8 @@ function createCurveAtPoint(baseX, baseY, settings) {
 
   let x = baseX;
   let y = baseY;
+
+  const curveColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
 
   if (applyFractalDisplacement) {
     const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(baseX, baseY, settings);
@@ -89,7 +92,7 @@ function createCurveAtPoint(baseX, baseY, settings) {
 
   const curve = { x, y,
     controlPoints,
-    strokeColor,
+    strokeColor: curveColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 

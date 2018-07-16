@@ -133,6 +133,7 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
 
 export function createRecursivePaths(settings, imageData, width, height) {
   const {
+    autoColor,
     outputScale,
     renderEveryXPixels,
     renderEveryYPixels,
@@ -151,11 +152,13 @@ export function createRecursivePaths(settings, imageData, width, height) {
   for (let x = 0; x < width; x += renderEveryXPixels) {
     for (let y = 0; y < height; y += renderEveryYPixels) {
       const pathString = buildRecursivePath(settings, imageData, x, y, width, height, travelled, 0);
+      const pixelColor = getPixelColorAtXY(imageData, x, y, width);
+      const pathColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
 
       if (pathString && pathString.length > 0) {
         paths.push({
           pathString: `M ${x * outputScale} ${y * outputScale} ${pathString}`,
-          strokeColor,
+          strokeColor: pathColor,
           strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
         });
       }
