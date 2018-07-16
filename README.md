@@ -10,13 +10,6 @@ Install svgurt using [NPM](https://nodejs.org/en/download), and add it to your p
 
 Svgurt can then be used from the command line or programmatically as a module.
 
-### CLI
-
-Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli)
-
-To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
-`svgurt config.json`. [Config documentation](https://github.com/Anemy/svgurt#config).
-
 ### Programatically
 
 Use Svgurt Programatically with node js or js on the client.
@@ -36,15 +29,25 @@ svgurt({
   input: "someImage.jpg",
   output: "output file name",
   blur: 2
-})
+});
 ```
 
-### Config
+### CLI
+
+Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli)
+
+To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
+`svgurt config.json`.
+[Config documentation](https://github.com/Anemy/svgurt#config).
+
+### Default Config
+
+When using Svgurt programatically or through the command line, you need to supply a config. Any fields in your configuration that are omitted will default to the following:
 
 ```js
 {
-  input: "someImage.jpg",
-  output: "output file name",
+  input: "image.jpg",
+  output: "svgurt-output",
   blur: 0,
   grayscale: false
   // TODO: Add the rest of the config options here and in the cli config.
