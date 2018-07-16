@@ -22,7 +22,7 @@ export default function ControlBar(props) {
               clearable={false}
               name="form-field-name"
               value={currentConfigName}
-              onChange={onConfigChange}
+              onChange={newConfig => onConfigChange(newConfig.value)}
               options={selectOptions}
             />
           </div>
