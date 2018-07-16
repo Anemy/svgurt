@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import dat from 'dat.gui';
 
+import './Controller.css';
+
 import { createRandomSeed, MAX_SEED } from '../utils/random';
 
 export const SVG_RENDER_TYPES = {
@@ -26,8 +28,14 @@ function openLinkInNewTab(url) {
   }).click();
 }
 
+// const controllerConfig = {
+//   blur: {
+
+//   }
+// };
+
 class ControllerControls {
-  comingSoon() {}
+  ['Import New Image']() {}
 
   // Image Controls
   blur = 0;
@@ -44,7 +52,6 @@ class ControllerControls {
   fieldRatioX = 0.01;
   fieldRatioY = 0.01;
   fieldRandomSeed = createRandomSeed();
-  importNewImage() {}
 
   // SVG Controls
   amplitude = 5;
@@ -58,7 +65,6 @@ class ControllerControls {
   length = 6;
   lengthOnColor = true;
   lengthRandomness = 0.2;
-  liveUpdate = true;
   minColorRecognized = 50;
   maxColorRecognized = 255;
   maxRecursiveDepth = 150;
@@ -87,17 +93,14 @@ class ControllerControls {
   fractalRatioY = 0.01;
   fractalRandomSeed = createRandomSeed();
   chooseSVGRenderType() {}
-  downloadSVG() {}
+  ['Download SVG']() {}
 
   // General Controls
-  liveUpdate = true;
+  ['Live Update'] = true;
 
   // About
-  codeLink() {
+  Github() {
     openLinkInNewTab('https://github.com/Anemy/svgurt');
-  }
-  creatorLink() {
-    openLinkInNewTab('http://rhyshowell.com');
   }
 }
 
@@ -195,9 +198,10 @@ export function createController() {
   };
 
   const mainController = new ControllerControls();
-  const imageFolder = gui.addFolder('Image Controls');
 
-  controller.importNewImage = imageFolder.add(mainController, 'importNewImage');
+  controller['Import New Image'] = gui.add(mainController, 'Import New Image');
+
+  const imageFolder = gui.addFolder('Image Controls');
 
   controller.imageChangingControls['grayscale'] = imageFolder.add(mainController, 'grayscale');
   controller.imageChangingControls['blur'] = imageFolder.add(mainController, 'blur', 0, 30).step(1);
@@ -205,7 +209,7 @@ export function createController() {
   const posterizeFolder = imageFolder.addFolder('Posterize');
   controller.imageChangingControls['posterize'] = posterizeFolder.add(mainController, 'posterize');
   controller.imageChangingControls['posterizeLevels'] = posterizeFolder.add(mainController, 'posterizeLevels', 1, 30).step(1);
-  const cannyFolder = imageFolder.addFolder('Canny Edge Detection');
+  const cannyFolder = imageFolder.addFolder('Edge Detection');
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
   controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
@@ -229,13 +233,12 @@ export function createController() {
   controller.svgSettingControls['fractalRatioY'] = fractalFolder.add(mainController, 'fractalRatioY', 0, 1);
   controller.svgSettingControls['fractalRandomSeed'] = fractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
   controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
-  controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
+  controller.downloadSvgButton = gui.add(mainController, 'Download SVG');
 
-  controller.liveUpdate = gui.add(mainController, 'liveUpdate');
+  controller['Live Update'] = gui.add(mainController, 'Live Update');
 
   const aboutFolder = gui.addFolder('About');
-  controller.codeLink = aboutFolder.add(mainController, 'codeLink');
-  controller.creatorLink = aboutFolder.add(mainController, 'creatorLink');
+  controller.Github = aboutFolder.add(mainController, 'Github');
 
   controller.gui = gui;
   controller.settings = mainController;

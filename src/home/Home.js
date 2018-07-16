@@ -18,6 +18,13 @@ export default class Home extends Component {
   controller = null;
   originalImageURI = null;
 
+  componentWillUnmount() {
+    if (this.controller) {
+      this.controller.gui.destroy();
+      this.controller = null;
+    }
+  }
+
   invertImageClicked = () => {
     if (this.state.imageLoaded) {
       this.image.invertImage();

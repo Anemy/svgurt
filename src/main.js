@@ -1,5 +1,10 @@
-const ok = 'ok';
 
-export default {
-  ok
+// Options:
+// - Import image
+// - Use a canvas element?
+// - Give config object.
+// - Output as svg - to file or string (default string)
+
+module.exports = function(config) {
+  console.log('Run svgurt with config', config);
 };

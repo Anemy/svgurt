@@ -23,7 +23,7 @@ export default class ImageRenderer extends Component {
   }
 
   componentDidMount() {
-    this.props.controller.importNewImage.onChange(() => {
+    this.props.controller['Import New Image'].onChange(() => {
       this.hiddenImageChooser.focus();
       this.hiddenImageChooser.click();
     });
@@ -37,8 +37,8 @@ export default class ImageRenderer extends Component {
       });
     });
 
-    this.props.controller.liveUpdate.onFinishChange(() => {
-      if (this.props.controller.settings.liveUpdate) {
+    this.props.controller['Live Update'].onFinishChange(() => {
+      if (this.props.controller.settings['Live Update']) {
         // TODO: We can make this smarter and not force an update on both if both didn't change.
         this.updateCanvasRender();
       }
@@ -162,7 +162,7 @@ export default class ImageRenderer extends Component {
   }
 
   updateSvgRender() {
-    if (this.state.isRendered && this.imageData && this.props.controller.settings.liveUpdate) {
+    if (this.state.isRendered && this.imageData && this.props.controller.settings['Live Update']) {
       renderSvgString(this.imageData.data, this.props.controller.settings, this.width, this.height, svgString => {
         // TODO: Version/cancel this.
         this.setState({
@@ -175,7 +175,7 @@ export default class ImageRenderer extends Component {
   updateCanvasRender() {
     // TODO: Offload hard things to web workers.
     // TODO: Version of render management.
-    if (this.renderedImage && !this.state.isRendering && this.props.controller.settings.liveUpdate) {
+    if (this.renderedImage && !this.state.isRendering && this.props.controller.settings['Live Update']) {
       this.setState({
         isRendering: true,
         isRendered: false
