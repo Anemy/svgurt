@@ -5,4 +5,4 @@ const exampleConfig = {
   input: 'input string'
 };
 
-const output = svgurt(exampleConfig);
+svgurt(exampleConfig);
