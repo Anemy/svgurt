@@ -4,7 +4,8 @@ Live @ [svgurt.com](http://svgurt.com)
 
 ### Installation
 
-Using NPM, install svgurt, and add it to your package.json dependencies:
+Install svgurt using [NPM](https://nodejs.org/en/download), and add it to your package.json dependencies:
+
 `npm install svgurt --save`
 
 Svgurt can then be used from the command line or programmatically as a module.
@@ -14,16 +15,29 @@ Svgurt can then be used from the command line or programmatically as a module.
 Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli)
 
 To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
-`svgurt config.json`. (Config documentation)[https://github.com/Anemy/svgurt#config].
+`svgurt config.json`. [Config documentation](https://github.com/Anemy/svgurt#config).
 
 ### Programatically
 
-The inside one of your javascript files use svgurt:
+Use Svgurt Programatically with node js or js on the client.
+
+ES5 module:
+
+`const svgurt = require('svgurt');`
+
 ES6 module:
+
 `import svgurt from 'svgurt';`
 
-Vanilla node:
-`const svgurt = require('svgurt');`
+Then call svgurt with a [config](https://github.com/Anemy/svgurt#config) object:
+
+```js
+svgurt({
+  input: "someImage.jpg",
+  output: "output file name",
+  blur: 2
+})
+```
 
 ### Config
 
@@ -37,7 +51,7 @@ Vanilla node:
 }
 ```
 
-# Local Development of Svgurt
+## Local Development of Svgurt
 
 ### Installation
 
