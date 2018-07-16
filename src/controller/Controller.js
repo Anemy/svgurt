@@ -20,17 +20,10 @@ export const RECURSIVE_LINE_ALGORITHMS = {
   fifth: 'fifth'
 };
 
-function openLinkInNewTab(url) {
-  Object.assign(document.createElement('a'), {
-    target: '_blank',
-    href: url,
-    rel: 'noopener noreferrer'
-  }).click();
-}
-
 const controllerConfig = {
-  'Import New Image': {
-    default: function() {}
+  // General Controls
+  'Live Update': {
+    default: true
   },
 
   // Image Controls
@@ -44,7 +37,7 @@ const controllerConfig = {
   invert: {
     default: true
   },
-  cannyEdgeDetection: {
+  'Edge Detection': {
     default: false
   },
   postBlur: {
@@ -198,34 +191,34 @@ const controllerConfig = {
   },
   autoColor: {
     default: false
-  },
-  'Download SVG': {
-    default: function() {}
-  },
-
-  // General Controls
-  'Live Update': {
-    default: true
-  },
-
-  // About
-  Github: {
-    default: function() {
-      openLinkInNewTab('https://github.com/Anemy/svgurt');
-    }
   }
 };
 
-class ControllerControls {
+class ControllerConfig {
   constructor() {
     _.each(controllerConfig, (configItem, index) => {
       this[index] = configItem.default;
     });
+
+    this.currentConfigName = 'Default';
+    this.configNames = ['Default', 'Some other settings', 'colorful'];
+  }
+
+  getCurrentConfigName() {
+    return this.currentConfigName;
+  }
+
+  getConfigNames() {
+    return this.configNames;
+  }
+
+  loadNewConfig(newConfigName) {
+    console.log('loadNewConfig', newConfigName);
   }
 }
 
 export function updateRenderType(controller) {
-  const newRenderType = controller.settings.svgRenderType;
+  const newRenderType = controller.config.svgRenderType;
   const svgFolder = controller.svgFolder;
   const fractalFolder = controller.svgFolder.fractalFolder;
 
@@ -242,7 +235,7 @@ export function updateRenderType(controller) {
   });
   controller.svgRenderChangingControls = {};
 
-  const mainController = controller.settings;
+  const mainController = controller.config;
 
   controller.svgRenderChangingControls.svgRenderType = svgFolder.add(mainController, 'svgRenderType', _.keys(SVG_RENDER_TYPES));
 
@@ -318,12 +311,16 @@ export function updateRenderType(controller) {
 }
 
 const datConfig = {
+  autoPlace: false
   // load: JSON, // When we have some states.
-  useLocalStorage: true
+  // useLocalStorage: true
 };
 
 export function createController() {
   const gui = new dat.GUI(datConfig);
+
+  const guiContainer = document.getElementById('js-dat-gui-container');
+  guiContainer.appendChild(gui.domElement);
 
   const controller = {
     imageChangingControls: {},
@@ -331,9 +328,9 @@ export function createController() {
     svgSettingControls: {}
   };
 
-  const mainController = new ControllerControls();
+  const mainController = new ControllerConfig();
 
-  controller['Import New Image'] = gui.add(mainController, 'Import New Image');
+  controller['Live Update'] = gui.add(mainController, 'Live Update');
 
   const imageFolder = gui.addFolder('Image Controls');
 
@@ -343,10 +340,10 @@ export function createController() {
   const posterizeFolder = imageFolder.addFolder('Posterize');
   controller.imageChangingControls['posterize'] = posterizeFolder.add(mainController, 'posterize');
   controller.imageChangingControls['posterizeLevels'] = posterizeFolder.add(mainController, 'posterizeLevels', 1, 30).step(1);
-  const cannyFolder = imageFolder.addFolder('Edge Detection');
-  controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
-  controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
-  controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
+  const edgeDetectionFolder = imageFolder.addFolder('Edge Detection');
+  controller.imageChangingControls['Edge Detection'] = edgeDetectionFolder.add(mainController, 'Edge Detection');
+  controller.imageChangingControls['lowThreshold'] = edgeDetectionFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
+  controller.imageChangingControls['highThreshold'] = edgeDetectionFolder.add(mainController, 'highThreshold', 0, 128).step(1);
   const fieldFolder = imageFolder.addFolder('Fractal Field Opacity');
   controller.imageChangingControls['applyFractalField'] = fieldFolder.add(mainController, 'applyFractalField');
   controller.imageChangingControls['fieldOpacity'] = fieldFolder.add(mainController, 'fieldOpacity', 0, 1);
@@ -362,15 +359,9 @@ export function createController() {
   controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
   controller.svgSettingControls['strokeColor'] = svgFolder.addColor(mainController, 'strokeColor');
   controller.svgSettingControls['autoColor'] = svgFolder.add(mainController, 'autoColor');
-  controller.downloadSvgButton = gui.add(mainController, 'Download SVG');
-
-  controller['Live Update'] = gui.add(mainController, 'Live Update');
-
-  const aboutFolder = gui.addFolder('About');
-  controller.Github = aboutFolder.add(mainController, 'Github');
 
   controller.gui = gui;
-  controller.settings = mainController;
+  controller.config = mainController;
 
   // gui.remember(mainController);
 

@@ -20,7 +20,7 @@ function grayScale(imageData, width, height) {
   return grayImageMatrix;
 }
 
-function cannyEdge(imageData, lowThreshold, highThreshold, width, height) {
+function cannyEdgeDetection(imageData, lowThreshold, highThreshold, width, height) {
   const matrix = new jsfeat.matrix_t(width, height, jsfeat.U8C1_t);
 
   jsfeat.imgproc.grayscale(imageData.data, width, height, matrix);
@@ -95,8 +95,8 @@ export function manipulateImageData(imageData, imageSettings, width, height) {
     posterizeImage(imageData, imageSettings.posterizeLevels);
   }
 
-  if (imageSettings.cannyEdgeDetection) {
-    cannyEdge(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
+  if (imageSettings['Edge Detection']) {
+    cannyEdgeDetection(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
   }
 
   if (imageSettings.applyFractalField) {

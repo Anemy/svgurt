@@ -1,6 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 
+import './ImageRenderer.css';
+
+import ControlBar from './control-bar/ControlBar';
+
 import { updateRenderType } from '../controller/Controller';
 
 import { manipulateImageData } from './image-manipulator';
@@ -12,22 +16,18 @@ export default class ImageRenderer extends Component {
     super(props);
 
     this.imageURI = this.props.imageURI;
-  }
 
-  state = {
-    imageLoadingError: false,
-    isRendered: false,
-    isRendering: false,
-    loadingImage: true,
-    svgString: ''
+    this.state = {
+      currentConfigName: props.controller.config.getCurrentConfigName(),
+      imageLoadingError: false,
+      isRendered: false,
+      isRendering: false,
+      loadingImage: true,
+      svgString: ''
+    };
   }
 
   componentDidMount() {
-    this.props.controller['Import New Image'].onChange(() => {
-      this.hiddenImageChooser.focus();
-      this.hiddenImageChooser.click();
-    });
-
     this.listenToSvgControls();
 
     // Listen for changes on all of the image changing controls.
@@ -38,7 +38,7 @@ export default class ImageRenderer extends Component {
     });
 
     this.props.controller['Live Update'].onFinishChange(() => {
-      if (this.props.controller.settings['Live Update']) {
+      if (this.props.controller.config['Live Update']) {
         // TODO: We can make this smarter and not force an update on both if both didn't change.
         this.updateCanvasRender();
       }
@@ -75,10 +75,6 @@ export default class ImageRenderer extends Component {
   }
 
   listenToSvgControls = () => {
-    this.props.controller.downloadSvgButton.onChange(() => {
-      downloadSVGString(this.state.svgString);
-    });
-
     this.updateSvgControlListeners();
 
     _.each(this.props.controller.svgSettingControls, svgSettingControl => {
@@ -86,6 +82,27 @@ export default class ImageRenderer extends Component {
         this.updateSvgRender();
       });
     });
+  }
+
+  onConfigChange = newConfig => {
+    if (newConfig !== this.state.currentConfigName) {
+      this.props.controller.config.loadNewConfig(newConfig);
+
+      // TODO: Update settings.
+
+      this.setState({
+        currentConfigName: newConfig
+      });
+    }
+  }
+
+  onImportNewImageClicked = () => {
+    this.hiddenImageChooser.focus();
+    this.hiddenImageChooser.click();
+  }
+
+  onDownloadSVGClicked = () => {
+    downloadSVGString(this.state.svgString);;
   }
 
   canvasRef = null;
@@ -149,7 +166,7 @@ export default class ImageRenderer extends Component {
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
         this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-        manipulateImageData(this.imageData, this.props.controller.settings, this.width, this.height);
+        manipulateImageData(this.imageData, this.props.controller.config, this.width, this.height);
 
         ctx.putImageData(this.imageData, 0, 0);
 
@@ -168,8 +185,8 @@ export default class ImageRenderer extends Component {
   }
 
   updateSvgRender() {
-    if (this.state.isRendered && this.imageData && this.props.controller.settings['Live Update']) {
-      renderSvgString(this.imageData.data, this.props.controller.settings, this.width, this.height, svgString => {
+    if (this.state.isRendered && this.imageData && this.props.controller.config['Live Update']) {
+      renderSvgString(this.imageData.data, this.props.controller.config, this.width, this.height, svgString => {
         // TODO: Version/cancel this.
         this.setState({
           svgString
@@ -181,7 +198,7 @@ export default class ImageRenderer extends Component {
   updateCanvasRender() {
     // TODO: Offload hard things to web workers.
     // TODO: Version of render management.
-    if (this.renderedImage && !this.state.isRendering && this.props.controller.settings['Live Update']) {
+    if (this.renderedImage && !this.state.isRendering && this.props.controller.config['Live Update']) {
       this.setState({
         isRendering: true,
         isRendered: false
@@ -191,7 +208,7 @@ export default class ImageRenderer extends Component {
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
-      manipulateImageData(this.imageData, this.props.controller.settings, this.width, this.height);
+      manipulateImageData(this.imageData, this.props.controller.config, this.width, this.height);
 
       ctx.putImageData(this.imageData, 0, 0);
 
@@ -206,10 +223,17 @@ export default class ImageRenderer extends Component {
   }
 
   render() {
-    const { isRendered, isRendering, loadingImage, svgString } = this.state;
+    const { currentConfigName, isRendered, isRendering, loadingImage, svgString } = this.state;
 
     return (
       <div className="svgee-image-renderer">
+        <ControlBar
+          currentConfigName={currentConfigName}
+          configNames={this.props.controller.config.getConfigNames()}
+          onConfigChange={this.onConfigChange}
+          onDownloadSVGClicked={this.onDownloadSVGClicked}
+          onImportNewImageClicked={this.onImportNewImageClicked}
+        />
         <input
           accept="image/*"
           onChange={() => this.handleImageChange()}
