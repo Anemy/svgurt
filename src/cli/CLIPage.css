@@ -1,0 +1,13 @@
+.svgee-docs-container {
+  position: relative;
+  margin-left: 20%;
+  margin-top: 100px;
+  width: 60%;
+}
+
+.svgee-docs-container pre {
+  background-color: #333;
+  border-radius: 1px;
+  color: #f5f5f5;
+  padding: 10px;
+}
