@@ -10,9 +10,9 @@ Install svgurt using [NPM](https://nodejs.org/en/download), and add it to your p
 
 Svgurt can then be used from the command line or programmatically as a module.
 
-### Programatically
+### Using Svgurt Programatically
 
-Use Svgurt Programatically with node js or js on the client.
+Svgurt can be used in node js or clientside.
 
 ES5 module:
 
@@ -22,7 +22,7 @@ ES6 module:
 
 `import svgurt from 'svgurt';`
 
-Then call svgurt with a [config](https://github.com/Anemy/svgurt#config) object:
+Next call svgurt with a [config](https://github.com/Anemy/svgurt#config) object:
 
 ```js
 svgurt({
@@ -34,7 +34,7 @@ svgurt({
 
 ### CLI
 
-Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli)
+Full docs can be found in the [CLI Documentation](http://svgurt.com/#/cli).
 
 To run svgurt from command line, navigate to the folder where you have installed it using npm (or anywhere if you use the `-g` flag). Then run svgurt by supplying a config file:
 `svgurt config.json`.
