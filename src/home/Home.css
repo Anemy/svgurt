@@ -115,8 +115,8 @@ input[type="file"] {
 }
 
 .svgee-github-banner {
-  position: absolute;
-  top: 0;
-  right: 0;
   border: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }

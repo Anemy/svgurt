@@ -2,10 +2,18 @@
   "homepage": "http://svgurt.com",
   "name": "svgurt",
   "version": "0.1.0",
-  "private": true,
+  "main": "bin/main.js",
+  "bin": {
+    "svgurt": "./lib/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anemy/svgurt.git"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "compile-cli": "babel -d lib/ src/",
+    "build": "react-scripts build && npm run compile-cli",
     "deploy": "npm run build && gh-pages -d build",
     "eject": "react-scripts eject"
   },
@@ -15,11 +23,21 @@
     "lodash": "^4.17.10",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-markdown": "^3.3.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^1.1.4",
+    "shelljs": "^0.8.2",
     "stackblur-canvas": "^1.4.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^4.18.1",
     "eslint-plugin-react": "^7.7.0",
     "gh-pages": "^1.2.0"
