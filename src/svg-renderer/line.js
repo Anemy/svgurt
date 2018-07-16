@@ -130,6 +130,7 @@ function createContinuousLines(lineNumber, width, height, settings) {
 
 function createLineAtPoint(x, y, settings, pixelColor) {
   const {
+    autoColor,
     applyFractalDisplacement,
     displaceOrigin,
     direction,
@@ -145,6 +146,8 @@ function createLineAtPoint(x, y, settings, pixelColor) {
   const x1 = x;
   const y1 = y;
 
+  const lineColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+
   let lengthOfLine = lineLength;
   if (lengthOnColor) {
     lengthOfLine = getPixelColorIntensity(pixelColor, settings) * lengthOfLine;
@@ -159,7 +162,7 @@ function createLineAtPoint(x, y, settings, pixelColor) {
   const y2 = y1 + yMove * lenRandom;
 
   const line = { x1, y1, x2, y2,
-    strokeColor,
+    strokeColor : lineColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 

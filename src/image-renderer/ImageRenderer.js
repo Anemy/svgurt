@@ -66,6 +66,12 @@ export default class ImageRenderer extends Component {
         this.updateSvgRender();
       });
     });
+
+    _.each(this.props.controller.svgFractalControls, svgFractalControl => {
+      svgFractalControl.onFinishChange(() => {
+        this.updateSvgRender();
+      });
+    });
   }
 
   listenToSvgControls = () => {

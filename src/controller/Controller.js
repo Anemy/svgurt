@@ -196,6 +196,9 @@ const controllerConfig = {
   chooseSVGRenderType: {
     default: function() {}
   },
+  autoColor: {
+    default: false
+  },
   'Download SVG': {
     default: function() {}
   },
@@ -224,7 +227,12 @@ class ControllerControls {
 export function updateRenderType(controller) {
   const newRenderType = controller.settings.svgRenderType;
   const svgFolder = controller.svgFolder;
+  const fractalFolder = controller.svgFolder.fractalFolder;
 
+  if (controller.svgFolder.fractalFolder) {
+    svgFolder.removeFolder(fractalFolder);
+  }
+  controller.svgFractalControls = {};
   _.each(controller.svgChangingControls, svgRenderSettingController => {
     svgFolder.remove(svgRenderSettingController);
   });
@@ -298,6 +306,15 @@ export function updateRenderType(controller) {
       break;
     }
   }
+  // Add Displacement Fractal Field settings to to the end of SVG controls
+  const newFractalFolder = svgFolder.addFolder('Displacement Fractal Field');
+  controller.svgFolder.fractalFolder = newFractalFolder;
+  controller.svgFractalControls['applyFractalDisplacement'] = newFractalFolder.add(mainController, 'applyFractalDisplacement');
+  controller.svgFractalControls['displacementAmount'] = newFractalFolder.add(mainController, 'displacementAmount', 0, 200);
+  controller.svgFractalControls['displaceOrigin'] = newFractalFolder.add(mainController, 'displaceOrigin');
+  controller.svgFractalControls['fractalRatioX'] = newFractalFolder.add(mainController, 'fractalRatioX', 0, 1);
+  controller.svgFractalControls['fractalRatioY'] = newFractalFolder.add(mainController, 'fractalRatioY', 0, 1);
+  controller.svgFractalControls['fractalRandomSeed'] = newFractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
 }
 
 const datConfig = {
@@ -342,14 +359,9 @@ export function createController() {
   controller.svgFolder = svgFolder;
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);
   controller.svgSettingControls['maxColorRecognized'] = svgFolder.add(mainController, 'maxColorRecognized', 0, 255).step(1);
-  const fractalFolder = svgFolder.addFolder('Displacement Fractal Field');
-  controller.svgSettingControls['applyFractalDisplacement'] = fractalFolder.add(mainController, 'applyFractalDisplacement');
-  controller.svgSettingControls['displacementAmount'] = fractalFolder.add(mainController, 'displacementAmount', 0, 200);
-  controller.svgSettingControls['displaceOrigin'] = fractalFolder.add(mainController, 'displaceOrigin');
-  controller.svgSettingControls['fractalRatioX'] = fractalFolder.add(mainController, 'fractalRatioX', 0, 1);
-  controller.svgSettingControls['fractalRatioY'] = fractalFolder.add(mainController, 'fractalRatioY', 0, 1);
-  controller.svgSettingControls['fractalRandomSeed'] = fractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
   controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
+  controller.svgSettingControls['strokeColor'] = svgFolder.addColor(mainController, 'strokeColor');
+  controller.svgSettingControls['autoColor'] = svgFolder.add(mainController, 'autoColor');
   controller.downloadSvgButton = gui.add(mainController, 'Download SVG');
 
   controller['Live Update'] = gui.add(mainController, 'Live Update');
