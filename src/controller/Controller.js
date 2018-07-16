@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import dat from 'dat.gui';
 
+import './Controller.css';
+
 import { createRandomSeed, MAX_SEED } from '../utils/random';
 
 export const SVG_RENDER_TYPES = {
@@ -26,79 +28,199 @@ function openLinkInNewTab(url) {
   }).click();
 }
 
-class ControllerControls {
-  comingSoon() {}
+const controllerConfig = {
+  'Import New Image': {
+    default: function() {}
+  },
 
   // Image Controls
-  blur = 0;
-  grayscale = true;
-  invert = true;
-  cannyEdgeDetection = false;
-  postBlur = 0;
-  posterize = false;
-  posterizeLevels = 5;
-  lowThreshold = 20;
-  highThreshold = 50;
-  applyFractalField = false;
-  fieldOpacity = 0.5;
-  fieldRatioX = 0.01;
-  fieldRatioY = 0.01;
-  fieldRandomSeed = createRandomSeed();
-  importNewImage() {}
+  blur: {
+    default: 0,
+    description: 'Image blur'
+  },
+  grayscale: {
+    default: true
+  },
+  invert: {
+    default: true
+  },
+  cannyEdgeDetection: {
+    default: false
+  },
+  postBlur: {
+    default: 0
+  },
+  posterize: {
+    default: false
+  },
+  posterizeLevels: {
+    default: 5
+  },
+  lowThreshold: {
+    default: 20
+  },
+  highThreshold: {
+    default: 50
+  },
+  applyFractalField: {
+    default: false
+  },
+  fieldOpacity: {
+    default: 0.5
+  },
+  fieldRatioX: {
+    default: 0.01
+  },
+  fieldRatioY: {
+    default: 0.01
+  },
+  fieldRandomSeed: {
+    default: createRandomSeed()
+  },
 
   // SVG Controls
-  amplitude = 5;
-  amplitudeRandomness = 0.5;
-  amountOfLines = 150;
-  continuous = false;
-  crossHatch = true;
-  direction = 30;
-  directionRandomness = 0.01;
-  displaceOrigin = false;
-  length = 6;
-  lengthOnColor = true;
-  lengthRandomness = 0.2;
-  liveUpdate = true;
-  minColorRecognized = 50;
-  maxColorRecognized = 255;
-  maxRecursiveDepth = 150;
-  minLineLength = 1;
-  outputScale = 1;
-  randomSeed = createRandomSeed();
-  radius = 1.5;
-  radiusOnColor = false;
-  radiusRandomness = 0.25;
-  resurseBehindNonMatching = false;
-  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.fifth;
-  renderEveryXPixels = 5;
-  renderEveryYPixels = 5;
-  startAtCenterOfShapes = false;
-  strokeColor = 'rgb(28, 32, 38)';
-  autoColor = false;
-  strokeWidth = 1;
-  strokeWidthRandomness = 0.1;
-  svgRenderType = SVG_RENDER_TYPES.RECURSIVE;
-  wavelength = 3;
-  wavelengthRandomness = 0.5;
-  waves = 3;
-  wavesRandomness = 0.5;
-  applyFractalDisplacement = false;
-  displacementAmount = 5;
-  fractalRatioX = 0.01;
-  fractalRatioY = 0.01;
-  fractalRandomSeed = createRandomSeed();
-  chooseSVGRenderType() {}
-  downloadSVG() {}
+  amplitude: {
+    default: 5
+  },
+  amplitudeRandomness: {
+    default: 0.5
+  },
+  amountOfLines: {
+    default: 150
+  },
+  continuous: {
+    default: false
+  },
+  crossHatch: {
+    default: true
+  },
+  direction: {
+    default: 30
+  },
+  directionRandomness: {
+    default: 0.01
+  },
+  displaceOrigin: {
+    default: false
+  },
+  lineLength: {
+    default: 6
+  },
+  lengthOnColor: {
+    default: true
+  },
+  lengthRandomness: {
+    default: 0.2
+  },
+  minColorRecognized: {
+    default: 50
+  },
+  maxColorRecognized: {
+    default: 255
+  },
+  maxRecursiveDepth: {
+    default: 150
+  },
+  minLineLength: {
+    default: 1
+  },
+  outputScale: {
+    default: 1
+  },
+  randomSeed: {
+    default: createRandomSeed()
+  },
+  radius: {
+    default: 1.5
+  },
+  radiusOnColor: {
+    default: false
+  },
+  radiusRandomness: {
+    default: 0.25
+  },
+  resurseBehindNonMatching: {
+    default: false
+  },
+  recursiveAlgorithm: {
+    default: RECURSIVE_LINE_ALGORITHMS.fifth
+  },
+  renderEveryXPixels: {
+    default: 5
+  },
+  renderEveryYPixels: {
+    default: 5
+  },
+  startAtCenterOfShapes: {
+    default: false
+  },
+  strokeColor: {
+    default: 'rgb(28, 32, 38)'
+  },
+  strokeWidth: {
+    default: 1
+  },
+  strokeWidthRandomness: {
+    default: 0.1
+  },
+  svgRenderType: {
+    default: SVG_RENDER_TYPES.RECURSIVE
+  },
+  wavelength: {
+    default: 3
+  },
+  wavelengthRandomness: {
+    default: 0.5
+  },
+  waves: {
+    default: 3
+  },
+  wavesRandomness: {
+    default: 0.5
+  },
+  applyFractalDisplacement: {
+    default: false
+  },
+  displacementAmount: {
+    default: 5
+  },
+  fractalRatioX: {
+    default: 0.01
+  },
+  fractalRatioY: {
+    default: 0.01
+  },
+  fractalRandomSeed: {
+    default: createRandomSeed()
+  },
+  chooseSVGRenderType: {
+    default: function() {}
+  },
+  autoColor: {
+    default: false
+  },
+  'Download SVG': {
+    default: function() {}
+  },
 
   // General Controls
-  liveUpdate = true;
+  'Live Update': {
+    default: true
+  },
 
   // About
-  codeLink() {
-    openLinkInNewTab('https://github.com/Anemy/svgurt');
+  Github: {
+    default: function() {
+      openLinkInNewTab('https://github.com/Anemy/svgurt');
+    }
   }
-  creatorLink() {
-    openLinkInNewTab('http://rhyshowell.com');
+};
+
+class ControllerControls {
+  constructor() {
+    _.each(controllerConfig, (configItem, index) => {
+      this[index] = configItem.default;
+    });
   }
 }
 
@@ -162,7 +284,7 @@ export function updateRenderType(controller) {
       if (!mainController.continuous) {
         controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
         controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
-        controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
+        controller.svgChangingControls['lineLength'] = svgFolder.add(mainController, 'lineLength', 0, 50);
         controller.svgChangingControls['lengthOnColor'] = svgFolder.add(mainController, 'lengthOnColor');
         controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
       } else {
@@ -210,9 +332,10 @@ export function createController() {
   };
 
   const mainController = new ControllerControls();
-  const imageFolder = gui.addFolder('Image Controls');
 
-  controller.importNewImage = imageFolder.add(mainController, 'importNewImage');
+  controller['Import New Image'] = gui.add(mainController, 'Import New Image');
+
+  const imageFolder = gui.addFolder('Image Controls');
 
   controller.imageChangingControls['grayscale'] = imageFolder.add(mainController, 'grayscale');
   controller.imageChangingControls['blur'] = imageFolder.add(mainController, 'blur', 0, 30).step(1);
@@ -220,7 +343,7 @@ export function createController() {
   const posterizeFolder = imageFolder.addFolder('Posterize');
   controller.imageChangingControls['posterize'] = posterizeFolder.add(mainController, 'posterize');
   controller.imageChangingControls['posterizeLevels'] = posterizeFolder.add(mainController, 'posterizeLevels', 1, 30).step(1);
-  const cannyFolder = imageFolder.addFolder('Canny Edge Detection');
+  const cannyFolder = imageFolder.addFolder('Edge Detection');
   controller.imageChangingControls['cannyEdgeDetection'] = cannyFolder.add(mainController, 'cannyEdgeDetection');
   controller.imageChangingControls['lowThreshold'] = cannyFolder.add(mainController, 'lowThreshold', 0, 128).step(1);
   controller.imageChangingControls['highThreshold'] = cannyFolder.add(mainController, 'highThreshold', 0, 128).step(1);
@@ -239,13 +362,12 @@ export function createController() {
   controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
   controller.svgSettingControls['strokeColor'] = svgFolder.addColor(mainController, 'strokeColor');
   controller.svgSettingControls['autoColor'] = svgFolder.add(mainController, 'autoColor');
-  controller.downloadSvgButton = gui.add(mainController, 'downloadSVG');
+  controller.downloadSvgButton = gui.add(mainController, 'Download SVG');
 
-  controller.liveUpdate = gui.add(mainController, 'liveUpdate');
+  controller['Live Update'] = gui.add(mainController, 'Live Update');
 
   const aboutFolder = gui.addFolder('About');
-  controller.codeLink = aboutFolder.add(mainController, 'codeLink');
-  controller.creatorLink = aboutFolder.add(mainController, 'creatorLink');
+  controller.Github = aboutFolder.add(mainController, 'Github');
 
   controller.gui = gui;
   controller.settings = mainController;

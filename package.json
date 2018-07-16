@@ -15,7 +15,8 @@
     "compile-cli": "babel -d lib/ src/",
     "build": "react-scripts build && npm run compile-cli",
     "deploy": "npm run build && gh-pages -d build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "node ./test/test-npm-module.js"
   },
   "dependencies": {
     "dat.gui": "^0.7.1",
