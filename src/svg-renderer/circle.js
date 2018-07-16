@@ -22,6 +22,7 @@ export function renderCircles(svgSettings, circles) {
 
 function createCircleAtPoint(baseX, baseY, settings, pixelColor) {
   const {
+    autoColor,
     applyFractalDisplacement,
     radius,
     radiusOnColor,
@@ -41,9 +42,11 @@ function createCircleAtPoint(baseX, baseY, settings, pixelColor) {
 
   circleRadius *= (1 - (Math.random() * radiusRandomness));
 
+  const circleColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+
   const circle = { x, y,
     r: circleRadius,
-    strokeColor,
+    strokeColor: circleColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 
