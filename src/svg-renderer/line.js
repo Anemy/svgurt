@@ -134,7 +134,7 @@ function createLineAtPoint(x, y, settings, pixelColor) {
     displaceOrigin,
     direction,
     directionRandomness,
-    length,
+    lineLength,
     lengthOnColor,
     lengthRandomness,
     strokeColor,
@@ -145,14 +145,14 @@ function createLineAtPoint(x, y, settings, pixelColor) {
   const x1 = x;
   const y1 = y;
 
-  let lineLength = length;
+  let lengthOfLine = lineLength;
   if (lengthOnColor) {
-    lineLength = getPixelColorIntensity(pixelColor, settings) * length;
+    lengthOfLine = getPixelColorIntensity(pixelColor, settings) * lengthOfLine;
   }
 
   const dir = (-direction) + 180 * directionRandomness * Math.random();
-  const xMove = lineLength * Math.cos(dir * (Math.PI / 180));
-  const yMove = lineLength * Math.sin(dir * (Math.PI / 180));
+  const xMove = lengthOfLine * Math.cos(dir * (Math.PI / 180));
+  const yMove = lengthOfLine * Math.sin(dir * (Math.PI / 180));
 
   const lenRandom = (1 - (Math.random() * lengthRandomness));
   const x2 = x1 + xMove * lenRandom;

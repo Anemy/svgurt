@@ -28,79 +28,196 @@ function openLinkInNewTab(url) {
   }).click();
 }
 
-// const controllerConfig = {
-//   blur: {
-
-//   }
-// };
-
-class ControllerControls {
-  ['Import New Image']() {}
+const controllerConfig = {
+  'Import New Image': {
+    default: function() {}
+  },
 
   // Image Controls
-  blur = 0;
-  grayscale = true;
-  invert = true;
-  cannyEdgeDetection = false;
-  postBlur = 0;
-  posterize = false;
-  posterizeLevels = 5;
-  lowThreshold = 20;
-  highThreshold = 50;
-  applyFractalField = false;
-  fieldOpacity = 0.5;
-  fieldRatioX = 0.01;
-  fieldRatioY = 0.01;
-  fieldRandomSeed = createRandomSeed();
+  blur: {
+    default: 0,
+    description: 'Image blur'
+  },
+  grayscale: {
+    default: true
+  },
+  invert: {
+    default: true
+  },
+  cannyEdgeDetection: {
+    default: false
+  },
+  postBlur: {
+    default: 0
+  },
+  posterize: {
+    default: false
+  },
+  posterizeLevels: {
+    default: 5
+  },
+  lowThreshold: {
+    default: 20
+  },
+  highThreshold: {
+    default: 50
+  },
+  applyFractalField: {
+    default: false
+  },
+  fieldOpacity: {
+    default: 0.5
+  },
+  fieldRatioX: {
+    default: 0.01
+  },
+  fieldRatioY: {
+    default: 0.01
+  },
+  fieldRandomSeed: {
+    default: createRandomSeed()
+  },
 
   // SVG Controls
-  amplitude = 5;
-  amplitudeRandomness = 0.5;
-  amountOfLines = 150;
-  continuous = false;
-  crossHatch = true;
-  direction = 30;
-  directionRandomness = 0.01;
-  displaceOrigin = false;
-  length = 6;
-  lengthOnColor = true;
-  lengthRandomness = 0.2;
-  minColorRecognized = 50;
-  maxColorRecognized = 255;
-  maxRecursiveDepth = 150;
-  minLineLength = 1;
-  outputScale = 1;
-  randomSeed = createRandomSeed();
-  radius = 1.5;
-  radiusOnColor = false;
-  radiusRandomness = 0.25;
-  resurseBehindNonMatching = false;
-  recursiveAlgorithm = RECURSIVE_LINE_ALGORITHMS.fifth;
-  renderEveryXPixels = 5;
-  renderEveryYPixels = 5;
-  startAtCenterOfShapes = false;
-  strokeColor = 'rgb(28, 32, 38)';
-  strokeWidth = 1;
-  strokeWidthRandomness = 0.1;
-  svgRenderType = SVG_RENDER_TYPES.RECURSIVE;
-  wavelength = 3;
-  wavelengthRandomness = 0.5;
-  waves = 3;
-  wavesRandomness = 0.5;
-  applyFractalDisplacement = false;
-  displacementAmount = 5;
-  fractalRatioX = 0.01;
-  fractalRatioY = 0.01;
-  fractalRandomSeed = createRandomSeed();
-  chooseSVGRenderType() {}
-  ['Download SVG']() {}
+  amplitude: {
+    default: 5
+  },
+  amplitudeRandomness: {
+    default: 0.5
+  },
+  amountOfLines: {
+    default: 150
+  },
+  continuous: {
+    default: false
+  },
+  crossHatch: {
+    default: true
+  },
+  direction: {
+    default: 30
+  },
+  directionRandomness: {
+    default: 0.01
+  },
+  displaceOrigin: {
+    default: false
+  },
+  lineLength: {
+    default: 6
+  },
+  lengthOnColor: {
+    default: true
+  },
+  lengthRandomness: {
+    default: 0.2
+  },
+  minColorRecognized: {
+    default: 50
+  },
+  maxColorRecognized: {
+    default: 255
+  },
+  maxRecursiveDepth: {
+    default: 150
+  },
+  minLineLength: {
+    default: 1
+  },
+  outputScale: {
+    default: 1
+  },
+  randomSeed: {
+    default: createRandomSeed()
+  },
+  radius: {
+    default: 1.5
+  },
+  radiusOnColor: {
+    default: false
+  },
+  radiusRandomness: {
+    default: 0.25
+  },
+  resurseBehindNonMatching: {
+    default: false
+  },
+  recursiveAlgorithm: {
+    default: RECURSIVE_LINE_ALGORITHMS.fifth
+  },
+  renderEveryXPixels: {
+    default: 5
+  },
+  renderEveryYPixels: {
+    default: 5
+  },
+  startAtCenterOfShapes: {
+    default: false
+  },
+  strokeColor: {
+    default: 'rgb(28, 32, 38)'
+  },
+  strokeWidth: {
+    default: 1
+  },
+  strokeWidthRandomness: {
+    default: 0.1
+  },
+  svgRenderType: {
+    default: SVG_RENDER_TYPES.RECURSIVE
+  },
+  wavelength: {
+    default: 3
+  },
+  wavelengthRandomness: {
+    default: 0.5
+  },
+  waves: {
+    default: 3
+  },
+  wavesRandomness: {
+    default: 0.5
+  },
+  applyFractalDisplacement: {
+    default: false
+  },
+  displacementAmount: {
+    default: 5
+  },
+  fractalRatioX: {
+    default: 0.01
+  },
+  fractalRatioY: {
+    default: 0.01
+  },
+  fractalRandomSeed: {
+    default: createRandomSeed()
+  },
+  chooseSVGRenderType: {
+    default: function() {}
+  },
+  'Download SVG': {
+    default: function() {}
+  },
 
   // General Controls
-  ['Live Update'] = true;
+  'Live Update': {
+    default: true
+  },
 
   // About
-  Github() {
-    openLinkInNewTab('https://github.com/Anemy/svgurt');
+  Github: {
+    default: function() {
+      openLinkInNewTab('https://github.com/Anemy/svgurt');
+    }
+  }
+};
+
+class ControllerControls {
+  constructor() {
+    _.each(controllerConfig, (configItem, index) => {
+      this[index] = configItem.default;
+    });
   }
 }
 
@@ -159,7 +276,7 @@ export function updateRenderType(controller) {
       if (!mainController.continuous) {
         controller.svgChangingControls['renderEveryXPixels'] = svgFolder.add(mainController, 'renderEveryXPixels', 1, 50).step(1);
         controller.svgChangingControls['renderEveryYPixels'] = svgFolder.add(mainController, 'renderEveryYPixels', 1, 50).step(1);
-        controller.svgChangingControls['length'] = svgFolder.add(mainController, 'length', 0, 50);
+        controller.svgChangingControls['lineLength'] = svgFolder.add(mainController, 'lineLength', 0, 50);
         controller.svgChangingControls['lengthOnColor'] = svgFolder.add(mainController, 'lengthOnColor');
         controller.svgChangingControls['lengthRandomness'] = svgFolder.add(mainController, 'lengthRandomness', 0, 1);
       } else {
