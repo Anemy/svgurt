@@ -148,12 +148,25 @@ export function createRecursivePaths(settings, imageData, width, height) {
   for (let x = 0; x < width; x += renderEveryXPixels) {
     travelled[x] = [];
   }
+  
+  console.log('imageData[0]', imageData[0]);
+
+  // console.log('typeof', typeof imageData);
+  // console.log('keys', Object.keys(imageData));
+
+  // console.log('recurs first 20', imageData.substring(0, 24));
+
+  console.log('image data length', imageData.length);
 
   for (let x = 0; x < width; x += renderEveryXPixels) {
     for (let y = 0; y < height; y += renderEveryYPixels) {
       const pathString = buildRecursivePath(settings, imageData, x, y, width, height, travelled, 0);
       const pixelColor = getPixelColorAtXY(imageData, x, y, width);
       const pathColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+
+      if (x === 200 && y === 200) {
+        console.log('200', pixelColor);
+      }
 
       if (pathString && pathString.length > 0) {
         paths.push({

@@ -11,7 +11,7 @@ svgurt(stringConfig, (err, svgStringOutput) => {
   if (err) {
     console.log('Error trying svg string:', err);
   }
-  console.log('Svg string output:', svgStringOutput);
+  // console.log('Svg string output:', svgStringOutput);
 });
 
 console.log('Running svg with a basic input image...');
@@ -39,5 +39,3 @@ svgurt(arrayConfig, err => {
   }
   console.log('Ran it with basic config on two inputs. Check for two files with array in their name in this directory.');
 });
-
-

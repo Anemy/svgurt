@@ -1,6 +1,6 @@
 
 import _ from 'lodash';
-import imageDataURI from 'image-data-uri';
+import fs from 'fs';
 import imageSize from 'image-size';
 
 import { manipulateImageData } from './image-renderer/image-manipulator';
@@ -27,34 +27,40 @@ function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
   imageSize(fileNameToImport, (err, dimensions) => {
     if (err) {
       callback(`Error importing image: ${err}`);
+      return;
     }
 
     const { width, height } = dimensions;
 
-    // Get the image data.
-    imageDataURI.encodeFromFile(fileNameToImport).then(imageData => {
-      let imageDataToUse = [...imageData];
+    fs.readFile(fileNameToImport, (err, data) => {
+      if (err) {
+        callback(`Error importing image: ${err}`);
+        return;
+      }
+
+      let imageData = new Buffer(data, 'base64');
+
+      const imageDataToUse = {
+        data: imageData
+      };
+
+      console.log('image data [0]', imageDataToUse.data[0]);
 
       // Do image manipulation - this mutates the image data.
       // It mutates because we're depending on some libraries that mutate it... Not my choice!
-      manipulateImageData({data: imageDataToUse}, config, width, height);
+      manipulateImageData(imageDataToUse, config, width, height);
 
       // Run svg creation based on the image data.
-      renderSvgString(imageDataToUse, config, width, height, svgString => {
+      renderSvgString(imageDataToUse.data, config, width, height, svgString => {
         // Write svg string to output file name.
         if (config.returnSVGString) {
           callback(false, svgString);
         } else {
-          const fsName = 'fs';
-          const fs = require(fsName);
-
           fs.writeFile(`${outputFileName}.svg`, svgString, function() {
             callback(false);
           });
         }
       });
-    }).catch(err => {
-      callback(`Error running svgurt when importing image ${fileNameToImport} ${err}`);
     });
   });
 }
