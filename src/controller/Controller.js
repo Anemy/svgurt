@@ -194,14 +194,19 @@ const controllerConfig = {
   }
 };
 
+const CONFIG_STORAGE_KEY = 'SVGURT_CONFIG_SAVE';
+const DEFAULT_CONFIG_NAME = 'Default';
+
 class ControllerConfig {
   constructor() {
+    this.configs = [];
     _.each(controllerConfig, (configItem, index) => {
       this[index] = configItem.default;
+      this.configs[DEFAULT_CONFIG_NAME] = configItem.default;
     });
 
-    this.currentConfigName = 'Default';
-    this.configNames = ['Default', 'Some other settings', 'colorful'];
+    this.loadConfigFromStore();
+    this.currentConfigName = DEFAULT_CONFIG_NAME;
   }
 
   getCurrentConfigName() {
@@ -212,8 +217,74 @@ class ControllerConfig {
     return this.configNames;
   }
 
-  loadNewConfig(newConfigName) {
-    console.log('loadNewConfig', newConfigName);
+  loadConfigFromStore() {
+    const configLoad = JSON.parse(localStorage.getItem(CONFIG_STORAGE_KEY));
+
+    this.configNames = [DEFAULT_CONFIG_NAME];
+
+    _.each(configLoad, (config, key) => {
+      if (key !== DEFAULT_CONFIG_NAME) {
+        this.configs[key] = config;
+        this.configNames.push(key);
+      }
+    });
+  }
+
+  loadConfig(configNameToLoad) {
+    if (configNameToLoad !== this.currentConfigName) {
+      _.each(controllerConfig, (configItem, index) => {
+        this[index] = this.configs[configNameToLoad][index];
+      });
+      this.currentConfigName = configNameToLoad;
+    }
+  }
+
+  loadConfigFromJson() {
+    // console.log('loadNewConfig', newConfigName);
+    // _.each(controllerConfig, (configItem, index) => {
+    //   this[index] = configItem.default;
+    // });
+    alert('Coming soon.');
+  }
+
+  createNewConfig() {
+    const newConfigName = prompt('Please enter the name of the configuration');
+
+    if (!newConfigName || newConfigName === null) {
+      return;
+    }
+
+    this.configs[newConfigName] = {};
+
+    _.each(controllerConfig, (configItem, index) => {
+      this.configs[newConfigName][index] = this.configs[this.currentConfigName][index];
+    });
+
+    this.currentConfigName = newConfigName;
+    this.configNames.push(newConfigName);
+  }
+
+  revertCurrentConfig() {
+    _.each(controllerConfig, (configItem, index) => {
+      this[index] = this.configs[this.currentConfigName][index];
+    });
+  }
+
+  saveConfigs() {
+    localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(this.configs));
+  }
+
+  deleteConfig() {
+    if (this.currentConfigName !== DEFAULT_CONFIG_NAME) {
+      if (window.confirm('Are you sure you want delete this config?')) {
+        delete this.configs[this.currentConfigName];
+        this.configNames = _.filter(this.configNames, name => name !== this.currentConfigName);
+        this.currentConfigName = DEFAULT_CONFIG_NAME;
+        this.saveConfigs();
+      }
+    } else {
+      alert('You cannot delete the default config. Sorry :)');
+    }
   }
 }
 

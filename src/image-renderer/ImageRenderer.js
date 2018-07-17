@@ -18,7 +18,8 @@ export default class ImageRenderer extends Component {
     this.imageURI = this.props.imageURI;
 
     this.state = {
-      currentConfigName: props.controller.config.getCurrentConfigName(),
+      configNames: props.controller.config.getConfigNames(),
+      currentConfigNames: props.controller.config.getCurrentConfigName(),
       imageLoadingError: false,
       isRendered: false,
       isRendering: false,
@@ -84,16 +85,15 @@ export default class ImageRenderer extends Component {
     });
   }
 
-  onConfigChange = newConfig => {
-    if (newConfig !== this.state.currentConfigName) {
-      this.props.controller.config.loadNewConfig(newConfig);
+  onConfigChange = (functionToCall, optionalArgument) => {
+    functionToCall(optionalArgument);
 
-      // TODO: Update settings.
+    this.setState({
+      currentConfigName: this.controller.config.getCurrentConfigName(),
+      configNames: this.controller.config.getConfigNames()
+    });
 
-      this.setState({
-        currentConfigName: newConfig
-      });
-    }
+    this.updateCanvasRender();
   }
 
   onImportNewImageClicked = () => {
@@ -223,16 +223,21 @@ export default class ImageRenderer extends Component {
   }
 
   render() {
-    const { currentConfigName, isRendered, isRendering, loadingImage, svgString } = this.state;
+    const { configNames, currentConfigName, isRendered, isRendering, loadingImage, svgString } = this.state;
 
     return (
       <div className="svgee-image-renderer">
         <ControlBar
           currentConfigName={currentConfigName}
-          configNames={this.props.controller.config.getConfigNames()}
-          onConfigChange={this.onConfigChange}
+          configNames={configNames}
+          onConfigChange={newConfigName => this.onConfigChange(this.props.controller.config.loadConfig, newConfigName)}
           onDownloadSVGClicked={this.onDownloadSVGClicked}
           onImportNewImageClicked={this.onImportNewImageClicked}
+          onRevertClicked={() => this.onConfigChange(this.props.controller.config.revertCurrentConfig)}
+          onLoadConfigClicked={() => this.onConfigChange(this.props.controller.config.loadConfigFromJson)}
+          onCreateNewConfigClicked={() => this.onConfigChange(this.props.controller.config.createNewConfig)}
+          onDeleteConfigClicked={() => this.onConfigChange(this.props.controller.config.deleteConfig)}
+          onSaveConfigClicked={() => this.onConfigChange(this.props.controller.config.saveConfigs)}
         />
         <input
           accept="image/*"
