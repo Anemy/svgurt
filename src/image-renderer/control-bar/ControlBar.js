@@ -6,7 +6,17 @@ import 'react-select/dist/react-select.css';
 import './ControlBar.css';
 
 export default function ControlBar(props) {
-  const { onConfigChange, onImportNewImageClicked, onDownloadSVGClicked, currentConfigName, configNames } = props;
+  const {
+    onConfigChange,
+    onCreateNewConfigClicked,
+    onDeleteConfigClicked,
+    onDownloadSVGClicked,
+    onImportNewImageClicked,
+    onRevertClicked,
+    onSaveConfigClicked,
+    currentConfigName,
+    configNames
+  } = props;
 
   const selectOptions = _.map(configNames, name => {
     return { value: name, label: name, className: 'svgee-control-bar-config-item' };
@@ -22,33 +32,33 @@ export default function ControlBar(props) {
               clearable={false}
               name="form-field-name"
               value={currentConfigName}
-              onChange={newConfig => onConfigChange(newConfig.value)}
+              onChange={newConfig => {if (newConfig) {onConfigChange(newConfig.value);}}}
               options={selectOptions}
             />
           </div>
           <div
             className="svgee-control-bar-button"
-            onClick={onImportNewImageClicked}
+            onClick={onCreateNewConfigClicked}
           >
             New
           </div>
           <div
             className="svgee-control-bar-button"
-            onClick={onImportNewImageClicked}
+            onClick={onSaveConfigClicked}
           >
             Save
           </div>
           <div
             className="svgee-control-bar-button"
-            onClick={onImportNewImageClicked}
+            onClick={onRevertClicked}
           >
             Revert
           </div>
           <div
             className="svgee-control-bar-button"
-            onClick={onImportNewImageClicked}
+            onClick={onDeleteConfigClicked}
           >
-            Load
+            Delete
           </div>
         </div>
         <div className="svgee-control-bar-right">
