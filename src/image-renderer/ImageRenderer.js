@@ -5,7 +5,7 @@ import './ImageRenderer.css';
 
 import ControlBar from './control-bar/ControlBar';
 
-import { updateRenderType } from '../controller/Controller';
+import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 
 import { manipulateImageData } from './image-manipulator';
 import { renderSvgString } from '../svg-renderer/svg-renderer';
@@ -19,7 +19,7 @@ export default class ImageRenderer extends Component {
 
     this.state = {
       configNames: props.controller.config.getConfigNames(),
-      currentConfigNames: props.controller.config.getCurrentConfigName(),
+      currentConfigName: props.controller.config.getCurrentConfigName(),
       imageLoadingError: false,
       isRendered: false,
       isRendering: false,
@@ -85,13 +85,13 @@ export default class ImageRenderer extends Component {
     });
   }
 
-  onConfigChange = (functionToCall, optionalArgument) => {
-    functionToCall(optionalArgument);
-
+  onConfigChange = () => {
     this.setState({
-      currentConfigName: this.controller.config.getCurrentConfigName(),
-      configNames: this.controller.config.getConfigNames()
+      currentConfigName: this.props.controller.config.getCurrentConfigName(),
+      configNames: this.props.controller.config.getConfigNames()
     });
+
+    updateGuiDisplay(this.props.controller.gui);
 
     this.updateCanvasRender();
   }
@@ -230,14 +230,14 @@ export default class ImageRenderer extends Component {
         <ControlBar
           currentConfigName={currentConfigName}
           configNames={configNames}
-          onConfigChange={newConfigName => this.onConfigChange(this.props.controller.config.loadConfig, newConfigName)}
+          onConfigChange={newConfigName => {this.props.controller.config.loadConfig(newConfigName); this.onConfigChange();}}
           onDownloadSVGClicked={this.onDownloadSVGClicked}
           onImportNewImageClicked={this.onImportNewImageClicked}
-          onRevertClicked={() => this.onConfigChange(this.props.controller.config.revertCurrentConfig)}
-          onLoadConfigClicked={() => this.onConfigChange(this.props.controller.config.loadConfigFromJson)}
-          onCreateNewConfigClicked={() => this.onConfigChange(this.props.controller.config.createNewConfig)}
-          onDeleteConfigClicked={() => this.onConfigChange(this.props.controller.config.deleteConfig)}
-          onSaveConfigClicked={() => this.onConfigChange(this.props.controller.config.saveConfigs)}
+          onRevertClicked={() => {this.props.controller.config.revertCurrentConfig(); this.onConfigChange();}}
+          onLoadConfigClicked={() => {this.props.controller.config.loadConfigFromJson(); this.onConfigChange();}}
+          onCreateNewConfigClicked={() => {this.props.controller.config.createNewConfig(); this.onConfigChange();}}
+          onDeleteConfigClicked={() => {this.props.controller.config.deleteConfig(); this.onConfigChange();}}
+          onSaveConfigClicked={() => {this.props.controller.config.saveConfigs(); this.onConfigChange();}}
         />
         <input
           accept="image/*"

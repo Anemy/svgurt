@@ -199,13 +199,17 @@ const DEFAULT_CONFIG_NAME = 'Default';
 
 class ControllerConfig {
   constructor() {
-    this.configs = [];
+    this.configs = {
+      [DEFAULT_CONFIG_NAME]: {}
+    };
     _.each(controllerConfig, (configItem, index) => {
       this[index] = configItem.default;
-      this.configs[DEFAULT_CONFIG_NAME] = configItem.default;
     });
 
+    this.configNames = [];
+
     this.loadConfigFromStore();
+
     this.currentConfigName = DEFAULT_CONFIG_NAME;
   }
 
@@ -220,18 +224,29 @@ class ControllerConfig {
   loadConfigFromStore() {
     const configLoad = JSON.parse(localStorage.getItem(CONFIG_STORAGE_KEY));
 
-    this.configNames = [DEFAULT_CONFIG_NAME];
+    let hasDefaultKeySave = false;
 
     _.each(configLoad, (config, key) => {
-      if (key !== DEFAULT_CONFIG_NAME) {
-        this.configs[key] = config;
-        this.configNames.push(key);
+      if (key === DEFAULT_CONFIG_NAME) {
+        hasDefaultKeySave = true;
       }
+      this.configs[key] = config;
+      this.configNames.push(key);
     });
+
+    if (!hasDefaultKeySave) {
+      this.configNames.push(DEFAULT_CONFIG_NAME);
+
+      _.each(controllerConfig, (configItem, index) => {
+        this.configs[DEFAULT_CONFIG_NAME][index] = configItem.default;
+      });
+    }
   }
 
   loadConfig(configNameToLoad) {
     if (configNameToLoad !== this.currentConfigName) {
+      this.saveConfigs();
+
       _.each(controllerConfig, (configItem, index) => {
         this[index] = this.configs[configNameToLoad][index];
       });
@@ -257,11 +272,13 @@ class ControllerConfig {
     this.configs[newConfigName] = {};
 
     _.each(controllerConfig, (configItem, index) => {
-      this.configs[newConfigName][index] = this.configs[this.currentConfigName][index];
+      this.configs[newConfigName][index] = this[index];
     });
 
     this.currentConfigName = newConfigName;
     this.configNames.push(newConfigName);
+
+    this.saveConfigs();
   }
 
   revertCurrentConfig() {
@@ -271,15 +288,23 @@ class ControllerConfig {
   }
 
   saveConfigs() {
+    _.each(controllerConfig, (configItem, index) => {
+      this.configs[this.currentConfigName][index] = this[index];
+    });
+
     localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(this.configs));
   }
 
   deleteConfig() {
     if (this.currentConfigName !== DEFAULT_CONFIG_NAME) {
       if (window.confirm('Are you sure you want delete this config?')) {
+        this.configs[this.currentConfigName] = null;
         delete this.configs[this.currentConfigName];
         this.configNames = _.filter(this.configNames, name => name !== this.currentConfigName);
         this.currentConfigName = DEFAULT_CONFIG_NAME;
+        _.each(controllerConfig, (configItem, index) => {
+          this[index] = this.configs[DEFAULT_CONFIG_NAME][index];
+        });
         this.saveConfigs();
       }
     } else {
@@ -386,6 +411,18 @@ const datConfig = {
   // load: JSON, // When we have some states.
   // useLocalStorage: true
 };
+
+export function updateGuiDisplay(gui) {
+  // eslint-disable-next-line
+  for (let i in gui.__controllers) {
+    gui.__controllers[i].updateDisplay();
+  }
+
+  // eslint-disable-next-line
+  for (let f in gui.__folders) {
+    updateGuiDisplay(gui.__folders[f]);
+  }
+}
 
 export function createController() {
   const gui = new dat.GUI(datConfig);

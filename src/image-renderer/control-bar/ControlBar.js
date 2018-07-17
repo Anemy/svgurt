@@ -12,7 +12,6 @@ export default function ControlBar(props) {
     onDeleteConfigClicked,
     onDownloadSVGClicked,
     onImportNewImageClicked,
-    onLoadConfigClicked,
     onRevertClicked,
     onSaveConfigClicked,
     currentConfigName,
@@ -60,12 +59,6 @@ export default function ControlBar(props) {
             onClick={onDeleteConfigClicked}
           >
             Delete
-          </div>
-          <div
-            className="svgee-control-bar-button"
-            onClick={onLoadConfigClicked}
-          >
-            Load
           </div>
         </div>
         <div className="svgee-control-bar-right">
