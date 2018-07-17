@@ -19,13 +19,15 @@
     "test": "node ./test/test-npm-module.js"
   },
   "dependencies": {
-    "dat.gui": "^0.7.1",
+    "dat.gui": "^0.7.2",
+    "image-data-uri": "^1.1.1",
+    "image-size": "^0.6.3",
     "jsfeat": "0.0.8",
     "lodash": "^4.17.10",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-markdown": "^3.3.4",
-    "react-router-dom": "^4.2.2",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.4",
     "react-select": "^1.2.1",
     "shelljs": "^0.8.2",
@@ -41,7 +43,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "eslint": "^4.18.1",
-    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react": "^7.10.0",
     "gh-pages": "^1.2.0"
   }
 }

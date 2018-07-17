@@ -3,196 +3,13 @@ import dat from 'dat.gui';
 
 import './Controller.css';
 
-import { createRandomSeed, MAX_SEED } from '../utils/random';
+import {
+  controllerConfig,
+  RECURSIVE_LINE_ALGORITHMS,
+  SVG_RENDER_TYPES
+} from './ControllerConstants';
 
-export const SVG_RENDER_TYPES = {
-  CIRCLE: 'CIRCLE',
-  CURVE: 'CURVE',
-  LINE: 'LINE',
-  RECURSIVE: 'RECURSIVE'
-};
-
-export const RECURSIVE_LINE_ALGORITHMS = {
-  first: 'first',
-  second: 'second',
-  third: 'third',
-  fourth: 'fourth',
-  fifth: 'fifth'
-};
-
-const controllerConfig = {
-  // General Controls
-  'Live Update': {
-    default: true
-  },
-
-  // Image Controls
-  blur: {
-    default: 0,
-    description: 'Image blur'
-  },
-  grayscale: {
-    default: true
-  },
-  invert: {
-    default: true
-  },
-  'Edge Detection': {
-    default: false
-  },
-  postBlur: {
-    default: 0
-  },
-  posterize: {
-    default: false
-  },
-  posterizeLevels: {
-    default: 5
-  },
-  lowThreshold: {
-    default: 20
-  },
-  highThreshold: {
-    default: 50
-  },
-  applyFractalField: {
-    default: false
-  },
-  fieldOpacity: {
-    default: 0.5
-  },
-  fieldRatioX: {
-    default: 0.01
-  },
-  fieldRatioY: {
-    default: 0.01
-  },
-  fieldRandomSeed: {
-    default: createRandomSeed()
-  },
-
-  // SVG Controls
-  amplitude: {
-    default: 5
-  },
-  amplitudeRandomness: {
-    default: 0.5
-  },
-  amountOfLines: {
-    default: 150
-  },
-  continuous: {
-    default: false
-  },
-  crossHatch: {
-    default: true
-  },
-  direction: {
-    default: 30
-  },
-  directionRandomness: {
-    default: 0.01
-  },
-  displaceOrigin: {
-    default: false
-  },
-  lineLength: {
-    default: 6
-  },
-  lengthOnColor: {
-    default: true
-  },
-  lengthRandomness: {
-    default: 0.2
-  },
-  minColorRecognized: {
-    default: 50
-  },
-  maxColorRecognized: {
-    default: 255
-  },
-  maxRecursiveDepth: {
-    default: 150
-  },
-  minLineLength: {
-    default: 1
-  },
-  outputScale: {
-    default: 1
-  },
-  randomSeed: {
-    default: createRandomSeed()
-  },
-  radius: {
-    default: 1.5
-  },
-  radiusOnColor: {
-    default: false
-  },
-  radiusRandomness: {
-    default: 0.25
-  },
-  resurseBehindNonMatching: {
-    default: false
-  },
-  recursiveAlgorithm: {
-    default: RECURSIVE_LINE_ALGORITHMS.fifth
-  },
-  renderEveryXPixels: {
-    default: 5
-  },
-  renderEveryYPixels: {
-    default: 5
-  },
-  startAtCenterOfShapes: {
-    default: false
-  },
-  strokeColor: {
-    default: 'rgb(28, 32, 38)'
-  },
-  strokeWidth: {
-    default: 1
-  },
-  strokeWidthRandomness: {
-    default: 0.1
-  },
-  svgRenderType: {
-    default: SVG_RENDER_TYPES.RECURSIVE
-  },
-  wavelength: {
-    default: 3
-  },
-  wavelengthRandomness: {
-    default: 0.5
-  },
-  waves: {
-    default: 3
-  },
-  wavesRandomness: {
-    default: 0.5
-  },
-  applyFractalDisplacement: {
-    default: false
-  },
-  displacementAmount: {
-    default: 5
-  },
-  fractalRatioX: {
-    default: 0.01
-  },
-  fractalRatioY: {
-    default: 0.01
-  },
-  fractalRandomSeed: {
-    default: createRandomSeed()
-  },
-  chooseSVGRenderType: {
-    default: function() {}
-  },
-  autoColor: {
-    default: false
-  }
-};
+import { MAX_SEED } from '../utils/random';
 
 const CONFIG_STORAGE_KEY = 'SVGURT_CONFIG_SAVE';
 const DEFAULT_CONFIG_NAME = 'Default';
@@ -404,14 +221,14 @@ export function updateRenderType(controller) {
   controller.svgFractalControls['fractalRatioX'] = newFractalFolder.add(mainController, 'fractalRatioX', 0, 1);
   controller.svgFractalControls['fractalRatioY'] = newFractalFolder.add(mainController, 'fractalRatioY', 0, 1);
   controller.svgFractalControls['fractalRandomSeed'] = newFractalFolder.add(mainController, 'fractalRandomSeed', 0, MAX_SEED).step(1);
+  controller.svgFractalControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
 }
 
 const datConfig = {
   autoPlace: false
-  // load: JSON, // When we have some states.
-  // useLocalStorage: true
 };
 
+// This is a bit of a hack to force an update of dat gui.
 export function updateGuiDisplay(gui) {
   // eslint-disable-next-line
   for (let i in gui.__controllers) {
@@ -443,8 +260,8 @@ export function createController() {
   const imageFolder = gui.addFolder('Image Controls');
 
   controller.imageChangingControls['grayscale'] = imageFolder.add(mainController, 'grayscale');
-  controller.imageChangingControls['blur'] = imageFolder.add(mainController, 'blur', 0, 30).step(1);
   controller.imageChangingControls['invert'] = imageFolder.add(mainController, 'invert');
+  controller.imageChangingControls['blur'] = imageFolder.add(mainController, 'blur', 0, 30).step(1);
   const posterizeFolder = imageFolder.addFolder('Posterize');
   controller.imageChangingControls['posterize'] = posterizeFolder.add(mainController, 'posterize');
   controller.imageChangingControls['posterizeLevels'] = posterizeFolder.add(mainController, 'posterizeLevels', 1, 30).step(1);
@@ -464,14 +281,11 @@ export function createController() {
   controller.svgFolder = svgFolder;
   controller.svgSettingControls['minColorRecognized'] = svgFolder.add(mainController, 'minColorRecognized', 0, 255).step(1);
   controller.svgSettingControls['maxColorRecognized'] = svgFolder.add(mainController, 'maxColorRecognized', 0, 255).step(1);
-  controller.svgSettingControls['outputScale'] = svgFolder.add(mainController, 'outputScale', 0, 5);
   controller.svgSettingControls['strokeColor'] = svgFolder.addColor(mainController, 'strokeColor');
   controller.svgSettingControls['autoColor'] = svgFolder.add(mainController, 'autoColor');
 
   controller.gui = gui;
   controller.config = mainController;
-
-  // gui.remember(mainController);
 
   updateRenderType(controller);
 

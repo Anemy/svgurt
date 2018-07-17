@@ -4,7 +4,7 @@ import {
   isInColorThreshhold
 } from './color';
 
-import { RECURSIVE_LINE_ALGORITHMS } from '../controller/Controller';
+import { RECURSIVE_LINE_ALGORITHMS } from '../controller/ControllerConstants';
 
 export function renderPaths(svgSettings, paths) {
   let renderString = '';
