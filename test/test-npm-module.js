@@ -1,5 +1,5 @@
 
-const svgurt = require('../lib/main');
+const svgurt = require('../lib/module');
 
 console.log('Running to create svg string...');
 const stringConfig = {
@@ -11,13 +11,13 @@ svgurt(stringConfig, (err, svgStringOutput) => {
   if (err) {
     console.log('Error trying svg string:', err);
   }
-  // console.log('Svg string output:', svgStringOutput);
+  console.log('Svg string output length:', svgStringOutput.length);
 });
 
 console.log('Running svg with a basic input image...');
 const basicConfig = {
   input: './test/palm.jpg',
-  output: 'palm output'
+  output: './test/palm output'
 };
 
 svgurt(basicConfig, err => {
@@ -30,7 +30,7 @@ svgurt(basicConfig, err => {
 console.log('Running svgurt with two input files...');
 const arrayConfig = {
   input: ['./test/palm.jpg', './test/diamond.png'],
-  output: ['palm in array output', 'diamond array output']
+  output: ['./test/palm in array output', './test/diamond array output']
 };
 
 svgurt(arrayConfig, err => {

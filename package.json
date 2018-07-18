@@ -1,8 +1,8 @@
 {
   "homepage": "http://svgurt.com",
   "name": "svgurt",
-  "version": "0.2.0",
-  "main": "bin/main.js",
+  "version": "0.3.0",
+  "main": "bin/module.js",
   "bin": {
     "svgurt": "./lib/cli.js"
   },
@@ -21,6 +21,7 @@
   "dependencies": {
     "dat.gui": "^0.7.2",
     "file-api": "^0.10.4",
+    "get-pixels": "^3.3.2",
     "image-data-uri": "^1.1.1",
     "image-size": "^0.6.3",
     "jsfeat": "0.0.8",

@@ -71,8 +71,14 @@ input[type="file"] {
 
 .svgee-home-item {
   border: 1px solid #eee;
-  height: 100vh;
+  height: 50vh;
   overflow: auto;
+}
+
+@media only screen and (min-width: 568px) {
+  .svgee-home-item {
+    height: 100vh;
+  }
 }
 
 .svgee-import-image-example {
@@ -107,8 +113,15 @@ input[type="file"] {
   top: 0;
 }
 
+/* For mobile phones: */
 .svgee-dat-gui-container {
   position: absolute;
   right: 10px;
-  top: 32px;
+  top: 164px;
+}
+
+@media only screen and (min-width: 470px) {
+  .svgee-dat-gui-container {
+    top: 99px;
+  }
 }

@@ -1,20 +1,20 @@
 .svgee-top-control-bar {
   background-color: #fafafa;
-  border-bottom: 1px solid #555;
-  clear: both;
-  height: 32px;
   position: relative;
   width: 100%;
 }
 
 .svgee-control-bar-left {
+  display: none;
   float: left;
-  height: 32px;
   margin-left: 10px;
 }
 
-.svgee-control-bar-left:after {
-  clear: both;
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .svgee-control-bar-left {
+    display: block;
+  }
 }
 
 .svgee-control-bar-right {
