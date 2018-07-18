@@ -1,7 +1,7 @@
 {
   "homepage": "http://svgurt.com",
   "name": "svgurt",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "main": "bin/module.js",
   "bin": {
     "svgurt": "./lib/cli.js"
