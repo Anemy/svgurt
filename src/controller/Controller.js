@@ -12,13 +12,11 @@ import {
 import { MAX_SEED } from '../utils/random';
 
 const CONFIG_STORAGE_KEY = 'SVGURT_CONFIG_SAVE';
-const DEFAULT_CONFIG_NAME = 'Default';
+const DEFAULT_CONFIG_NAME = 'Default Config';
 
 class ControllerConfig {
   constructor() {
-    this.configs = {
-      [DEFAULT_CONFIG_NAME]: {}
-    };
+    this.configs = {};
     _.each(controllerConfig, (configItem, index) => {
       this[index] = configItem.default;
     });
@@ -53,6 +51,7 @@ class ControllerConfig {
 
     if (!hasDefaultKeySave) {
       this.configNames.push(DEFAULT_CONFIG_NAME);
+      this.configs[DEFAULT_CONFIG_NAME] = {};
 
       _.each(controllerConfig, (configItem, index) => {
         this.configs[DEFAULT_CONFIG_NAME][index] = configItem.default;
