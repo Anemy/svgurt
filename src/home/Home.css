@@ -22,21 +22,6 @@ input[type="file"] {
   transition-duration: 0.6s;
 }
 
-.svgee-about-section {
-  border: 1px solid #ccc;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  bottom: 0;
-  padding: 4px;
-  position: fixed;
-  right: 10px;
-}
-
-.svgee-about-link {
-  font-size: 14px;
-  margin: 4px;
-}
-
 .svgee-image-upload:hover {
   border-color: #bbb;
   animation: glow 5s infinite;
@@ -112,6 +97,7 @@ input[type="file"] {
 .svgee-example-svg {
   border: 1px solid;
   display: inline-block;
+  transform: scale(0.68);
 }
 
 .svgee-github-banner {
@@ -122,9 +108,7 @@ input[type="file"] {
 }
 
 .svgee-dat-gui-container {
-  /* bottom: 0; */
-  /* left: 0; */
-  position: fixed;
+  position: absolute;
   right: 10px;
   top: 32px;
 }

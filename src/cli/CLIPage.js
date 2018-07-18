@@ -6,11 +6,14 @@ import './CLIPage.css';
 
 import cliDocsMarkdown from './cli-wiki.md';
 
+import SvgurtTextLogo from '../home/SvgurtTextLogo';
+
 export default class CLIPage extends Component {
   render() {
     return (
       <React.Fragment>
         <div className="svgee-top-nav-bar">
+          <SvgurtTextLogo />
           <Link
             className="svgee-top-nav-link"
             to="/"

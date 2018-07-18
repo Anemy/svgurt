@@ -102,7 +102,7 @@ export default class ImageRenderer extends Component {
   }
 
   onDownloadSVGClicked = () => {
-    downloadSVGString(this.state.svgString);;
+    downloadSVGString(this.state.svgString);
   }
 
   canvasRef = null;
