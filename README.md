@@ -12,7 +12,7 @@ Svgurt can then be used from the command line or programmatically as a module.
 
 ### Using Svgurt Programatically
 
-Svgurt can be used in node js or clientside.
+Svgurt can be used with node js.
 
 ES5 module:
 
