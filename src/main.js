@@ -32,13 +32,13 @@ function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
 
     const { width, height } = dimensions;
 
-    fs.readFile(fileNameToImport, (err, data) => {
+    fs.readFile(fileNameToImport, 'utf-8', (err, data) => {
       if (err) {
         callback(`Error importing image: ${err}`);
         return;
       }
 
-      let imageData = new Buffer(data, 'base64');
+      let imageData = new Buffer(data, 'utf-8');
 
       const imageDataToUse = {
         data: imageData
