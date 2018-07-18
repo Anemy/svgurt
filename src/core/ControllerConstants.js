@@ -4,7 +4,8 @@ export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
   LINE: 'LINE',
-  RECURSIVE: 'RECURSIVE'
+  RECURSIVE: 'RECURSIVE',
+  CONCENTRIC: 'CONCENTRIC'
 };
 
 export const RECURSIVE_LINE_ALGORITHMS = {
@@ -186,5 +187,14 @@ export const controllerConfig = {
   },
   autoColor: {
     default: false
+  },
+  circleArcs : {
+    default : 200
+  },
+  intensityWeight : {
+    default: 100000
+  },
+  radiusStep: {
+    default: 5
   }
 };
