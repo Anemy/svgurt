@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './ImageRenderer.css';
 
@@ -10,6 +11,7 @@ import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 import { manipulateImageData } from '../../core/image-manipulator';
 import { renderSvgString } from '../../core/svg-renderer/svg-renderer';
 import { downloadSVGString } from './downloader';
+import SvgurtTextLogo from '../home/SvgurtTextLogo';
 
 export default class ImageRenderer extends Component {
   constructor(props) {
@@ -227,6 +229,29 @@ export default class ImageRenderer extends Component {
 
     return (
       <div className="svgee-image-renderer">
+        <div className="svgee-top-nav-bar">
+          <SvgurtTextLogo />
+          <Link
+            className="svgee-top-nav-link"
+            to="/"
+          >
+            Home
+          </Link>
+          <Link
+            className="svgee-top-nav-link"
+            to="cli"
+          >
+            Cli Docs
+          </Link>
+          <a
+            className="svgee-top-nav-link"
+            href="https://github.com/Anemy/svgurt"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Github
+          </a>
+        </div>
         <ControlBar
           currentConfigName={currentConfigName}
           configNames={configNames}

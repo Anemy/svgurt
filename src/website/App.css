@@ -1,6 +1,6 @@
 .svgee-top-nav-bar {
   background-color: #15b7b9;
-  position: fixed;
+  position: relative;
   text-align: right;
   top: 0;
   width: 100%;
