@@ -272,7 +272,7 @@ export default class ImageRenderer extends Component {
         />
         {loadingImage && <p>Loading Image...</p>}
         {isRendering && <p>Building Image...</p>}
-        <div className="grid no-gutters">
+        <div className="svgee-image-showing-window grid no-gutters">
           <div className="unit half">
             <div className="svgee-home-item">
               <canvas
