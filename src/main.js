@@ -44,8 +44,6 @@ function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
         data: imageData
       };
 
-      console.log('image data [0]', imageDataToUse.data[0]);
-
       // Do image manipulation - this mutates the image data.
       // It mutates because we're depending on some libraries that mutate it... Not my choice!
       manipulateImageData(imageDataToUse, config, width, height);

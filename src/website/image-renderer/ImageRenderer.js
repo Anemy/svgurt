@@ -7,8 +7,8 @@ import ControlBar from './control-bar/ControlBar';
 
 import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 
-import { manipulateImageData } from './image-manipulator';
-import { renderSvgString } from '../svg-renderer/svg-renderer';
+import { manipulateImageData } from '../../core/image-manipulator';
+import { renderSvgString } from '../../core/svg-renderer/svg-renderer';
 import { downloadSVGString } from './downloader';
 
 export default class ImageRenderer extends Component {

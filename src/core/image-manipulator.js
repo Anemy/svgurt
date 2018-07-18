@@ -1,6 +1,7 @@
 import jsfeat from 'jsfeat';
-import noise from '../utils/noise';
 import StackBlur from 'stackblur-canvas';
+
+import noise from './utils/noise';
 
 function grayScale(imageData, width, height) {
   const grayImageMatrix = new jsfeat.matrix_t(width, height, jsfeat.U8C1_t);

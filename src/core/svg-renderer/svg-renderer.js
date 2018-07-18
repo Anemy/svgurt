@@ -1,4 +1,4 @@
-import { SVG_RENDER_TYPES } from '../controller/ControllerConstants';
+import { SVG_RENDER_TYPES } from '../ControllerConstants';
 import { createCircles, renderCircles } from './circle';
 import { createCurves, renderCurves } from './curve';
 import { createLines, renderLines } from './line';
