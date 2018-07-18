@@ -66,7 +66,7 @@ input[type="file"] {
 }
 
 .svgee-import-image-prompt {
-  padding-top: 100px;
+  padding-top: 40px;
 }
 
 .svgee-home-item {
@@ -83,6 +83,10 @@ input[type="file"] {
 
 .svgee-import-image-example {
   margin-top: 24px;
+}
+
+.svgee-logo-image {
+  height: 160px;
 }
 
 .svgee-example-image {

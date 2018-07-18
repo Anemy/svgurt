@@ -126,6 +126,11 @@ export default class Home extends Component {
                   alt="Fork me on GitHub"
                 />
               </a> */}
+              <img
+                className="svgee-logo-image"
+                src="/images/svgurt_logo.png"
+                alt="svgurt logo"
+              />
               <h1>Svgurt</h1>
               <h2>Image -&gt; SVG Vectorizing Tool</h2>
               <h3>Free &amp;&nbsp;

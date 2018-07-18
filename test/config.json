@@ -1,0 +1,5 @@
+{
+  "input": "test/palm.jpg",
+  "output": "test/cli-palm-output",
+  "svgRenderType": "LINE"
+}

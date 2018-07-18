@@ -1,6 +1,7 @@
 
 import _ from 'lodash';
 import fs from 'fs';
+import path from 'path';
 import getPixels from 'get-pixels';
 
 import { manipulateImageData } from './core/image-manipulator';
@@ -21,7 +22,7 @@ const defaultConfig = {
 };
 
 function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
-  const fileNameToImport = inputFileName.indexOf('./') === 0 ? inputFileName : `./${inputFileName}`;
+  const fileNameToImport = path.join(__dirname, '..', inputFileName);
 
   getPixels(fileNameToImport, (err, pixels) => {
     if (err) {

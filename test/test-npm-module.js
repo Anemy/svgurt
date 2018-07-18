@@ -17,7 +17,11 @@ svgurt(stringConfig, (err, svgStringOutput) => {
 console.log('Running svg with a basic input image...');
 const basicConfig = {
   input: './test/palm.jpg',
-  output: './test/palm output'
+  output: './test/palm output',
+  blur: 10,
+  applyFractalDisplacement: true,
+  circleRadius: true,
+  svgRenderType: 'CIRCLE'
 };
 
 svgurt(basicConfig, err => {
