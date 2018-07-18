@@ -210,6 +210,12 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['maxRecursiveDepth'] = svgFolder.add(mainController, 'maxRecursiveDepth', 1, 1000).step(1);
       break;
     }
+    case SVG_RENDER_TYPES.CONCENTRIC: {
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['circleArcs'] = svgFolder.add(mainController, 'circleArcs', 2, 400).step(1);
+      controller.svgChangingControls['intensityWeight'] = svgFolder.add(mainController, 'intensityWeight', 500, 1000000);
+      controller.svgChangingControls['radiusStep'] = svgFolder.add(mainController, 'radiusStep', 1, 100).step(1);
+    }
   }
   // Add Displacement Fractal Field settings to to the end of SVG controls
   const newFractalFolder = svgFolder.addFolder('Displacement Fractal Field');
