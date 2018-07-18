@@ -1,20 +1,13 @@
-'use strict';
+import { createRandomSeed } from './utils/random';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.controllerConfig = exports.RECURSIVE_LINE_ALGORITHMS = exports.SVG_RENDER_TYPES = undefined;
-
-var _random = require('../utils/random');
-
-var SVG_RENDER_TYPES = exports.SVG_RENDER_TYPES = {
+export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
   LINE: 'LINE',
   RECURSIVE: 'RECURSIVE'
 };
 
-var RECURSIVE_LINE_ALGORITHMS = exports.RECURSIVE_LINE_ALGORITHMS = {
+export const RECURSIVE_LINE_ALGORITHMS = {
   first: 'first',
   second: 'second',
   third: 'third',
@@ -22,7 +15,7 @@ var RECURSIVE_LINE_ALGORITHMS = exports.RECURSIVE_LINE_ALGORITHMS = {
   fifth: 'fifth'
 };
 
-var controllerConfig = exports.controllerConfig = {
+export const controllerConfig = {
   // General Controls
   'Live Update': {
     default: true
@@ -70,7 +63,7 @@ var controllerConfig = exports.controllerConfig = {
     default: 0.01
   },
   fieldRandomSeed: {
-    default: (0, _random.createRandomSeed)()
+    default: createRandomSeed()
   },
 
   // SVG Controls
@@ -123,7 +116,7 @@ var controllerConfig = exports.controllerConfig = {
     default: 1
   },
   randomSeed: {
-    default: (0, _random.createRandomSeed)()
+    default: createRandomSeed()
   },
   radius: {
     default: 1.5
@@ -186,10 +179,10 @@ var controllerConfig = exports.controllerConfig = {
     default: 0.01
   },
   fractalRandomSeed: {
-    default: (0, _random.createRandomSeed)()
+    default: createRandomSeed()
   },
   chooseSVGRenderType: {
-    default: function _default() {}
+    default: function() {}
   },
   autoColor: {
     default: false

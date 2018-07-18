@@ -3,9 +3,9 @@ import _ from 'lodash';
 import fs from 'fs';
 import imageSize from 'image-size';
 
-import { manipulateImageData } from './image-renderer/image-manipulator';
-import { controllerConfig } from './controller/ControllerConstants';
-import { renderSvgString } from './svg-renderer/svg-renderer';
+import { manipulateImageData } from './core/image-manipulator';
+import { controllerConfig } from './core/ControllerConstants';
+import { renderSvgString } from './core/svg-renderer/svg-renderer';
 
 const configDefaults = {};
 
@@ -32,19 +32,17 @@ function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
 
     const { width, height } = dimensions;
 
-    fs.readFile(fileNameToImport, (err, data) => {
+    fs.readFile(fileNameToImport, 'utf-8', (err, data) => {
       if (err) {
         callback(`Error importing image: ${err}`);
         return;
       }
 
-      let imageData = new Buffer(data, 'base64');
+      let imageData = new Buffer(data, 'utf-8');
 
       const imageDataToUse = {
         data: imageData
       };
-
-      console.log('image data [0]', imageDataToUse.data[0]);
 
       // Do image manipulation - this mutates the image data.
       // It mutates because we're depending on some libraries that mutate it... Not my choice!

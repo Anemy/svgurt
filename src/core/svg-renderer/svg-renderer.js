@@ -1,4 +1,4 @@
-import { SVG_RENDER_TYPES } from '../controller/ControllerConstants';
+import { SVG_RENDER_TYPES } from '../ControllerConstants';
 import { createCircles, renderCircles } from './circle';
 import { createCurves, renderCurves } from './curve';
 import { createLines, renderLines } from './line';
@@ -10,10 +10,9 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
   } = svgSettings;
 
   setImmediate(() => {
-    let svgString = `<svg
-      height="${height * outputScale}"
-      width="${width * outputScale}"
-    >`;
+    const dimensionsString = `height="${height * outputScale}" width="${width * outputScale}"`;
+    const nameSpaceString = 'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"';
+    let svgString = `<svg ${dimensionsString} ${nameSpaceString}>`;
 
     // eslint-disable-next-line default-case
     switch (svgSettings.svgRenderType) {

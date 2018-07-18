@@ -7,9 +7,9 @@ import {
   controllerConfig,
   RECURSIVE_LINE_ALGORITHMS,
   SVG_RENDER_TYPES
-} from './ControllerConstants';
+} from '../../core/ControllerConstants';
 
-import { MAX_SEED } from '../utils/random';
+import { MAX_SEED } from '../../core/utils/random';
 
 const CONFIG_STORAGE_KEY = 'SVGURT_CONFIG_SAVE';
 const DEFAULT_CONFIG_NAME = 'Default Config';
