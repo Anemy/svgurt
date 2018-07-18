@@ -3,9 +3,9 @@ import _ from 'lodash';
 import fs from 'fs';
 import imageSize from 'image-size';
 
-import { manipulateImageData } from './image-renderer/image-manipulator';
-import { controllerConfig } from './controller/ControllerConstants';
-import { renderSvgString } from './svg-renderer/svg-renderer';
+import { manipulateImageData } from './core/image-manipulator';
+import { controllerConfig } from './core/ControllerConstants';
+import { renderSvgString } from './core/svg-renderer/svg-renderer';
 
 const configDefaults = {};
 
