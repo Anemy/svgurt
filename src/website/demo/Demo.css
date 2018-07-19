@@ -1,0 +1,90 @@
+input[type="file"] {
+  display: none;
+}
+
+.svgee-image-upload {
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 20px 10px rgb(255, 255, 255)q;
+  border-radius: 2px;
+  color: #333;
+  font-size: 16px;
+  margin-top: 14px;
+  margin-bottom: 30px;
+  outline: none;
+  padding: 6px 12px;
+  transition-duration: 0.6s;
+}
+
+.svgee-image-upload:hover {
+  border-color: #bbb;
+  animation: glow 5s infinite;
+  cursor: pointer;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0px 0px 1px 1px rgb(238, 156, 48);
+  }
+  13% {
+    box-shadow: 0px 0px 10px 5px rgb(227, 235, 106);
+  }
+  26% {
+    box-shadow: 0px 0px 20px 10px rgb(147, 235, 106);
+  }
+  39% {
+    box-shadow: 0px 0px 10px 5px rgb(106, 235, 196);
+  }
+  52% {
+    box-shadow: 0px 0px 20px 10px rgb(106, 140, 235);
+  }
+  65% {
+    box-shadow: 0px 0px 10px 5px rgb(125, 106, 235);
+  }
+  78% {
+    box-shadow: 0px 0px 20px 10px rgb(205, 106, 235);
+  }
+  87% {
+    box-shadow: 0px 0px 10px 5px rgb(235, 106, 112);
+  }
+  100% {
+    box-shadow: 0px 0px 1px 1px rgb(238, 156, 48);
+  }
+}
+
+.svgee-image-upload-disabled {
+  visibility: hidden;
+}
+.svgee-image-upload-disabled:hover {
+  cursor: not-allowed;
+}
+
+.svgee-demo-image-prompt-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.svgee-demo-panel {
+  border: 1px solid #eee;
+  height: 50vh;
+  overflow: auto;
+}
+
+@media only screen and (min-width: 568px) {
+  .svgee-demo-panel {
+    height: 100vh;
+  }
+}
+
+/* For mobile phones: */
+.svgee-dat-gui-container {
+  position: absolute;
+  right: 10px;
+  top: 164px;
+}
+
+@media only screen and (min-width: 470px) {
+  .svgee-dat-gui-container {
+    top: 99px;
+  }
+}
