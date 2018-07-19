@@ -17,21 +17,9 @@ const DEFAULT_CONFIG_NAME = 'Default Config';
 class ControllerConfig {
   constructor() {
     this.configs = {};
-    const settings = [];
-    let str = '';
     _.each(controllerConfig, (configItem, index) => {
       this[index] = configItem.default;
-      str += (`${index.indexOf(' ') > 0 ? '\'index\'' : index}: '${configItem.default}',`);
-      settings.push({
-        index,
-        default: configItem.default
-      });
     });
-
-    console.log(str);
-    // _.each(settings, setting => {
-    //   console.log(`"${setting.index}": "${setting.default}"`);
-    // });
 
     this.configNames = [];
 
