@@ -19,17 +19,11 @@ export default class Demo extends Component {
   controller = null;
   originalImageURI = null;
 
-  constructor(props){super(props);console.log('demooo const');}
-
   componentWillUnmount() {
     if (this.controller) {
       this.controller.gui.destroy();
       this.controller = null;
     }
-  }
-
-  componentWillMount() {
-    console.log('test');
   }
 
   invertImageClicked = () => {
@@ -97,8 +91,6 @@ export default class Demo extends Component {
       imageLoadingError,
       loadingImage
     } = this.state;
-
-    console.log('demo');
 
     return (
       <React.Fragment>
