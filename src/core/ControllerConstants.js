@@ -128,9 +128,6 @@ export const controllerConfig = {
   radiusRandomness: {
     default: 0.25
   },
-  resurseBehindNonMatching: {
-    default: false
-  },
   recursiveAlgorithm: {
     default: RECURSIVE_LINE_ALGORITHMS.fifth
   },

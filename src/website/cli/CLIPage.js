@@ -20,6 +20,12 @@ export default class CLIPage extends Component {
           >
             Home
           </Link>
+          <Link
+            className="svgee-top-nav-link"
+            to="demo"
+          >
+            Demo
+          </Link>
           <a
             className="svgee-top-nav-link"
             href="https://github.com/Anemy/svgurt"
