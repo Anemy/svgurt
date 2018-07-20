@@ -2,10 +2,10 @@ import { createRandomSeed } from './utils/random';
 
 export const SVG_RENDER_TYPES = {
   CIRCLE: 'CIRCLE',
+  CONCENTRIC: 'CONCENTRIC',
   CURVE: 'CURVE',
   LINE: 'LINE',
-  RECURSIVE: 'RECURSIVE',
-  CONCENTRIC: 'CONCENTRIC'
+  RECURSIVE: 'RECURSIVE'
 };
 
 export const RECURSIVE_LINE_ALGORITHMS = {
@@ -150,7 +150,7 @@ export const controllerConfig = {
     default: 0.1
   },
   svgRenderType: {
-    default: SVG_RENDER_TYPES.RECURSIVE
+    default: SVG_RENDER_TYPES.CONCENTRIC
   },
   wavelength: {
     default: 3
@@ -185,8 +185,17 @@ export const controllerConfig = {
   autoColor: {
     default: false
   },
-  circleArcs : {
+  arcUnits: {
     default : 200
+  },
+  'shape sides': {
+    default: 4
+  },
+  'units per side': {
+    default: 3
+  },
+  circleShape: {
+    default: false
   },
   intensityWeight : {
     default: 100000

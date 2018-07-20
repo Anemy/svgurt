@@ -1,9 +1,9 @@
 import { SVG_RENDER_TYPES } from '../ControllerConstants';
 import { createCircles, renderCircles } from './circle';
+import { createConcentricPaths, renderConcentricPaths } from './concentric';
 import { createCurves, renderCurves } from './curve';
 import { createLines, renderLines } from './line';
 import { createRecursivePaths, renderPaths } from './recursive';
-import { createConcentricPaths, renderConcentricPaths } from './concentric'
 
 export function renderSvgString(imageData, svgSettings, width, height, done) {
   const {
@@ -44,7 +44,7 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
       case SVG_RENDER_TYPES.CONCENTRIC: {
         const concentricPaths = createConcentricPaths(svgSettings, imageData, width, height);
 
-        svgString +=  renderConcentricPaths(svgSettings, concentricPaths, width/2, height/2);
+        svgString +=  renderConcentricPaths(svgSettings, concentricPaths, width / 2, height / 2);
       }
     }
 

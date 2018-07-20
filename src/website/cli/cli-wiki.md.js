@@ -87,7 +87,7 @@ The available configurations and the defaults are as follows:
   fractalRatioY: 0.01,
   fractalRandomSeed: 9996,
   autoColor: false,
-  circleArcs: 200,
+  arcUnits: 200,
   intensityWeight: 100000,
   radiusStep: '5'
 }

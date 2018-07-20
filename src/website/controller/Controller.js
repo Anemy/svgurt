@@ -164,6 +164,19 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['radiusRandomness'] = svgFolder.add(mainController, 'radiusRandomness', 0, 1);
       break;
     }
+    case SVG_RENDER_TYPES.CONCENTRIC: {
+      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
+      controller.svgChangingControls['intensityWeight'] = svgFolder.add(mainController, 'intensityWeight', 500, 1000000);
+      controller.svgChangingControls['radiusStep'] = svgFolder.add(mainController, 'radiusStep', 1, 100).step(1);
+      controller.svgChangingControls['circleShape'] = svgFolder.add(mainController, 'radiusStep');
+      if (!mainController.circleShape) {
+        controller.svgChangingControls['shape sides'] = svgFolder.add(mainController, 'shape sides', 3, 10).step(1);
+        controller.svgChangingControls['units per side'] = svgFolder.add(mainController, 'units per side', 1, 400).step(1);
+      } else {
+        controller.svgChangingControls['arcUnits'] = svgFolder.add(mainController, 'arcUnits', 2, 400).step(1);
+      }
+      break;
+    }
     case SVG_RENDER_TYPES.CURVE: {
       controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(mainController, 'strokeWidthRandomness', 0, 1);
@@ -209,12 +222,6 @@ export function updateRenderType(controller) {
       controller.svgChangingControls['recursiveAlgorithm'] = svgFolder.add(mainController, 'recursiveAlgorithm', _.keys(RECURSIVE_LINE_ALGORITHMS));
       controller.svgChangingControls['maxRecursiveDepth'] = svgFolder.add(mainController, 'maxRecursiveDepth', 1, 1000).step(1);
       break;
-    }
-    case SVG_RENDER_TYPES.CONCENTRIC: {
-      controller.svgChangingControls['strokeWidth'] = svgFolder.add(mainController, 'strokeWidth', 0, 20);
-      controller.svgChangingControls['circleArcs'] = svgFolder.add(mainController, 'circleArcs', 2, 400).step(1);
-      controller.svgChangingControls['intensityWeight'] = svgFolder.add(mainController, 'intensityWeight', 500, 1000000);
-      controller.svgChangingControls['radiusStep'] = svgFolder.add(mainController, 'radiusStep', 1, 100).step(1);
     }
   }
   // Add Displacement Fractal Field settings to to the end of SVG controls
