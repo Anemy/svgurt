@@ -8,31 +8,17 @@
   margin-top: 40px;
 }
 
-.svgee-import-image-example {
-  margin-top: 24px;
-}
-
 .svgee-logo-image {
   height: 160px;
 }
 
-.svgee-svgurt-title {
-  margin: 0;
-}
-
-.svgee-tool-desc {
-  margin: 0;
-  margin-top: 10px;
-}
-
-.svgee-open-source-desc {
-  margin: 0;
-  margin-top: 10px;
-}
-
 .svgee-demo-link-container {
-  margin-top: 30px;
+  margin-top: 40px;
   position: relative;
+}
+
+.svgee-import-image-example {
+  margin-top: 50px;
 }
 
 .svgee-demo-link {
@@ -60,23 +46,22 @@
   cursor: pointer;
 }
 
-.svgee-example-image {
-  border: 1px solid;
-  display: inline-block;
-  height: 200px;
-  margin-top: 50px;
-  vertical-align: top;
+.svgee-home-desc {
+  font-size: 16px;
+  color: #707070;
+  line-height: 24px;
+  margin: auto;
+  margin-top: 16px;
+  max-width: 400px;
 }
 
-.svgee-example-text {
-  display: inline-block;
-  margin: 10px;
-  margin-top: 150px;
-  vertical-align: top;
+.svgee-example-table {
+  width: 50%;
+  margin: auto;
+  margin-top: 40px;
+  max-width: 600px;
 }
 
-.svgee-example-svg {
-  border: 1px solid;
-  display: inline-block;
-  transform: scale(0.68);
+.svgee-image-example-input {
+  width: 160px;
 }
