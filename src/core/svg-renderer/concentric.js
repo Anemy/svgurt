@@ -71,7 +71,7 @@ export function renderConcentricPaths(svgSettings, concentricPaths, centerX, cen
       const { rx, ry, xRot, x, y} = conPath.arcs[j];
       renderString += ` A ${rx * outputScale} ${ry * outputScale} ${xRot} 0 1 ${x * outputScale} ${y * outputScale}`;
     }
-    renderString += `"stroke="${strokeColor}"; stroke-width="${strokeWidth}"; style="fill: none;" />`;
+    renderString += `" stroke="${strokeColor}" stroke-width="${strokeWidth}" style="fill: none;" />`;
   }
 
   return renderString;

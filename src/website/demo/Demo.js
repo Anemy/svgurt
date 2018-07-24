@@ -10,14 +10,22 @@ import exampleImage from '../fixtures/example-image';
 import SvgurtTextLogo from '../home/SvgurtTextLogo';
 
 export default class Demo extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
+    loadingImage: true,
     imageLoaded: false,
-    imageLoadingError: false,
-    loadingImage: false
+    imageLoadingError: false
   }
 
   controller = null;
   originalImageURI = null;
+
+  componentDidMount() {
+    this.loadExampleImage();
+  }
 
   componentWillUnmount() {
     if (this.controller) {
@@ -38,18 +46,29 @@ export default class Demo extends Component {
     }
   }
 
-  handleExampleImageClicked = () => {
-    if (!this.loadingImage && !this.imageLoaded) {
-      this.controller = createController();
-      this.originalImageURI = exampleImage;
+  loadExampleImage = () => {
+    this.originalImageURI = exampleImage;
 
-      this.setState({
-        loadingImage: false,
-        imageLoaded: true,
-        imageLoadingError: false
-      });
-    }
+    this.controller = createController();
+
+    this.setState({
+      imageLoaded: true,
+      loadingImage: false
+    });
   }
+
+  // handleExampleImageClicked = () => {
+  //   if (!this.loadingImage && !this.imageLoaded) {
+  //     this.controller = createController();
+  //     this.originalImageURI = exampleImage;
+
+  //     this.setState({
+  //       loadingImage: false,
+  //       imageLoaded: true,
+  //       imageLoadingError: false
+  //     });
+  //   }
+  // }
 
   handleImageChange = () => {
     if (!this.state.loadingImage && this.imageInputRef.files &&
@@ -117,7 +136,7 @@ export default class Demo extends Component {
             Github
           </a>
         </div>
-        {!imageLoaded &&
+        {/* {!imageLoaded &&
           <div className="svgee-demo-image-prompt-container">
             <button
               onClick={this.handleExampleImageClicked}
@@ -139,7 +158,7 @@ export default class Demo extends Component {
               type="file"
             />
           </div>
-        }
+        } */}
         {loadingImage && <p>Importing Image...</p>}
         {imageLoadingError && <p>Failed to load image. Please try again.</p>}
         {imageLoaded && <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>}

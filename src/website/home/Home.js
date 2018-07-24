@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import './Home.css';
 
-import SvgurtExampleSvg from './SvgurtExampleSvg';
 import SvgurtTextLogo from './SvgurtTextLogo';
 
 export default class Home extends Component {
@@ -39,17 +38,15 @@ export default class Home extends Component {
             src="/images/svgurt_logo.png"
             alt="svgurt logo"
           />
-          <h1 className="svgee-svgurt-title">Svgurt</h1>
-          <h2 className="svgee-tool-desc">Image -&gt; SVG Vectorizing Tool</h2>
-          <h3 className="svgee-open-source-desc">Free &amp;&nbsp;
-            <a
+          <div className="svgee-home-desc">
+            Svgurt is an <strong><a
               href="https://github.com/Anemy/svgurt"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Open Source
-            </a>
-          </h3>
+              open source
+            </a></strong> image to <strong>SVG</strong> transformation tool with a lot of knobs and controls.
+          </div>
           <div className="svgee-demo-link-container">
             <Link
               className="svgee-demo-link"
@@ -58,17 +55,24 @@ export default class Home extends Component {
               Live Demo
             </Link>
           </div>
-          <div className="svgee-import-image-example">
-            <img
-              className="svgee-example-image"
-              src="/images/palm.png"
-              alt="palm tree"
-            />
-            <div className="svgee-example-text">
-              --&gt;
-            </div>
-            <SvgurtExampleSvg />
-          </div>
+          <table className="svgee-example-table">
+            <tr>
+              <th>Input</th>
+              <th>Output</th>
+            </tr>
+            <tr>
+              <td><img className="svgee-image-example-input" src="/images/palm.png" alt="palm tree input" /></td>
+              <td><img className="svgee-svg-example-output" src="/images/palm-1.svg" alt="palm tree svg output" /></td>
+            </tr>
+            <tr>
+              <td><img className="svgee-image-example-input" src="/images/palm.png" alt="palm tree" /></td>
+              <td><img className="svgee-svg-example-output" src="/images/palm-2.svg" alt="palm tree svg output" /></td>
+            </tr>
+            <tr>
+              <td><img className="svgee-image-example-input" src="/images/palm.png" alt="palm tree" /></td>
+              <td><img className="svgee-svg-example-output" src="/images/palm-3.svg" alt="palm tree svg output" /></td>
+            </tr>
+          </table>
         </div>
       </div>
     );
