@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import "./Demo.css";
+import './Demo.css';
 
-import ImageRenderer from "../image-renderer/ImageRenderer";
+import ImageRenderer from '../image-renderer/ImageRenderer';
 
-import { createController } from "../controller/Controller";
-import exampleImage from "../fixtures/example-image";
-import SvgurtTextLogo from "../home/SvgurtTextLogo";
+import { createController } from '../controller/Controller';
+import exampleImage from '../fixtures/example-image';
+import SvgurtTextLogo from '../home/SvgurtTextLogo';
 
 export default class Demo extends Component {
   constructor(props) {

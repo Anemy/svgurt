@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import "./Home.css";
+import './Home.css';
 
-import SvgurtTextLogo from "./SvgurtTextLogo";
+import SvgurtTextLogo from './SvgurtTextLogo';
 
 export default class Home extends Component {
   render() {
@@ -33,7 +33,7 @@ export default class Home extends Component {
             alt="svgurt logo"
           />
           <div className="svgee-home-desc">
-            Svgurt is an{" "}
+            Svgurt is an{' '}
             <strong>
               <a
                 href="https://github.com/Anemy/svgurt"
@@ -42,7 +42,7 @@ export default class Home extends Component {
               >
                 open source
               </a>
-            </strong>{" "}
+            </strong>{' '}
             image to <strong>SVG</strong> transformation tool with a lot of
             knobs and controls.
           </div>

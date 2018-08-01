@@ -1,11 +1,11 @@
-import _ from "lodash";
-import fs from "fs";
-import path from "path";
-import getPixels from "get-pixels";
+import _ from 'lodash';
+import fs from 'fs';
+import path from 'path';
+import getPixels from 'get-pixels';
 
-import { manipulateImageData } from "./core/image-manipulator";
-import { controllerConfig } from "./core/ControllerConstants";
-import { renderSvgString } from "./core/svg-renderer/svg-renderer";
+import { manipulateImageData } from './core/image-manipulator';
+import { controllerConfig } from './core/ControllerConstants';
+import { renderSvgString } from './core/svg-renderer/svg-renderer';
 
 const configDefaults = {};
 
@@ -15,13 +15,13 @@ _.each(controllerConfig, (configItem, index) => {
 
 const defaultConfig = {
   ...configDefaults,
-  input: "image.jpg",
-  output: "output",
+  input: 'image.jpg',
+  output: 'output',
   returnSVGString: false
 };
 
 function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
-  const fileNameToImport = path.join(__dirname, "..", inputFileName);
+  const fileNameToImport = path.join(__dirname, '..', inputFileName);
 
   getPixels(fileNameToImport, (err, pixels) => {
     if (err) {

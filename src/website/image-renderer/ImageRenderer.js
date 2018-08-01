@@ -1,15 +1,15 @@
-import _ from "lodash";
-import React, { Component } from "react";
+import _ from 'lodash';
+import React, { Component } from 'react';
 
-import "./ImageRenderer.css";
+import './ImageRenderer.css';
 
-import ControlBar from "./control-bar/ControlBar";
+import ControlBar from './control-bar/ControlBar';
 
-import { updateGuiDisplay, updateRenderType } from "../controller/Controller";
+import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 
-import { manipulateImageData } from "../../core/image-manipulator";
-import { renderSvgString } from "../../core/svg-renderer/svg-renderer";
-import { downloadSVGString } from "./downloader";
+import { manipulateImageData } from '../../core/image-manipulator';
+import { renderSvgString } from '../../core/svg-renderer/svg-renderer';
+import { downloadSVGString } from './downloader';
 
 export default class ImageRenderer extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default class ImageRenderer extends Component {
       isRendered: false,
       isRendering: false,
       loadingImage: true,
-      svgString: ""
+      svgString: ''
     };
   }
 
@@ -41,8 +41,8 @@ export default class ImageRenderer extends Component {
       }
     );
 
-    this.props.controller["Live Update"].onFinishChange(() => {
-      if (this.props.controller.config["Live Update"]) {
+    this.props.controller['Live Update'].onFinishChange(() => {
+      if (this.props.controller.config['Live Update']) {
         // TODO: We can make this smarter and not force an update on both if both didn't change.
         this.updateCanvasRender();
       }
@@ -166,7 +166,7 @@ export default class ImageRenderer extends Component {
         this.height = htmlRenderedImage.height;
         this.width = htmlRenderedImage.width;
 
-        const ctx = this.canvasRef.getContext("2d");
+        const ctx = this.canvasRef.getContext('2d');
         this.renderedImage = htmlRenderedImage;
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
         this.imageData = ctx.getImageData(0, 0, this.width, this.height);
@@ -198,7 +198,7 @@ export default class ImageRenderer extends Component {
     if (
       this.state.isRendered &&
       this.imageData &&
-      this.props.controller.config["Live Update"]
+      this.props.controller.config['Live Update']
     ) {
       renderSvgString(
         this.imageData.data,
@@ -221,14 +221,14 @@ export default class ImageRenderer extends Component {
     if (
       this.renderedImage &&
       !this.state.isRendering &&
-      this.props.controller.config["Live Update"]
+      this.props.controller.config['Live Update']
     ) {
       this.setState({
         isRendering: true,
         isRendered: false
       });
 
-      const ctx = this.canvasRef.getContext("2d");
+      const ctx = this.canvasRef.getContext('2d');
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
@@ -308,7 +308,7 @@ export default class ImageRenderer extends Component {
             <div className="svgee-demo-panel">
               <canvas
                 style={{
-                  visibility: isRendered && !isRendering ? "visible" : "hidden"
+                  visibility: isRendered && !isRendering ? 'visible' : 'hidden'
                 }}
                 ref={ref => {
                   this.canvasRef = ref;

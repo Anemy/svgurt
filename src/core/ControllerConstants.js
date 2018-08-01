@@ -1,31 +1,31 @@
-import { createRandomSeed } from "./utils/random";
+import { createRandomSeed } from './utils/random';
 
 export const SVG_RENDER_TYPES = {
-  CIRCLE: "CIRCLE",
-  CURVE: "CURVE",
-  LINE: "LINE",
-  RECURSIVE: "RECURSIVE",
-  CONCENTRIC: "CONCENTRIC"
+  CIRCLE: 'CIRCLE',
+  CURVE: 'CURVE',
+  LINE: 'LINE',
+  RECURSIVE: 'RECURSIVE',
+  CONCENTRIC: 'CONCENTRIC'
 };
 
 export const RECURSIVE_LINE_ALGORITHMS = {
-  first: "first",
-  second: "second",
-  third: "third",
-  fourth: "fourth",
-  fifth: "fifth"
+  first: 'first',
+  second: 'second',
+  third: 'third',
+  fourth: 'fourth',
+  fifth: 'fifth'
 };
 
 export const controllerConfig = {
   // General Controls
-  "Live Update": {
+  'Live Update': {
     default: true
   },
 
   // Image Controls
   blur: {
     default: 0,
-    description: "Image blur"
+    description: 'Image blur'
   },
   grayscale: {
     default: false
@@ -33,7 +33,7 @@ export const controllerConfig = {
   invert: {
     default: false
   },
-  "Edge Detection": {
+  'Edge Detection': {
     default: false
   },
   postBlur: {
@@ -141,7 +141,7 @@ export const controllerConfig = {
     default: false
   },
   strokeColor: {
-    default: "rgb(28, 32, 38)"
+    default: 'rgb(28, 32, 38)'
   },
   strokeWidth: {
     default: 1

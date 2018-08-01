@@ -1,9 +1,9 @@
-import _ from "lodash";
-import React from "react";
-import Select from "react-select";
-import "react-select/dist/react-select.css";
+import _ from 'lodash';
+import React from 'react';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
-import "./ControlBar.css";
+import './ControlBar.css';
 
 export default function ControlBar(props) {
   const {
@@ -22,7 +22,7 @@ export default function ControlBar(props) {
     return {
       value: name,
       label: name,
-      className: "svgee-control-bar-config-item"
+      className: 'svgee-control-bar-config-item'
     };
   });
 
