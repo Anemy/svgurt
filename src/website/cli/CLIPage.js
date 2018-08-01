@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 
-import './CLIPage.css';
+import "./CLIPage.css";
 
-import cliDocsMarkdown from './cli-wiki.md';
+import cliDocsMarkdown from "./cli-wiki.md";
 
-import SvgurtTextLogo from '../home/SvgurtTextLogo';
+import SvgurtTextLogo from "../home/SvgurtTextLogo";
 
 export default class CLIPage extends Component {
   render() {
@@ -14,16 +14,10 @@ export default class CLIPage extends Component {
       <React.Fragment>
         <div className="svgee-top-nav-bar">
           <SvgurtTextLogo />
-          <Link
-            className="svgee-top-nav-link"
-            to="/"
-          >
+          <Link className="svgee-top-nav-link" to="/">
             Home
           </Link>
-          <Link
-            className="svgee-top-nav-link"
-            to="demo"
-          >
+          <Link className="svgee-top-nav-link" to="demo">
             Demo
           </Link>
           <a

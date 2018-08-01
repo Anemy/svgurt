@@ -1,12 +1,11 @@
+import _ from "lodash";
+import fs from "fs";
+import path from "path";
+import getPixels from "get-pixels";
 
-import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
-import getPixels from 'get-pixels';
-
-import { manipulateImageData } from './core/image-manipulator';
-import { controllerConfig } from './core/ControllerConstants';
-import { renderSvgString } from './core/svg-renderer/svg-renderer';
+import { manipulateImageData } from "./core/image-manipulator";
+import { controllerConfig } from "./core/ControllerConstants";
+import { renderSvgString } from "./core/svg-renderer/svg-renderer";
 
 const configDefaults = {};
 
@@ -16,13 +15,13 @@ _.each(controllerConfig, (configItem, index) => {
 
 const defaultConfig = {
   ...configDefaults,
-  input: 'image.jpg',
-  output: 'output',
+  input: "image.jpg",
+  output: "output",
   returnSVGString: false
 };
 
 function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
-  const fileNameToImport = path.join(__dirname, '..', inputFileName);
+  const fileNameToImport = path.join(__dirname, "..", inputFileName);
 
   getPixels(fileNameToImport, (err, pixels) => {
     if (err) {
@@ -84,10 +83,20 @@ module.exports = function(config, callback) {
       };
 
       if (isOutputArray && svgurtConfig.output[index]) {
-        runSvgurtOnFile(svgurtConfig, inputFileName, svgurtConfig.output[index], doneFunction);
+        runSvgurtOnFile(
+          svgurtConfig,
+          inputFileName,
+          svgurtConfig.output[index],
+          doneFunction
+        );
       } else {
         // If they don't supply a corresponding output file name then we just use the input file name.
-        runSvgurtOnFile(svgurtConfig, inputFileName, inputFileName, doneFunction);
+        runSvgurtOnFile(
+          svgurtConfig,
+          inputFileName,
+          inputFileName,
+          doneFunction
+        );
       }
     });
   } else {
@@ -100,6 +109,11 @@ module.exports = function(config, callback) {
       }
     }
 
-    runSvgurtOnFile(svgurtConfig, svgurtConfig.input, svgurtConfig.output, callback);
+    runSvgurtOnFile(
+      svgurtConfig,
+      svgurtConfig.input,
+      svgurtConfig.output,
+      callback
+    );
   }
 };

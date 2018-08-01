@@ -1,7 +1,7 @@
-import jsfeat from 'jsfeat';
-import StackBlur from 'stackblur-canvas';
+import jsfeat from "jsfeat";
+import StackBlur from "stackblur-canvas";
 
-import noise from './utils/noise';
+import noise from "./utils/noise";
 
 function grayScale(imageData, width, height) {
   const grayImageMatrix = new jsfeat.matrix_t(width, height, jsfeat.U8C1_t);
@@ -12,7 +12,7 @@ function grayScale(imageData, width, height) {
   let i = grayImageMatrix.cols * grayImageMatrix.rows;
   let pix = 0;
 
-  const alpha = (0xff << 24);
+  const alpha = 0xff << 24;
   while (--i >= 0) {
     pix = grayImageMatrix.data[i];
     data_u32[i] = alpha | (pix << 16) | (pix << 8) | pix;
@@ -21,7 +21,13 @@ function grayScale(imageData, width, height) {
   return grayImageMatrix;
 }
 
-function cannyEdgeDetection(imageData, lowThreshold, highThreshold, width, height) {
+function cannyEdgeDetection(
+  imageData,
+  lowThreshold,
+  highThreshold,
+  width,
+  height
+) {
   const matrix = new jsfeat.matrix_t(width, height, jsfeat.U8C1_t);
 
   jsfeat.imgproc.grayscale(imageData.data, width, height, matrix);
@@ -32,7 +38,7 @@ function cannyEdgeDetection(imageData, lowThreshold, highThreshold, width, heigh
   let i = matrix.cols * matrix.rows;
   let pix = 0;
 
-  const alpha = (0xff << 24);
+  const alpha = 0xff << 24;
   while (--i >= 0) {
     pix = matrix.data[i];
     data_u32[i] = alpha | (pix << 16) | (pix << 8) | pix;
@@ -40,12 +46,20 @@ function cannyEdgeDetection(imageData, lowThreshold, highThreshold, width, heigh
 }
 
 function blurImage(imageData, blurAmount, width, height) {
-  StackBlur.imageDataRGB(imageData, 0, 0, width, height, Math.floor(blurAmount));
+  StackBlur.imageDataRGB(
+    imageData,
+    0,
+    0,
+    width,
+    height,
+    Math.floor(blurAmount)
+  );
 }
 
 function invertImage(imageData) {
   for (let i = 0; i < imageData.data.length; i++) {
-    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
+    if ((i + 1) % 4 !== 0) {
+      // Skip alpha channel.
       imageData.data[i] = 255 - imageData.data[i];
     }
   }
@@ -56,24 +70,31 @@ function posterizeImage(imageData, posterizeLevels) {
   const numOfValues = 255 / (posterizeLevels - 1);
 
   for (let i = 0; i < imageData.data.length; i++) {
-    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
-      imageData.data[i] = Math.floor(Math.floor(imageData.data[i] / numOfAreas) * numOfValues);
+    if ((i + 1) % 4 !== 0) {
+      // Skip alpha channel.
+      imageData.data[i] = Math.floor(
+        Math.floor(imageData.data[i] / numOfAreas) * numOfValues
+      );
     }
   }
 }
 
-function fractalField(imageData, {
-  fieldOpacity,
-  fieldRatioX,
-  fieldRatioY,
-  fieldRandomSeed
-}, width) {
+function fractalField(
+  imageData,
+  { fieldOpacity, fieldRatioX, fieldRatioY, fieldRandomSeed },
+  width
+) {
   noise.seed(fieldRandomSeed);
 
   for (let i = 0; i < imageData.data.length; i++) {
-    if ((i + 1) % 4 !== 0) { // Skip alpha channel.
-      const noiseValue = noise.simplex2(((Math.floor(i / 4) % width) * fieldRatioX), Math.floor((i / 4) / width) * fieldRatioY);
-      imageData.data[i] = imageData.data[i] * (1 - Math.abs(noiseValue) * fieldOpacity);
+    if ((i + 1) % 4 !== 0) {
+      // Skip alpha channel.
+      const noiseValue = noise.simplex2(
+        (Math.floor(i / 4) % width) * fieldRatioX,
+        Math.floor(i / 4 / width) * fieldRatioY
+      );
+      imageData.data[i] =
+        imageData.data[i] * (1 - Math.abs(noiseValue) * fieldOpacity);
     }
   }
 }
@@ -96,8 +117,14 @@ export function manipulateImageData(imageData, imageSettings, width, height) {
     posterizeImage(imageData, imageSettings.posterizeLevels);
   }
 
-  if (imageSettings['Edge Detection']) {
-    cannyEdgeDetection(imageData, imageSettings.lowThreshold, imageSettings.highThreshold, width, height);
+  if (imageSettings["Edge Detection"]) {
+    cannyEdgeDetection(
+      imageData,
+      imageSettings.lowThreshold,
+      imageSettings.highThreshold,
+      width,
+      height
+    );
   }
 
   if (imageSettings.applyFractalField) {

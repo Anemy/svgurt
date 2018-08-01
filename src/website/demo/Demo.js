@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import './Demo.css';
+import "./Demo.css";
 
-import ImageRenderer from '../image-renderer/ImageRenderer';
+import ImageRenderer from "../image-renderer/ImageRenderer";
 
-import { createController } from '../controller/Controller';
-import exampleImage from '../fixtures/example-image';
-import SvgurtTextLogo from '../home/SvgurtTextLogo';
+import { createController } from "../controller/Controller";
+import exampleImage from "../fixtures/example-image";
+import SvgurtTextLogo from "../home/SvgurtTextLogo";
 
 export default class Demo extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class Demo extends Component {
     loadingImage: true,
     imageLoaded: false,
     imageLoadingError: false
-  }
+  };
 
   controller = null;
   originalImageURI = null;
@@ -44,7 +44,7 @@ export default class Demo extends Component {
         imageLoaded: true
       });
     }
-  }
+  };
 
   loadExampleImage = () => {
     this.originalImageURI = exampleImage;
@@ -55,23 +55,12 @@ export default class Demo extends Component {
       imageLoaded: true,
       loadingImage: false
     });
-  }
-
-  // handleExampleImageClicked = () => {
-  //   if (!this.loadingImage && !this.imageLoaded) {
-  //     this.controller = createController();
-  //     this.originalImageURI = exampleImage;
-
-  //     this.setState({
-  //       loadingImage: false,
-  //       imageLoaded: true,
-  //       imageLoadingError: false
-  //     });
-  //   }
-  // }
+  };
 
   handleImageChange = () => {
-    if (!this.state.loadingImage && this.imageInputRef.files &&
+    if (
+      !this.state.loadingImage &&
+      this.imageInputRef.files &&
       this.imageInputRef.files[0]
     ) {
       this.setState({
@@ -102,29 +91,19 @@ export default class Demo extends Component {
         reader.readAsDataURL(this.imageInputRef.files[0]);
       });
     }
-  }
+  };
 
   render() {
-    const {
-      imageLoaded,
-      imageLoadingError,
-      loadingImage
-    } = this.state;
+    const { imageLoaded, imageLoadingError, loadingImage } = this.state;
 
     return (
       <React.Fragment>
         <div className="svgee-top-nav-bar">
           <SvgurtTextLogo />
-          <Link
-            className="svgee-top-nav-link"
-            to="/"
-          >
+          <Link className="svgee-top-nav-link" to="/">
             Home
           </Link>
-          <Link
-            className="svgee-top-nav-link"
-            to="cli"
-          >
+          <Link className="svgee-top-nav-link" to="cli">
             Cli Docs
           </Link>
           <a
@@ -136,32 +115,14 @@ export default class Demo extends Component {
             Github
           </a>
         </div>
-        {/* {!imageLoaded &&
-          <div className="svgee-demo-image-prompt-container">
-            <button
-              onClick={this.handleExampleImageClicked}
-              className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
-            >Use Example Image</button>
-            <br />
-            <label
-              htmlFor="image-upload"
-              className={`svgee svgee-image-upload ${loadingImage && 'svgee-image-upload-disabled'}`}
-            >
-              Import Image
-            </label>
-            <input
-              accept="image/*"
-              disabled={loadingImage}
-              id="image-upload"
-              onChange={this.handleImageChange}
-              ref={ref => { this.imageInputRef = ref; }}
-              type="file"
-            />
-          </div>
-        } */}
         {loadingImage && <p>Importing Image...</p>}
         {imageLoadingError && <p>Failed to load image. Please try again.</p>}
-        {imageLoaded && <ImageRenderer controller={this.controller} imageURI={this.originalImageURI}/>}
+        {imageLoaded && (
+          <ImageRenderer
+            controller={this.controller}
+            imageURI={this.originalImageURI}
+          />
+        )}
         <div id="js-dat-gui-container" className="svgee-dat-gui-container" />
       </React.Fragment>
     );

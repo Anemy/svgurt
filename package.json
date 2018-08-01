@@ -12,6 +12,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "format": "prettier --write \"src/**/*{.js,.jsx}\" \"!**/lib/**\"",
+    "fmt": "npm run format",
     "compile-cli": "babel -d lib/ src/",
     "build": "react-scripts build && npm run compile-cli",
     "deploy": "npm run build && gh-pages -d build",
@@ -26,6 +28,7 @@
     "image-size": "^0.6.3",
     "jsfeat": "0.0.8",
     "lodash": "^4.17.10",
+    "prettier": "^1.14.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-markdown": "^3.3.4",

@@ -1,8 +1,5 @@
 import { getFractalDispacementForPoint } from './fractal';
-import {
-  getPixelColorAtXY,
-  isInColorThreshhold
-} from './color';
+import { getPixelColorAtXY, isInColorThreshhold } from './color';
 
 import { RECURSIVE_LINE_ALGORITHMS } from '../ControllerConstants';
 
@@ -17,7 +14,16 @@ export function renderPaths(svgSettings, paths) {
   return renderString;
 }
 
-function buildRecursivePath(settings, imageData, x, y, width, height, travelled, stack) {
+function buildRecursivePath(
+  settings,
+  imageData,
+  x,
+  y,
+  width,
+  height,
+  travelled,
+  stack
+) {
   // Ensure this is a valid pixel.
   if (x < 0 || y < 0 || x >= width || y >= height) {
     return '';
@@ -56,7 +62,11 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
     //   yBase += Math.round(yDisplacement / renderEveryYPixels) * renderEveryYPixels;
     // }
 
-    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(x, y, settings);
+    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(
+      x,
+      y,
+      settings
+    );
 
     xPos += xDisplacement;
     yPos += yDisplacement;
@@ -82,13 +92,13 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
       // eslint-disable-next-line default-case
       switch (recursiveAlgorithm) {
         case RECURSIVE_LINE_ALGORITHMS.first: {
-          xMove = xBase + (renderEveryXPixels * i);
-          yMove = yBase + (renderEveryYPixels * k);
+          xMove = xBase + renderEveryXPixels * i;
+          yMove = yBase + renderEveryYPixels * k;
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.second: {
           xMove = xBase + Math.abs(renderEveryXPixels * i);
-          yMove = yBase - (renderEveryYPixels * k);
+          yMove = yBase - renderEveryYPixels * k;
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.third: {
@@ -97,8 +107,8 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.fourth: {
-          xMove = xBase + (renderEveryXPixels * i);
-          yMove = yBase + (renderEveryYPixels * k);
+          xMove = xBase + renderEveryXPixels * i;
+          yMove = yBase + renderEveryYPixels * k;
           break;
         }
         case RECURSIVE_LINE_ALGORITHMS.fifth: {
@@ -108,7 +118,16 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
         }
       }
 
-      const pathAddition = buildRecursivePath(settings, imageData, xMove, yMove, width, height, travelled, stack + 1);
+      const pathAddition = buildRecursivePath(
+        settings,
+        imageData,
+        xMove,
+        yMove,
+        width,
+        height,
+        travelled,
+        stack + 1
+      );
 
       if (pathAddition) {
         if (moved) {
@@ -119,8 +138,9 @@ function buildRecursivePath(settings, imageData, x, y, width, height, travelled,
 
         pathString += pathAddition;
 
-        if (recursiveAlgorithm ===  RECURSIVE_LINE_ALGORITHMS.fifth ||
-          recursiveAlgorithm ===  RECURSIVE_LINE_ALGORITHMS.fourth
+        if (
+          recursiveAlgorithm === RECURSIVE_LINE_ALGORITHMS.fifth ||
+          recursiveAlgorithm === RECURSIVE_LINE_ALGORITHMS.fourth
         ) {
           return pathString;
         }
@@ -151,9 +171,20 @@ export function createRecursivePaths(settings, imageData, width, height) {
 
   for (let x = 0; x < width; x += renderEveryXPixels) {
     for (let y = 0; y < height; y += renderEveryYPixels) {
-      const pathString = buildRecursivePath(settings, imageData, x, y, width, height, travelled, 0);
+      const pathString = buildRecursivePath(
+        settings,
+        imageData,
+        x,
+        y,
+        width,
+        height,
+        travelled,
+        0
+      );
       const pixelColor = getPixelColorAtXY(imageData, x, y, width);
-      const pathColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+      const pathColor = autoColor
+        ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})`
+        : strokeColor;
 
       if (pathString && pathString.length > 0) {
         paths.push({
@@ -167,4 +198,3 @@ export function createRecursivePaths(settings, imageData, width, height) {
 
   return paths;
 }
-

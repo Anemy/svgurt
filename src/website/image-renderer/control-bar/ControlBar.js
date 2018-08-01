@@ -1,9 +1,9 @@
-import _ from 'lodash';
-import React from 'react';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import _ from "lodash";
+import React from "react";
+import Select from "react-select";
+import "react-select/dist/react-select.css";
 
-import './ControlBar.css';
+import "./ControlBar.css";
 
 export default function ControlBar(props) {
   const {
@@ -19,7 +19,11 @@ export default function ControlBar(props) {
   } = props;
 
   const selectOptions = _.map(configNames, name => {
-    return { value: name, label: name, className: 'svgee-control-bar-config-item' };
+    return {
+      value: name,
+      label: name,
+      className: "svgee-control-bar-config-item"
+    };
   });
 
   return (
@@ -31,7 +35,11 @@ export default function ControlBar(props) {
             clearable={false}
             name="form-field-name"
             value={currentConfigName}
-            onChange={newConfig => {if (newConfig) {onConfigChange(newConfig.value);}}}
+            onChange={newConfig => {
+              if (newConfig) {
+                onConfigChange(newConfig.value);
+              }
+            }}
             options={selectOptions}
           />
         </div>
@@ -41,16 +49,10 @@ export default function ControlBar(props) {
         >
           New
         </div>
-        <div
-          className="svgee-control-bar-button"
-          onClick={onSaveConfigClicked}
-        >
+        <div className="svgee-control-bar-button" onClick={onSaveConfigClicked}>
           Save
         </div>
-        <div
-          className="svgee-control-bar-button"
-          onClick={onRevertClicked}
-        >
+        <div className="svgee-control-bar-button" onClick={onRevertClicked}>
           Revert
         </div>
         <div

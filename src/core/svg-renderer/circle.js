@@ -6,15 +6,15 @@ import {
 } from './color';
 
 export function renderCircles(svgSettings, circles) {
-  const {
-    outputScale
-  } = svgSettings;
+  const { outputScale } = svgSettings;
 
   let renderString = '';
   let i = 0;
   for (i = 0; i < circles.length; i++) {
     const { x, y, r, strokeWidth, strokeColor } = circles[i];
-    renderString += `<circle cx="${x * outputScale}" cy="${y * outputScale}" r="${r * outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
+    renderString += `<circle cx="${x * outputScale}" cy="${y *
+      outputScale}" r="${r *
+      outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}; fill: none;" />`;
   }
 
   return renderString;
@@ -40,18 +40,26 @@ function createCircleAtPoint(baseX, baseY, settings, pixelColor) {
     circleRadius = getPixelColorIntensity(pixelColor, settings) * radius;
   }
 
-  circleRadius *= (1 - (Math.random() * radiusRandomness));
+  circleRadius *= 1 - Math.random() * radiusRandomness;
 
-  const circleColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+  const circleColor = autoColor
+    ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})`
+    : strokeColor;
 
-  const circle = { x, y,
+  const circle = {
+    x,
+    y,
     r: circleRadius,
     strokeColor: circleColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 
   if (applyFractalDisplacement) {
-    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(circle.x, circle.y, settings);
+    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(
+      circle.x,
+      circle.y,
+      settings
+    );
 
     circle.x += xDisplacement;
     circle.y += yDisplacement;
@@ -61,10 +69,7 @@ function createCircleAtPoint(baseX, baseY, settings, pixelColor) {
 }
 
 export function createCircles(settings, imageData, width, height) {
-  const {
-    renderEveryXPixels,
-    renderEveryYPixels
-  } = settings;
+  const { renderEveryXPixels, renderEveryYPixels } = settings;
 
   const circles = [];
 
@@ -81,4 +86,3 @@ export function createCircles(settings, imageData, width, height) {
 
   return circles;
 }
-

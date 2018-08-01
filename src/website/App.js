@@ -1,11 +1,11 @@
-import React from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import React from "react";
+import { HashRouter as Router, Route } from "react-router-dom";
 
-import CLIPage from './cli/CLIPage';
-import Demo from './demo/Demo';
-import Home from './home/Home';
+import CLIPage from "./cli/CLIPage";
+import Demo from "./demo/Demo";
+import Home from "./home/Home";
 
-import './App.css';
+import "./App.css";
 
 const App = () => (
   <main>
