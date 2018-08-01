@@ -1,6 +1,6 @@
-# [svgurt.com](http://svgurt.com) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Anemy/svgurt/blob/master/LICENSE) [![NPM](https://img.shields.io/npm/v/svgurt.svg)](https://www.npmjs.com/package/svgurt)
+# [Svgurt](http://svgurt.com) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Anemy/svgurt/blob/master/LICENSE) [![NPM](https://img.shields.io/npm/v/svgurt.svg)](https://www.npmjs.com/package/svgurt)
 
-Svgurt is a configurable, interactable image to SVG converting tool.
+Svgurt is a configurable, interactive image to SVG converting tool.
 
 ## Usage
 
