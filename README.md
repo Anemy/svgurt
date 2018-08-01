@@ -2,6 +2,8 @@
 
 Svgurt is a configurable, interactive image to SVG converting tool.
 
+<img src="https://i.imgur.com/HLDuuqS.png" width="60%" />
+
 ## Usage
 
 ### Installation
