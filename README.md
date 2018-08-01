@@ -1,4 +1,6 @@
-Live @ [svgurt.com](http://svgurt.com)
+# [svgurt.com](http://svgurt.com) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Anemy/svgurt/blob/master/LICENSE) [![NPM](https://img.shields.io/npm/v/svgurt.svg)](https://www.npmjs.com/package/svgurt)
+
+Svgurt is a configurable, interactable image to SVG converting tool.
 
 ## Usage
 
@@ -144,3 +146,7 @@ BTC Wallet:
 
 
 If you'd like to see something added, create an issue or make a PR! 🚀
+
+### License
+
+Svgurt is [MIT licensed](./LICENSE).
