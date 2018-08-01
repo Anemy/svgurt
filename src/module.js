@@ -1,4 +1,3 @@
-
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
@@ -84,10 +83,20 @@ module.exports = function(config, callback) {
       };
 
       if (isOutputArray && svgurtConfig.output[index]) {
-        runSvgurtOnFile(svgurtConfig, inputFileName, svgurtConfig.output[index], doneFunction);
+        runSvgurtOnFile(
+          svgurtConfig,
+          inputFileName,
+          svgurtConfig.output[index],
+          doneFunction
+        );
       } else {
         // If they don't supply a corresponding output file name then we just use the input file name.
-        runSvgurtOnFile(svgurtConfig, inputFileName, inputFileName, doneFunction);
+        runSvgurtOnFile(
+          svgurtConfig,
+          inputFileName,
+          inputFileName,
+          doneFunction
+        );
       }
     });
   } else {
@@ -100,6 +109,11 @@ module.exports = function(config, callback) {
       }
     }
 
-    runSvgurtOnFile(svgurtConfig, svgurtConfig.input, svgurtConfig.output, callback);
+    runSvgurtOnFile(
+      svgurtConfig,
+      svgurtConfig.input,
+      svgurtConfig.output,
+      callback
+    );
   }
 };

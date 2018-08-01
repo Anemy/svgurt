@@ -20,7 +20,7 @@ export function downloadSVGString(svgString) {
   if (!isDownloading && svgString) {
     isDownloading = true;
 
-    const blob = new Blob([svgString], {type: 'image/svg+xml'});
+    const blob = new Blob([svgString], { type: 'image/svg+xml' });
     const uri = window.URL.createObjectURL(blob);
 
     const fileName = window.prompt('File name', 'svgurt-output');

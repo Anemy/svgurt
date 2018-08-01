@@ -5,9 +5,10 @@ import './website/index.css';
 import App from './website/App';
 import registerServiceWorker from './website/registerServiceWorker';
 
-ReactDOM.render((
+ReactDOM.render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>
-), document.getElementById('root'));
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 registerServiceWorker();

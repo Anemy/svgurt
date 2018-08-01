@@ -185,10 +185,10 @@ export const controllerConfig = {
   autoColor: {
     default: false
   },
-  circleArcs : {
-    default : 200
+  circleArcs: {
+    default: 200
   },
-  intensityWeight : {
+  intensityWeight: {
     default: 100000
   },
   radiusStep: {

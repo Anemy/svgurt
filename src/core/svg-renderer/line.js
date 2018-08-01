@@ -6,15 +6,15 @@ import {
 } from './color';
 
 export function renderLines(svgSettings, lines) {
-  const {
-    outputScale
-  } = svgSettings;
+  const { outputScale } = svgSettings;
 
   let renderString = '';
   let i = 0;
   for (i = 0; i < lines.length; i++) {
     const { x1, y1, x2, y2, strokeWidth, strokeColor } = lines[i];
-    renderString += `<line x1="${x1 * outputScale}" y1="${y1 * outputScale}" x2="${x2 * outputScale}" y2="${y2 * outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}" />`;
+    renderString += `<line x1="${x1 * outputScale}" y1="${y1 *
+      outputScale}" x2="${x2 * outputScale}" y2="${y2 *
+      outputScale}" style="stroke: ${strokeColor}; stroke-width: ${strokeWidth}" />`;
   }
 
   return renderString;
@@ -52,7 +52,7 @@ function createContinuousLine(lineNumber, width, height, dir, settings) {
     // Positive will go to the bottom right. LEFT & TOP Origins
     const linesStartX = -height / slope;
     const distanceToWidth = Math.abs(linesStartX) + width;
-    const startX = ((lineIteration * distanceToWidth) + linesStartX) + offset;
+    const startX = lineIteration * distanceToWidth + linesStartX + offset;
 
     if (startX + height / slope > width) {
       x1 = width;
@@ -73,11 +73,11 @@ function createContinuousLine(lineNumber, width, height, dir, settings) {
     // Negative will go to the top right. LEFT & BOTTOM Origins
     const linesStartX = height / slope;
     const distanceToWidth = Math.abs(linesStartX) + width;
-    const startX = ((lineIteration * distanceToWidth) + linesStartX) + offset;
+    const startX = lineIteration * distanceToWidth + linesStartX + offset;
 
     if (startX < 0) {
       x1 = 0;
-      y1 = Math.max(0, height - (startX * slope));
+      y1 = Math.max(0, height - startX * slope);
     } else {
       x1 = startX;
       y1 = height;
@@ -85,7 +85,7 @@ function createContinuousLine(lineNumber, width, height, dir, settings) {
 
     if (startX - height / slope > width) {
       x2 = width;
-      y2 = Math.min(height, height - (-(-startX + width) * slope));
+      y2 = Math.min(height, height - -(-startX + width) * slope);
     } else {
       x2 = Math.max(0, startX - height / slope);
       y2 = 0;
@@ -98,7 +98,11 @@ function createContinuousLine(lineNumber, width, height, dir, settings) {
     y2 = lineIteration * height;
   }
 
-  const line = { x1, y1, x2, y2,
+  const line = {
+    x1,
+    y1,
+    x2,
+    y2,
     dir,
     strokeColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
@@ -108,21 +112,25 @@ function createContinuousLine(lineNumber, width, height, dir, settings) {
 }
 
 function createContinuousLines(lineNumber, width, height, settings) {
-  const {
-    crossHatch,
-    direction,
-    directionRandomness
-  } = settings;
+  const { crossHatch, direction, directionRandomness } = settings;
 
   const lines = [];
 
-  const dir = (-direction) + 180 * directionRandomness * Math.random();
+  const dir = -direction + 180 * directionRandomness * Math.random();
 
   lines.push(createContinuousLine(lineNumber, width, height, dir, settings));
 
   if (crossHatch) {
     let perpendicularDir = dir > -90 ? dir - 90 : dir + 90;
-    lines.push(createContinuousLine(lineNumber, width, height, perpendicularDir, settings));
+    lines.push(
+      createContinuousLine(
+        lineNumber,
+        width,
+        height,
+        perpendicularDir,
+        settings
+      )
+    );
   }
 
   return lines;
@@ -146,35 +154,49 @@ function createLineAtPoint(x, y, settings, pixelColor) {
   const x1 = x;
   const y1 = y;
 
-  const lineColor = autoColor ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})` : strokeColor;
+  const lineColor = autoColor
+    ? `rgb(${pixelColor.r}, ${pixelColor.g}, ${pixelColor.b})`
+    : strokeColor;
 
   let lengthOfLine = lineLength;
   if (lengthOnColor) {
     lengthOfLine = getPixelColorIntensity(pixelColor, settings) * lengthOfLine;
   }
 
-  const dir = (-direction) + 180 * directionRandomness * Math.random();
+  const dir = -direction + 180 * directionRandomness * Math.random();
   const xMove = lengthOfLine * Math.cos(dir * (Math.PI / 180));
   const yMove = lengthOfLine * Math.sin(dir * (Math.PI / 180));
 
-  const lenRandom = (1 - (Math.random() * lengthRandomness));
+  const lenRandom = 1 - Math.random() * lengthRandomness;
   const x2 = x1 + xMove * lenRandom;
   const y2 = y1 + yMove * lenRandom;
 
-  const line = { x1, y1, x2, y2,
-    strokeColor : lineColor,
+  const line = {
+    x1,
+    y1,
+    x2,
+    y2,
+    strokeColor: lineColor,
     strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
   };
 
   if (applyFractalDisplacement) {
     if (displaceOrigin) {
-      const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(line.x1, line.y1, settings);
+      const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(
+        line.x1,
+        line.y1,
+        settings
+      );
 
       line.x1 += xDisplacement;
       line.y1 += yDisplacement;
     }
 
-    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(line.x2, line.y2, settings);
+    const { xDisplacement, yDisplacement } = getFractalDispacementForPoint(
+      line.x2,
+      line.y2,
+      settings
+    );
 
     line.x2 += xDisplacement;
     line.y2 += yDisplacement;
@@ -184,17 +206,9 @@ function createLineAtPoint(x, y, settings, pixelColor) {
 }
 
 function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
-  const {
-    applyFractalDisplacement,
-    displaceOrigin,
-    minLineLength
-  } = settings;
+  const { applyFractalDisplacement, displaceOrigin, minLineLength } = settings;
 
-  const {
-    dir,
-    strokeColor,
-    strokeWidth
-  } = guidingLine;
+  const { dir, strokeColor, strokeWidth } = guidingLine;
 
   const linesAlongLine = [];
 
@@ -224,13 +238,19 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
     tickY = 0;
   }
 
-  let amountOfPixelsInLine = Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) +
+  let amountOfPixelsInLine =
+    Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) +
     Math.abs(Math.abs(guidingLine.y1) - Math.abs(guidingLine.y2));
-  for (let i = 0; i < amountOfPixelsInLine; i ++) {
+  for (let i = 0; i < amountOfPixelsInLine; i++) {
     const pixelColor = getPixelColorAtXY(imageData, currentX, currentY, width);
     pixelInThreshold = isInColorThreshhold(pixelColor, settings);
     if (!pixelInThreshold) {
-      if (lastPixelInThreshold && Math.abs(Math.abs(x1) - Math.abs(lastX)) + Math.abs(Math.abs(y1) - Math.abs(lastY)) > minLineLength) {
+      if (
+        lastPixelInThreshold &&
+        Math.abs(Math.abs(x1) - Math.abs(lastX)) +
+          Math.abs(Math.abs(y1) - Math.abs(lastY)) >
+          minLineLength
+      ) {
         if (applyFractalDisplacement) {
           if (displaceOrigin) {
             const {
@@ -250,7 +270,12 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
         }
 
         linesAlongLine.push({
-          x1, y1, x2: lastX, y2: lastY, strokeColor, strokeWidth
+          x1,
+          y1,
+          x2: lastX,
+          y2: lastY,
+          strokeColor,
+          strokeWidth
         });
       }
       x1 = currentX;
@@ -263,9 +288,17 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
     currentY += tickY;
   }
 
-  if (lastPixelInThreshold && Math.abs(x1 - lastX) + Math.abs(y1 - lastY) > minLineLength) {
+  if (
+    lastPixelInThreshold &&
+    Math.abs(x1 - lastX) + Math.abs(y1 - lastY) > minLineLength
+  ) {
     linesAlongLine.push({
-      x1, y1, x2: lastX, y2: lastY, strokeColor, strokeWidth
+      x1,
+      y1,
+      x2: lastX,
+      y2: lastY,
+      strokeColor,
+      strokeWidth
     });
   }
 
@@ -286,10 +319,22 @@ export function createLines(settings, imageData, width, height) {
   let y = 0;
   if (continuous) {
     for (let i = 0; i < amountOfLines; i++) {
-      const continuousLines = createContinuousLines(i, width, height, settings, imageData);
+      const continuousLines = createContinuousLines(
+        i,
+        width,
+        height,
+        settings,
+        imageData
+      );
 
       for (let m = 0; m < continuousLines.length; m++) {
-        const linesAlongLine = getLinesAlongLine(continuousLines[m], width, height, settings, imageData);
+        const linesAlongLine = getLinesAlongLine(
+          continuousLines[m],
+          width,
+          height,
+          settings,
+          imageData
+        );
 
         for (let k = 0; k < linesAlongLine.length; k++) {
           lines.push(linesAlongLine[k]);
