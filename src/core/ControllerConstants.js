@@ -123,7 +123,7 @@ export const controllerConfig = {
     default: 1.5
   },
   radiusOnColor: {
-    default: false
+    default: true
   },
   radiusRandomness: {
     default: 0.25

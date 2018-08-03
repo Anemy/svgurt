@@ -10,10 +10,6 @@ import exampleImage from '../fixtures/example-image';
 import SvgurtTextLogo from '../home/SvgurtTextLogo';
 
 export default class Demo extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     loadingImage: true,
     imageLoaded: false,

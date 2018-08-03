@@ -91,7 +91,7 @@ When using Svgurt programatically or through the command line, you need to suppl
   outputScale: 1,
   randomSeed: 1011,
   radius: 1.5,
-  radiusOnColor: false,
+  radiusOnColor: true,
   radiusRandomness: 0.25,
   recursiveAlgorithm: 'fifth', // One of 'first', 'second', 'third', 'fourth', or 'fifth'.
   renderEveryXPixels: 5,
