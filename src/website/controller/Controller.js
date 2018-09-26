@@ -165,7 +165,7 @@ export function updateRenderType(controller) {
         mainController,
         'strokeWidth',
         0,
-        20
+        100
       );
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
         mainController,
@@ -233,7 +233,7 @@ export function updateRenderType(controller) {
         mainController,
         'direction',
         0,
-        180
+        360
       );
       controller.svgChangingControls['directionRandomness'] = svgFolder.add(
         mainController,
@@ -245,7 +245,7 @@ export function updateRenderType(controller) {
         mainController,
         'amplitude',
         0,
-        50
+        100
       );
       controller.svgChangingControls['amplitudeRandomness'] = svgFolder.add(
         mainController,
@@ -259,7 +259,7 @@ export function updateRenderType(controller) {
         mainController,
         'wavelength',
         0,
-        50
+        100
       );
       controller.svgChangingControls['wavelengthRandomness'] = svgFolder.add(
         mainController,
@@ -298,7 +298,7 @@ export function updateRenderType(controller) {
           mainController,
           'lineLength',
           0,
-          50
+          300
         );
         controller.svgChangingControls['lengthOnColor'] = svgFolder.add(
           mainController,
@@ -309,6 +309,12 @@ export function updateRenderType(controller) {
           'lengthRandomness',
           0,
           1
+        );
+        controller.svgChangingControls['direction'] = svgFolder.add(
+          mainController,
+          'direction',
+          0,
+          360
         );
       } else {
         controller.svgChangingControls['minLineLength'] = svgFolder
@@ -321,13 +327,19 @@ export function updateRenderType(controller) {
         controller.svgChangingControls['amountOfLines'] = svgFolder
           .add(mainController, 'amountOfLines', 1, 5000)
           .step(1);
+
+        // Ensure the direction isn't already out of bounds.
+        if (mainController.direction > 180) {
+          mainController.direction = 180;
+        }
+
+        controller.svgChangingControls['direction'] = svgFolder.add(
+          mainController,
+          'direction',
+          0,
+          180
+        );
       }
-      controller.svgChangingControls['direction'] = svgFolder.add(
-        mainController,
-        'direction',
-        0,
-        180
-      );
       controller.svgChangingControls['directionRandomness'] = svgFolder.add(
         mainController,
         'directionRandomness',
@@ -417,12 +429,6 @@ export function updateRenderType(controller) {
   controller.svgFractalControls['fractalRandomSeed'] = newFractalFolder
     .add(mainController, 'fractalRandomSeed', 0, MAX_SEED)
     .step(1);
-  controller.svgFractalControls['outputScale'] = svgFolder.add(
-    mainController,
-    'outputScale',
-    0,
-    5
-  );
 }
 
 const datConfig = {
@@ -522,6 +528,12 @@ export function createController() {
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgFolder = svgFolder;
+  controller.svgSettingControls['outputScale'] = svgFolder.add(
+    mainController,
+    'outputScale',
+    0,
+    5
+  );
   controller.svgSettingControls['minColorRecognized'] = svgFolder
     .add(mainController, 'minColorRecognized', 0, 255)
     .step(1);
