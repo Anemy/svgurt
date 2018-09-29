@@ -1,6 +1,7 @@
 import { createRandomSeed } from './utils/random';
 
 export const SVG_RENDER_TYPES = {
+  TRACE: 'TRACE',
   CIRCLE: 'CIRCLE',
   CURVE: 'CURVE',
   LINE: 'LINE',
@@ -92,6 +93,12 @@ export const controllerConfig = {
   displaceOrigin: {
     default: false
   },
+  fill: {
+    default: true
+  },
+  fillColor: {
+    default: 'rgb(28, 32, 38)'
+  },
   lineLength: {
     default: 6
   },
@@ -112,6 +119,9 @@ export const controllerConfig = {
   },
   minLineLength: {
     default: 1
+  },
+  noiseSize: {
+    default: 2
   },
   outputScale: {
     default: 1
@@ -140,6 +150,9 @@ export const controllerConfig = {
   startAtCenterOfShapes: {
     default: false
   },
+  stroke: {
+    default: false
+  },
   strokeColor: {
     default: 'rgb(28, 32, 38)'
   },
@@ -150,7 +163,7 @@ export const controllerConfig = {
     default: 0.1
   },
   svgRenderType: {
-    default: SVG_RENDER_TYPES.RECURSIVE
+    default: SVG_RENDER_TYPES.TRACE
   },
   wavelength: {
     default: 3

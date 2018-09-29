@@ -202,6 +202,7 @@ export default class ImageRenderer extends Component {
     ) {
       renderSvgString(
         this.imageData.data,
+        this.canvasRef,
         this.props.controller.config,
         this.width,
         this.height,
