@@ -9,7 +9,8 @@ export default class Point {
     return new Point(this.x, this.y);
   }
   toIndex(width, height) {
-    if (this.x < 0 || this.y < 0 || this.x >= width || this.y >= height) return null;
+    if (this.x < 0 || this.y < 0 || this.x >= width || this.y >= height)
+      return null;
     return width * this.y + this.x;
   }
   lerp(point, lambda) {

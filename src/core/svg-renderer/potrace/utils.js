@@ -16,15 +16,15 @@ export function createBitmap(canvas) {
 
   let imageDataIndex = 0;
   const length = width * height;
-  for (let bitmapIndex = 0; bitmapIndex < length; bitmapIndex ++) {
-    const r = 0.2126 * imageData.data[imageDataIndex ++];
-    const g = 0.7153 * imageData.data[imageDataIndex ++];
-    const b = 0.0721 * imageData.data[imageDataIndex ++];
+  for (let bitmapIndex = 0; bitmapIndex < length; bitmapIndex++) {
+    const r = 0.2126 * imageData.data[imageDataIndex++];
+    const g = 0.7153 * imageData.data[imageDataIndex++];
+    const b = 0.0721 * imageData.data[imageDataIndex++];
     // eslint-disable-next-line
-    const a = imageDataIndex ++; // alpha
+    const a = imageDataIndex++; // alpha
     const color = r + g + b;
 
-    bitmap.data[bitmapIndex] = (color < 128 ? 1 : 0);
+    bitmap.data[bitmapIndex] = color < 128 ? 1 : 0;
   }
 
   return bitmap;

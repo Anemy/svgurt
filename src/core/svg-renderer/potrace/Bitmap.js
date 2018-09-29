@@ -9,8 +9,13 @@ export default class Bitmap {
   }
 
   at(x, y) {
-    return (x >= 0 && x < this.width && y >=0 && y < this.height) &&
-        this.data[this.width * y + x] === 1;
+    return (
+      x >= 0 &&
+      x < this.width &&
+      y >= 0 &&
+      y < this.height &&
+      this.data[this.width * y + x] === 1
+    );
   }
 
   flip(x, y) {
@@ -23,7 +28,7 @@ export default class Bitmap {
 
   copy() {
     const bitmap = new Bitmap(this.width, this.height);
-    for (let i = 0; i < this.size; i ++) {
+    for (let i = 0; i < this.size; i++) {
       bitmap.data[i] = this.data[i];
     }
     return bitmap;
@@ -38,14 +43,14 @@ export default class Bitmap {
   xOrPath(path) {
     let y1 = path.points[0].y;
 
-    for (let i = 1; i < path.points.length; i ++) {
+    for (let i = 1; i < path.points.length; i++) {
       const x = path.points[i].x;
       const y = path.points[i].y;
 
       if (y !== y1) {
         const minY = Math.min(y1, y);
         const maxX = path.maxX;
-        for (let j = x; j < maxX; j ++) {
+        for (let j = x; j < maxX; j++) {
           this.flip(j, minY);
         }
         y1 = y;

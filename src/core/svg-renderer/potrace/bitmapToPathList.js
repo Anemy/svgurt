@@ -5,7 +5,11 @@ export default function bitmapToPathList(bitmap, options) {
   const bitmapTarget = bitmap.copy();
   const pathList = [];
 
-  for (let point = findNext(new Point(0, 0), bitmapTarget); point; point = findNext(point, bitmapTarget)) {
+  for (
+    let point = findNext(new Point(0, 0), bitmapTarget);
+    point;
+    point = findNext(point, bitmapTarget)
+  ) {
     const path = findPath(point, bitmap, bitmapTarget, options);
     if (path.area > options.turdsize) pathList.push(path);
 
@@ -16,7 +20,11 @@ export default function bitmapToPathList(bitmap, options) {
 }
 
 function findNext(point, bitmapTarget) {
-  for (let i = point.toIndex(bitmapTarget.width, bitmapTarget.height); i < bitmapTarget.size; i ++) {
+  for (
+    let i = point.toIndex(bitmapTarget.width, bitmapTarget.height);
+    i < bitmapTarget.size;
+    i++
+  ) {
     if (bitmapTarget.data[i]) return bitmapTarget.index(i);
   }
   return false;
@@ -40,8 +48,14 @@ function findPath(point, bitmap, bitmapTarget, options) {
 
     if (x === point.x && y === point.y) break;
 
-    const left = bitmapTarget.at(x + (dirX + dirY - 1 ) / 2, y + (dirY - dirX - 1) / 2);
-    const right = bitmapTarget.at(x + (dirX - dirY - 1) / 2, y + (dirY + dirX - 1) / 2);
+    const left = bitmapTarget.at(
+      x + (dirX + dirY - 1) / 2,
+      y + (dirY - dirX - 1) / 2
+    );
+    const right = bitmapTarget.at(
+      x + (dirX - dirY - 1) / 2,
+      y + (dirY + dirX - 1) / 2
+    );
 
     if (right && !left) {
       if (turn(options.turnpolicy, isHole, bitmapTarget, x, y)) {
@@ -90,9 +104,9 @@ function turn(turnpolicy, isHole, bitmap, x, y) {
 }
 
 function majority(x, y, bitmap) {
-  for (let i = 2; i < 5; i ++) {
+  for (let i = 2; i < 5; i++) {
     let ct = 0;
-    for (let a = -i + 1; a <= i - 1; a ++) {
+    for (let a = -i + 1; a <= i - 1; a++) {
       ct += bitmap.at(x + a, y + i - 1) ? 1 : -1;
       ct += bitmap.at(x + i - 1, y + a - 1) ? 1 : -1;
       ct += bitmap.at(x + a - 1, y - i) ? 1 : -1;
