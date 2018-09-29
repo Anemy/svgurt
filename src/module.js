@@ -41,16 +41,23 @@ function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
     manipulateImageData(imageDataToUse, config, width, height);
 
     // Run svg creation based on the image data.
-    renderSvgString(imageDataToUse.data, config, width, height, svgString => {
-      // Write svg string to output file name.
-      if (config.returnSVGString) {
-        callback(false, svgString);
-      } else {
-        fs.writeFile(`${outputFileName}.svg`, svgString, function() {
-          callback(false);
-        });
+    renderSvgString(
+      imageDataToUse.data,
+      null,
+      config,
+      width,
+      height,
+      svgString => {
+        // Write svg string to output file name.
+        if (config.returnSVGString) {
+          callback(false, svgString);
+        } else {
+          fs.writeFile(`${outputFileName}.svg`, svgString, function() {
+            callback(false);
+          });
+        }
       }
-    });
+    );
   });
 }
 

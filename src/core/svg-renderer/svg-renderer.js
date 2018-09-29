@@ -4,8 +4,17 @@ import { createCurves, renderCurves } from './curve';
 import { createLines, renderLines } from './line';
 import { createRecursivePaths, renderPaths } from './recursive';
 import { createConcentricPaths, renderConcentricPaths } from './concentric';
+import { renderPotracePaths } from './trace';
+import potrace from './potrace';
 
-export function renderSvgString(imageData, svgSettings, width, height, done) {
+export function renderSvgString(
+  imageData,
+  canvas,
+  svgSettings,
+  width,
+  height,
+  done
+) {
   const { outputScale } = svgSettings;
 
   setImmediate(() => {
@@ -44,6 +53,24 @@ export function renderSvgString(imageData, svgSettings, width, height, done) {
         );
 
         svgString += renderPaths(svgSettings, lines);
+        break;
+      }
+      case SVG_RENDER_TYPES.TRACE: {
+        if (!canvas) {
+          done(
+            null,
+            'Unfortunatly, we only currently support trace in the browser, since it reads data from html canvas. This is on our roadmap to fix. Feel free to make a github issue about it to get us moving on it.'
+          );
+          return;
+        }
+
+        const paths = potrace.getPaths(
+          potrace.traceCanvas(canvas, {
+            turdsize: svgSettings.noiseSize
+          })
+        );
+
+        svgString += renderPotracePaths(svgSettings, paths);
         break;
       }
       case SVG_RENDER_TYPES.CONCENTRIC: {

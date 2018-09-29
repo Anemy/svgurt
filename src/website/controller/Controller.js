@@ -160,26 +160,101 @@ export function updateRenderType(controller) {
 
   // eslint-disable-next-line default-case
   switch (newRenderType) {
+    case SVG_RENDER_TYPES.TRACE: {
+      controller.svgChangingControls['noiseSize'] = svgFolder.add(
+        mainController,
+        'noiseSize',
+        0,
+        200
+      );
+      controller.svgRenderChangingControls['fill'] = svgFolder.add(
+        mainController,
+        'fill'
+      );
+      if (mainController.fill) {
+        controller.svgChangingControls['fillColor'] = svgFolder.addColor(
+          mainController,
+          'fillColor'
+        );
+      }
+
+      controller.svgRenderChangingControls['stroke'] = svgFolder.add(
+        mainController,
+        'stroke'
+      );
+      if (mainController.stroke) {
+        controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+          mainController,
+          'strokeColor'
+        );
+        controller.svgChangingControls['strokeWidth'] = svgFolder.add(
+          mainController,
+          'strokeWidth',
+          0,
+          100
+        );
+        controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
+          mainController,
+          'strokeWidthRandomness',
+          0,
+          1
+        );
+      }
+      break;
+    }
     case SVG_RENDER_TYPES.CIRCLE: {
-      controller.svgChangingControls['strokeWidth'] = svgFolder.add(
-        mainController,
-        'strokeWidth',
-        0,
-        100
-      );
-      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
-        mainController,
-        'strokeWidthRandomness',
-        0,
-        1
-      );
+      controller.svgChangingControls['minColorRecognized'] = svgFolder
+        .add(mainController, 'minColorRecognized', 0, 255)
+        .step(1);
+      controller.svgChangingControls['maxColorRecognized'] = svgFolder
+        .add(mainController, 'maxColorRecognized', 0, 255)
+        .step(1);
       controller.svgChangingControls['renderEveryXPixels'] = svgFolder
         .add(mainController, 'renderEveryXPixels', 1, 50)
         .step(1);
       controller.svgChangingControls['renderEveryYPixels'] = svgFolder
         .add(mainController, 'renderEveryYPixels', 1, 50)
         .step(1);
-      // controller.svgChangingControls['continuous'] = svgFolder.add(mainController, 'continuous');
+      controller.svgRenderChangingControls['fill'] = svgFolder.add(
+        mainController,
+        'fill'
+      );
+      if (mainController.fill) {
+        controller.svgChangingControls['fillColor'] = svgFolder.addColor(
+          mainController,
+          'fillColor'
+        );
+      }
+
+      controller.svgRenderChangingControls['stroke'] = svgFolder.add(
+        mainController,
+        'stroke'
+      );
+      if (mainController.stroke) {
+        controller.svgRenderChangingControls['autoColor'] = svgFolder.add(
+          mainController,
+          'autoColor'
+        );
+        if (!mainController.autoColor) {
+          controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+            mainController,
+            'strokeColor'
+          );
+        }
+        controller.svgChangingControls['strokeWidth'] = svgFolder.add(
+          mainController,
+          'strokeWidth',
+          0,
+          100
+        );
+        controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
+          mainController,
+          'strokeWidthRandomness',
+          0,
+          1
+        );
+      }
+
       controller.svgChangingControls['radius'] = svgFolder.add(
         mainController,
         'radius',
@@ -199,11 +274,34 @@ export function updateRenderType(controller) {
       break;
     }
     case SVG_RENDER_TYPES.CURVE: {
+      controller.svgChangingControls['minColorRecognized'] = svgFolder
+        .add(mainController, 'minColorRecognized', 0, 255)
+        .step(1);
+      controller.svgChangingControls['maxColorRecognized'] = svgFolder
+        .add(mainController, 'maxColorRecognized', 0, 255)
+        .step(1);
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder
+        .add(mainController, 'renderEveryXPixels', 1, 50)
+        .step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder
+        .add(mainController, 'renderEveryYPixels', 1, 50)
+        .step(1);
+
+      controller.svgRenderChangingControls['autoColor'] = svgFolder.add(
+        mainController,
+        'autoColor'
+      );
+      if (!mainController.autoColor) {
+        controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+          mainController,
+          'strokeColor'
+        );
+      }
       controller.svgChangingControls['strokeWidth'] = svgFolder.add(
         mainController,
         'strokeWidth',
         0,
-        20
+        100
       );
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
         mainController,
@@ -211,12 +309,6 @@ export function updateRenderType(controller) {
         0,
         1
       );
-      controller.svgChangingControls['renderEveryXPixels'] = svgFolder
-        .add(mainController, 'renderEveryXPixels', 1, 50)
-        .step(1);
-      controller.svgChangingControls['renderEveryYPixels'] = svgFolder
-        .add(mainController, 'renderEveryYPixels', 1, 50)
-        .step(1);
       controller.svgChangingControls['waves'] = svgFolder.add(
         mainController,
         'waves',
@@ -271,18 +363,41 @@ export function updateRenderType(controller) {
       break;
     }
     case SVG_RENDER_TYPES.LINE: {
-      controller.svgChangingControls['strokeWidth'] = svgFolder.add(
+      controller.svgChangingControls['minColorRecognized'] = svgFolder
+        .add(mainController, 'minColorRecognized', 0, 255)
+        .step(1);
+      controller.svgChangingControls['maxColorRecognized'] = svgFolder
+        .add(mainController, 'maxColorRecognized', 0, 255)
+        .step(1);
+
+      controller.svgRenderChangingControls['stroke'] = svgFolder.add(
         mainController,
-        'strokeWidth',
-        0,
-        20
+        'stroke'
       );
-      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
-        mainController,
-        'strokeWidthRandomness',
-        0,
-        1
-      );
+      if (mainController.stroke) {
+        controller.svgRenderChangingControls['autoColor'] = svgFolder.add(
+          mainController,
+          'autoColor'
+        );
+        if (!mainController.autoColor) {
+          controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+            mainController,
+            'strokeColor'
+          );
+        }
+        controller.svgChangingControls['strokeWidth'] = svgFolder.add(
+          mainController,
+          'strokeWidth',
+          0,
+          100
+        );
+        controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
+          mainController,
+          'strokeWidthRandomness',
+          0,
+          1
+        );
+      }
       controller.svgRenderChangingControls['continuous'] = svgFolder.add(
         mainController,
         'continuous'
@@ -349,11 +464,21 @@ export function updateRenderType(controller) {
       break;
     }
     case SVG_RENDER_TYPES.RECURSIVE: {
+      controller.svgChangingControls['renderEveryXPixels'] = svgFolder
+        .add(mainController, 'renderEveryXPixels', 1, 50)
+        .step(1);
+      controller.svgChangingControls['renderEveryYPixels'] = svgFolder
+        .add(mainController, 'renderEveryYPixels', 1, 50)
+        .step(1);
+      controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+        mainController,
+        'strokeColor'
+      );
       controller.svgChangingControls['strokeWidth'] = svgFolder.add(
         mainController,
         'strokeWidth',
         0,
-        20
+        100
       );
       controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
         mainController,
@@ -361,12 +486,6 @@ export function updateRenderType(controller) {
         0,
         1
       );
-      controller.svgChangingControls['renderEveryXPixels'] = svgFolder
-        .add(mainController, 'renderEveryXPixels', 1, 50)
-        .step(1);
-      controller.svgChangingControls['renderEveryYPixels'] = svgFolder
-        .add(mainController, 'renderEveryYPixels', 1, 50)
-        .step(1);
       controller.svgChangingControls['recursiveAlgorithm'] = svgFolder.add(
         mainController,
         'recursiveAlgorithm',
@@ -378,11 +497,21 @@ export function updateRenderType(controller) {
       break;
     }
     case SVG_RENDER_TYPES.CONCENTRIC: {
+      controller.svgChangingControls['strokeColor'] = svgFolder.addColor(
+        mainController,
+        'strokeColor'
+      );
       controller.svgChangingControls['strokeWidth'] = svgFolder.add(
         mainController,
         'strokeWidth',
         0,
-        20
+        100
+      );
+      controller.svgChangingControls['strokeWidthRandomness'] = svgFolder.add(
+        mainController,
+        'strokeWidthRandomness',
+        0,
+        1
       );
       controller.svgChangingControls['circleArcs'] = svgFolder
         .add(mainController, 'circleArcs', 2, 400)
@@ -533,20 +662,6 @@ export function createController() {
     'outputScale',
     0,
     5
-  );
-  controller.svgSettingControls['minColorRecognized'] = svgFolder
-    .add(mainController, 'minColorRecognized', 0, 255)
-    .step(1);
-  controller.svgSettingControls['maxColorRecognized'] = svgFolder
-    .add(mainController, 'maxColorRecognized', 0, 255)
-    .step(1);
-  controller.svgSettingControls['strokeColor'] = svgFolder.addColor(
-    mainController,
-    'strokeColor'
-  );
-  controller.svgSettingControls['autoColor'] = svgFolder.add(
-    mainController,
-    'autoColor'
   );
 
   controller.gui = gui;
