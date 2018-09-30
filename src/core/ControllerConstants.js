@@ -22,6 +22,9 @@ export const controllerConfig = {
   'Live Update': {
     default: true
   },
+  scale: {
+    default: 1
+  },
 
   // Image Controls
   blur: {
@@ -122,9 +125,6 @@ export const controllerConfig = {
   },
   noiseSize: {
     default: 2
-  },
-  outputScale: {
-    default: 1
   },
   randomSeed: {
     default: createRandomSeed()

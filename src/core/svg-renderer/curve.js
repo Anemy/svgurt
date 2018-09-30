@@ -4,16 +4,16 @@ import { getFractalDispacementForPoint } from './fractal';
 import { getPixelColorAtXY, isInColorThreshhold } from './color';
 
 export function renderCurves(svgSettings, curves) {
-  const { outputScale } = svgSettings;
+  const { scale } = svgSettings;
 
   let renderString = '';
   for (let i = 0; i < curves.length; i++) {
     const { x, y, controlPoints, strokeWidth, strokeColor } = curves[i];
 
-    let curvePath = `M ${x * outputScale} ${y * outputScale} C`;
+    let curvePath = `M ${x * scale} ${y * scale} C`;
     _.each(controlPoints, (point, index) => {
       curvePath +=
-        ` ${point.x * outputScale} ${point.y * outputScale}` +
+        ` ${point.x * scale} ${point.y * scale}` +
         (index === controlPoints.length - 1 ? '' : ',');
     });
 

@@ -169,6 +169,7 @@ export default class ImageRenderer extends Component {
         const ctx = this.canvasRef.getContext('2d');
         this.renderedImage = htmlRenderedImage;
         ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
+
         this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
         manipulateImageData(
@@ -204,8 +205,8 @@ export default class ImageRenderer extends Component {
         this.imageData.data,
         this.canvasRef,
         this.props.controller.config,
-        this.width,
-        this.height,
+        this.canvasRef.width,
+        this.canvasRef.height,
         svgString => {
           // TODO: Version/cancel this.
           this.setState({
@@ -230,7 +231,10 @@ export default class ImageRenderer extends Component {
       });
 
       const ctx = this.canvasRef.getContext('2d');
+      this.canvasRef.width = this.width;
+      this.canvasRef.height = this.height;
       ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
+
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
       manipulateImageData(
@@ -309,7 +313,9 @@ export default class ImageRenderer extends Component {
             <div className="svgee-demo-panel">
               <canvas
                 style={{
-                  visibility: isRendered && !isRendering ? 'visible' : 'hidden'
+                  height: isRendered && !isRendering ? this.height * this.props.controller.config.scale : 0,
+                  visibility: isRendered && !isRendering ? 'visible' : 'hidden',
+                  width: isRendered && !isRendering ? this.width * this.props.controller.config.scale : 0
                 }}
                 ref={ref => {
                   this.canvasRef = ref;

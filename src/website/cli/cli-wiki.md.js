@@ -64,7 +64,6 @@ The available configurations and the defaults are as follows:
   maxColorRecognized: 200,
   maxRecursiveDepth: 150,
   minLineLength: 1,
-  outputScale: 1,
   randomSeed: 1011,
   radius: 1.5,
   radiusOnColor: true,
@@ -72,6 +71,7 @@ The available configurations and the defaults are as follows:
   recursiveAlgorithm: 'fifth', // One of 'first', 'second', 'third', 'fourth', or 'fifth'.
   renderEveryXPixels: 5,
   renderEveryYPixels: 5,
+  scale: 1,
   startAtCenterOfShapes: false,
   strokeColor: 'rgb(28, 32, 38)',
   strokeWidth: 1,

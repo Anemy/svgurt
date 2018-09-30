@@ -15,11 +15,11 @@ export function renderSvgString(
   height,
   done
 ) {
-  const { outputScale } = svgSettings;
+  const { scale } = svgSettings;
 
   setImmediate(() => {
-    const dimensionsString = `height="${height * outputScale}" width="${width *
-      outputScale}"`;
+    const dimensionsString = `height="${height * scale}" width="${width *
+      scale}"`;
     const nameSpaceString =
       'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"';
     let svgString = `<svg ${dimensionsString} ${nameSpaceString}>`;

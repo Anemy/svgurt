@@ -41,7 +41,7 @@ function buildRecursivePath(
   const {
     applyFractalDisplacement,
     // displaceOrigin,
-    outputScale,
+    scale,
     maxRecursiveDepth,
     renderEveryXPixels,
     renderEveryYPixels,
@@ -72,7 +72,7 @@ function buildRecursivePath(
     yPos += yDisplacement;
   }
 
-  let pathString = ` L ${xPos * outputScale} ${yPos * outputScale}`;
+  let pathString = ` L ${xPos * scale} ${yPos * scale}`;
   travelled[x][y] = true;
 
   if (stack > maxRecursiveDepth) {
@@ -131,7 +131,7 @@ function buildRecursivePath(
 
       if (pathAddition) {
         if (moved) {
-          pathString += ` M ${xPos * outputScale} ${yPos * outputScale}`;
+          pathString += ` M ${xPos * scale} ${yPos * scale}`;
         } else {
           moved = true;
         }
@@ -154,7 +154,7 @@ function buildRecursivePath(
 export function createRecursivePaths(settings, imageData, width, height) {
   const {
     autoColor,
-    outputScale,
+    scale,
     renderEveryXPixels,
     renderEveryYPixels,
     strokeColor,
@@ -188,7 +188,7 @@ export function createRecursivePaths(settings, imageData, width, height) {
 
       if (pathString && pathString.length > 0) {
         paths.push({
-          pathString: `M ${x * outputScale} ${y * outputScale} ${pathString}`,
+          pathString: `M ${x * scale} ${y * scale} ${pathString}`,
           strokeColor: pathColor,
           strokeWidth: strokeWidth * (1 - Math.random() * strokeWidthRandomness)
         });
