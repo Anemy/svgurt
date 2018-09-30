@@ -464,6 +464,12 @@ export function updateRenderType(controller) {
       break;
     }
     case SVG_RENDER_TYPES.RECURSIVE: {
+      controller.svgChangingControls['minColorRecognized'] = svgFolder
+        .add(mainController, 'minColorRecognized', 0, 255)
+        .step(1);
+      controller.svgChangingControls['maxColorRecognized'] = svgFolder
+        .add(mainController, 'maxColorRecognized', 0, 255)
+        .step(1);
       controller.svgChangingControls['renderEveryXPixels'] = svgFolder
         .add(mainController, 'renderEveryXPixels', 1, 50)
         .step(1);
@@ -592,6 +598,12 @@ export function createController() {
   const mainController = new ControllerConfig();
 
   controller['Live Update'] = gui.add(mainController, 'Live Update');
+  controller.imageChangingControls['scale'] = gui.add(
+    mainController,
+    'scale',
+    0.01,
+    3
+  );
 
   const imageFolder = gui.addFolder('Image Controls');
 
@@ -657,12 +669,6 @@ export function createController() {
 
   const svgFolder = gui.addFolder('SVG Controls');
   controller.svgFolder = svgFolder;
-  controller.svgSettingControls['outputScale'] = svgFolder.add(
-    mainController,
-    'outputScale',
-    0,
-    5
-  );
 
   controller.gui = gui;
   controller.config = mainController;

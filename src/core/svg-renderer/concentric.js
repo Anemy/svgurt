@@ -64,17 +64,17 @@ export function renderConcentricPaths(
   centerX,
   centerY
 ) {
-  const { outputScale, strokeColor, strokeWidth } = svgSettings;
+  const { scale, strokeColor, strokeWidth } = svgSettings;
 
   let renderString = '';
   for (let i = 0; i < concentricPaths.length; i++) {
     const conPath = concentricPaths[i];
-    renderString += `<path d="M ${centerX * outputScale} ${centerY *
-      outputScale} m 0 ${-conPath.radius * outputScale}`;
+    renderString += `<path d="M ${centerX * scale} ${centerY *
+      scale} m 0 ${-conPath.radius * scale}`;
     for (let j = 0; j < conPath.arcs.length; j++) {
       const { rx, ry, xRot, x, y } = conPath.arcs[j];
-      renderString += ` A ${rx * outputScale} ${ry *
-        outputScale} ${xRot} 0 1 ${x * outputScale} ${y * outputScale}`;
+      renderString += ` A ${rx * scale} ${ry *
+        scale} ${xRot} 0 1 ${x * scale} ${y * scale}`;
     }
     renderString += `" stroke="${strokeColor}" stroke-width="${strokeWidth}" style="fill: none;" />`;
   }
