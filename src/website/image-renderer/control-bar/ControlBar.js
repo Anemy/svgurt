@@ -29,6 +29,20 @@ export default function ControlBar(props) {
   return (
     <div className="svgee-top-control-bar">
       <div className="svgee-control-bar-left">
+        <div
+          className="svgee-control-bar-button"
+          onClick={onImportNewImageClicked}
+        >
+          Import New Image
+        </div>
+        <div
+          className="svgee-control-bar-button"
+          onClick={onDownloadSVGClicked}
+        >
+          Download SVG
+        </div>
+      </div>
+      <div className="svgee-control-bar-right">
         <div className="svgee-control-bar-config-selector-container">
           <Select
             className="svgee-control-bar-config-selector"
@@ -60,20 +74,6 @@ export default function ControlBar(props) {
           onClick={onDeleteConfigClicked}
         >
           Delete
-        </div>
-      </div>
-      <div className="svgee-control-bar-right">
-        <div
-          className="svgee-control-bar-button"
-          onClick={onImportNewImageClicked}
-        >
-          Import New Image
-        </div>
-        <div
-          className="svgee-control-bar-button"
-          onClick={onDownloadSVGClicked}
-        >
-          Download SVG
         </div>
       </div>
     </div>
