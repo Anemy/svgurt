@@ -114,6 +114,7 @@ When using Svgurt programatically or through the command line, you need to suppl
   circleArcs: 200,
   intensityWeight: 100000,
   radiusStep: '5'
+}
 ```
 
 ## Local Development of Svgurt
