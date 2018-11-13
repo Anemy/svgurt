@@ -107,7 +107,7 @@ When using Svgurt programatically or through the command line, you need to suppl
   fractalRatioY: 0.01,
   fractalRandomSeed: 9996,
   autoColor: false,
-  arcUnits: 200,
+  arcUnits: 200111,
   intensityWeight: 100000,
   radiusStep: '5'
 ```
