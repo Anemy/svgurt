@@ -12,6 +12,7 @@
   left: 0;
   right: 0;
   z-index: 10;
+  box-shadow: 0 0 20px rgba(39, 158, 160, 0.6);
 }
 
 .svgee-landing-page-background {
