@@ -25,6 +25,8 @@ export function downloadSVGString(svgString) {
 
     const fileName = window.prompt('File name', 'svgurt-output');
 
-    downloadURI(uri, `${fileName}.svg`);
+    if (fileName) {
+      downloadURI(uri, `${fileName}.svg`);
+    }
   }
 }

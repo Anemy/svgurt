@@ -45,7 +45,7 @@ export default class LandingInfo extends Component {
               className="svgee-demo-link"
               onClick={closeLandingInfo}
             >
-              Ok, let me use it already
+              Cool, let me use it already
             </button>
           </div>
           <table className="svgee-example-table">

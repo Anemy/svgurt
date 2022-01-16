@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import SplitterLayout from 'react-splitter-layout';
+import 'react-splitter-layout/lib/index.css';
 
 import './ImageRenderer.css';
 
@@ -268,48 +270,50 @@ export default class ImageRenderer extends Component {
 
     return (
       <div className="svgee-image-renderer">
-        <ControlBar
-          currentConfigName={currentConfigName}
-          configNames={configNames}
-          onConfigChange={newConfigName => {
-            this.props.controller.config.loadConfig(newConfigName);
-            this.onConfigChange();
-          }}
-          onDownloadSVGClicked={this.onDownloadSVGClicked}
-          onImportNewImageClicked={this.onImportNewImageClicked}
-          onRevertClicked={() => {
-            this.props.controller.config.revertCurrentConfig();
-            this.onConfigChange();
-          }}
-          onLoadConfigClicked={() => {
-            this.props.controller.config.loadConfigFromJson();
-            this.onConfigChange();
-          }}
-          onCreateNewConfigClicked={() => {
-            this.props.controller.config.createNewConfig();
-            this.onConfigChange();
-          }}
-          onDeleteConfigClicked={() => {
-            this.props.controller.config.deleteConfig();
-            this.onConfigChange();
-          }}
-          onSaveConfigClicked={() => {
-            this.props.controller.config.saveConfigs();
-            this.onConfigChange();
-          }}
-        />
-        <input
-          accept="image/*"
-          onChange={() => this.handleImageChange()}
-          ref={ref => {
-            this.hiddenImageChooser = ref;
-          }}
-          type="file"
-        />
-        {loadingImage && <p>Loading Image...</p>}
-        {isRendering && <p>Building Image...</p>}
-        <div className="svgee-image-showing-window grid no-gutters">
-          <div className="unit half">
+        <div className="svgee-demo-toolbar-area">
+          <ControlBar
+            currentConfigName={currentConfigName}
+            configNames={configNames}
+            onConfigChange={newConfigName => {
+              this.props.controller.config.loadConfig(newConfigName);
+              this.onConfigChange();
+            }}
+            onDownloadSVGClicked={this.onDownloadSVGClicked}
+            onImportNewImageClicked={this.onImportNewImageClicked}
+            onRevertClicked={() => {
+              this.props.controller.config.revertCurrentConfig();
+              this.onConfigChange();
+            }}
+            onLoadConfigClicked={() => {
+              this.props.controller.config.loadConfigFromJson();
+              this.onConfigChange();
+            }}
+            onCreateNewConfigClicked={() => {
+              this.props.controller.config.createNewConfig();
+              this.onConfigChange();
+            }}
+            onDeleteConfigClicked={() => {
+              this.props.controller.config.deleteConfig();
+              this.onConfigChange();
+            }}
+            onSaveConfigClicked={() => {
+              this.props.controller.config.saveConfigs();
+              this.onConfigChange();
+            }}
+          />
+          <input
+            accept="image/*"
+            onChange={() => this.handleImageChange()}
+            ref={ref => {
+              this.hiddenImageChooser = ref;
+            }}
+            type="file"
+          />
+          {loadingImage && <p>Loading Image...</p>}
+          {isRendering && <p>Building Image...</p>}
+        </div>
+        <div className="svgee-demo-main-render-area">
+          <SplitterLayout>
             <div className="svgee-demo-panel">
               <canvas
                 style={{
@@ -322,12 +326,10 @@ export default class ImageRenderer extends Component {
                 }}
               />
             </div>
-          </div>
-          <div className="unit half">
             <div className="svgee-demo-panel">
               <div dangerouslySetInnerHTML={{ __html: svgString }} />
             </div>
-          </div>
+          </SplitterLayout>
         </div>
       </div>
     );

@@ -1,5 +1,7 @@
 .svgee-top-control-bar {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
+  /* background-color: #061621; */
+  /* background-color: #15b7b9; */
   position: relative;
   width: 100%;
 }
@@ -8,6 +10,7 @@
   display: none;
   float: left;
   margin-left: 10px;
+  padding: 4px 0px;
 }
 
 @media only screen and (min-width: 768px) {

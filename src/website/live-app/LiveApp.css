@@ -66,25 +66,33 @@ input[type="file"] {
 
 .svgee-demo-panel {
   border: 1px solid #eee;
-  height: 50vh;
+  /* height: 50vh; */
   overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
-@media only screen and (min-width: 568px) {
+/* @media only screen and (min-width: 568px) {
   .svgee-demo-panel {
-    height: 100vh;
+    height: 100`vh;
+    flex-grow: 1;
   }
-}
+} */
 
 /* For mobile phones: */
 .svgee-dat-gui-container {
   position: absolute;
   right: 10px;
-  top: 164px;
+  /* top: 164px; */
+  top: 81px;
 }
 
 @media only screen and (min-width: 470px) {
   .svgee-dat-gui-container {
-    top: 99px;
+    /* top: 99px; */
+    top: 81px;
   }
 }

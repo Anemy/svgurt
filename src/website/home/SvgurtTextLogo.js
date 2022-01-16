@@ -7,8 +7,8 @@ export default function SvgurtTextLogo() {
   /* eslint-disable max-len */
   return (
     <Link to="/">
-      <svg className="svgee-text-logo" height="50" width="180">
-        <g transform="translate(-40,-36) scale(0.85)">
+      <svg className="svgee-text-logo" height="25" width="90">
+        <g transform="translate(-20,-18) scale(0.425)">
           <path d="M 45 45  L 45 45 L 50 50 L 55 55 L 60 60 L 65 60 L 70 65 L 75 70 L 80 75" />
           <path d="M 45 50  L 45 50 L 50 55 L 55 60" />
           <path d="M 45 70  L 45 70 L 50 75 L 55 80 L 60 80 L 65 80 L 70 80 L 75 80" />

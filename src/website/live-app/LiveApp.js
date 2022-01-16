@@ -95,7 +95,7 @@ export default class LiveApp extends Component {
     const { showLandingInfo, imageLoaded, imageLoadingError, loadingImage } = this.state;
 
     return (
-      <React.Fragment>
+      <div className="svgee-full-page">
         <div className="svgee-top-nav-bar">
           <SvgurtTextLogo />
           <button
@@ -138,7 +138,7 @@ export default class LiveApp extends Component {
             }}
           />
         )}
-      </React.Fragment>
+      </div>
     );
   }
 }

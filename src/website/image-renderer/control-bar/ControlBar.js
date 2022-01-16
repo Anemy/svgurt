@@ -1,35 +1,85 @@
-import _ from 'lodash';
-import React from 'react';
-import Select from 'react-select';
+// import _ from 'lodash';
+import React, { useState } from 'react';
+// import Select from 'react-select';
+import { Menu, Button, MenuItem } from '@material-ui/core';
+
 import 'react-select/dist/react-select.css';
 
 import './ControlBar.css';
 
 export default function ControlBar(props) {
   const {
-    onConfigChange,
-    onCreateNewConfigClicked,
-    onDeleteConfigClicked,
+    // onConfigChange,
+    // onCreateNewConfigClicked,
+    // onDeleteConfigClicked,
     onDownloadSVGClicked,
-    onImportNewImageClicked,
-    onRevertClicked,
-    onSaveConfigClicked,
-    currentConfigName,
-    configNames
+    onImportNewImageClicked
+    // onRevertClicked,
+    // onSaveConfigClicked,
+    // currentConfigName,
+    // configNames
   } = props;
 
-  const selectOptions = _.map(configNames, name => {
-    return {
-      value: name,
-      label: name,
-      className: 'svgee-control-bar-config-item'
-    };
-  });
+  // const selectOptions = _.map(configNames, name => {
+  //   return {
+  //     value: name,
+  //     label: name,
+  //     className: 'svgee-control-bar-config-item'
+  //   };
+  // });
+
+  const [menuAnchorEl, setAnchorEl] = useState(null);
+
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className="svgee-top-control-bar">
       <div className="svgee-control-bar-left">
-        <div
+        <Button
+          // variant="outlined"
+          // color="primary"
+          variant="contained"
+          size="small"
+          // color="primary"
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleOpenMenu}
+        >
+          File
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={menuAnchorEl}
+          keepMounted
+          open={Boolean(menuAnchorEl)}
+          onClose={handleCloseMenu}
+        >
+          <MenuItem
+            onClick={() => {
+              handleCloseMenu();
+              onImportNewImageClicked();
+            }}
+          >Import New Image</MenuItem>
+          {/* <MenuItem onClick={() => {
+            handleCloseMenu();
+            onImportNewImageClicked();
+          }}>Load config</MenuItem>
+          <MenuItem onClick={() => {
+            handleCloseMenu();
+            onSaveConfigClicked();
+          }}>Save config</MenuItem> */}
+          <MenuItem onClick={() => {
+            handleCloseMenu();
+            onDownloadSVGClicked();
+          }}>Download SVG</MenuItem>
+        </Menu>
+        {/* <div
           className="svgee-control-bar-button"
           onClick={onImportNewImageClicked}
         >
@@ -40,9 +90,9 @@ export default function ControlBar(props) {
           onClick={onDownloadSVGClicked}
         >
           Download SVG
-        </div>
+        </div> */}
       </div>
-      <div className="svgee-control-bar-right">
+      {/* <div className="svgee-control-bar-right">
         <div className="svgee-control-bar-config-selector-container">
           <Select
             className="svgee-control-bar-config-selector"
@@ -75,7 +125,7 @@ export default function ControlBar(props) {
         >
           Delete
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

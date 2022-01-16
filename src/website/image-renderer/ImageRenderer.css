@@ -1,3 +1,22 @@
 .svgee-image-showing-window {
   border-top: 1px solid #555;
 }
+
+.svgee-image-renderer {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.svgee-demo-toolbar-area {
+  /* background-color: #061621; */
+  /* background-color: #15b7b9; */
+  background-color: rgba(39, 158, 160, 0.6);
+}
+
+.svgee-demo-main-render-area {
+  flex-grow: 1;
+  position: relative;
+}
