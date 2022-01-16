@@ -38,6 +38,12 @@
   margin-top: 50px;
 }
 
+.svgee-github-link {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+}
+
 .svgee-demo-link {
   background-color: #15b7b9;
   border: 1px solid #15b7b9;
