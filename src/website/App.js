@@ -2,8 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 
 import CLIPage from './cli/CLIPage';
-import Demo from './demo/Demo';
-import Home from './home/Home';
+import LiveApp from './live-app/LiveApp';
 
 import './App.css';
 
@@ -12,8 +11,7 @@ const App = () => (
     <Router>
       <React.Fragment>
         <Route path="/cli" component={CLIPage} />
-        <Route path="/demo" component={Demo} />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={LiveApp} />
       </React.Fragment>
     </Router>
   </main>

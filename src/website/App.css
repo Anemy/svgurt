@@ -8,7 +8,11 @@
 .svgee-top-nav-link {
   color: #fff;
   display: inline-block;
+  background: none;
+  border: none;
+  outline: none;
   font-weight: bold;
+  font-size: 1em;
   margin-right: 30px;
   padding: 24px 0px;
   position: relative;

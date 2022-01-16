@@ -1,32 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import './Home.css';
+import './LandingInfo.css';
 
-import SvgurtTextLogo from './SvgurtTextLogo';
-
-export default class Home extends Component {
+export default class LandingInfo extends Component {
   render() {
+    const {
+      closeLandingInfo
+    } = this.props;
+
     return (
-      <div className="svgee-home">
-        <div className="svgee-top-nav-bar">
-          <SvgurtTextLogo />
-          <Link className="svgee-top-nav-link" to="cli">
-            CLI Docs
-          </Link>
-          <Link className="svgee-top-nav-link" to="/">
-            Live App
-          </Link>
-          <a
-            className="svgee-top-nav-link"
-            href="https://github.com/Anemy/svgurt"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Github
-          </a>
-        </div>
-        <div className="svgee-home-page">
+      <React.Fragment>
+        <div
+          className="svgee-landing-page-background"
+          onClick={closeLandingInfo}
+        />
+        <div className="svgee-landing-page">
           <img
             className="svgee-logo-image"
             src="/images/svgurt_logo.png"
@@ -47,9 +35,12 @@ export default class Home extends Component {
             knobs and controls.
           </div>
           <div className="svgee-demo-link-container">
-            <Link className="svgee-demo-link" to="app">
-              Use Now
-            </Link>
+            <button
+              className="svgee-demo-link"
+              onClick={closeLandingInfo}
+            >
+              Ok, let me use it already
+            </button>
           </div>
           <table className="svgee-example-table">
             <tr>
@@ -106,7 +97,7 @@ export default class Home extends Component {
             </tr>
           </table>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

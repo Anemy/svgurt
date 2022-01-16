@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import './Demo.css';
+import './LiveApp.css';
 
 import ImageRenderer from '../image-renderer/ImageRenderer';
 
 import { createController } from '../controller/Controller';
 import exampleImage from '../fixtures/example-image';
 import SvgurtTextLogo from '../home/SvgurtTextLogo';
+import LandingInfo from '../landing-info/LandingInfo';
 
-export default class Demo extends Component {
+export default class LiveApp extends Component {
   state = {
+    showLandingInfo: true,
     loadingImage: true,
     imageLoaded: false,
     imageLoadingError: false
@@ -90,15 +92,22 @@ export default class Demo extends Component {
   };
 
   render() {
-    const { imageLoaded, imageLoadingError, loadingImage } = this.state;
+    const { showLandingInfo, imageLoaded, imageLoadingError, loadingImage } = this.state;
 
     return (
       <React.Fragment>
         <div className="svgee-top-nav-bar">
           <SvgurtTextLogo />
-          <Link className="svgee-top-nav-link" to="/">
+          <button
+            className="svgee-top-nav-link"
+            onClick={() => {
+              this.setState({
+                showLandingInfo: true
+              });
+            }}
+          >
             Home
-          </Link>
+          </button>
           <Link className="svgee-top-nav-link" to="cli">
             Cli Docs
           </Link>
@@ -120,6 +129,15 @@ export default class Demo extends Component {
           />
         )}
         <div id="js-dat-gui-container" className="svgee-dat-gui-container" />
+        {showLandingInfo && (
+          <LandingInfo
+            closeLandingInfo={() => {
+              this.setState({
+                showLandingInfo: false
+              });
+            }}
+          />
+        )}
       </React.Fragment>
     );
   }

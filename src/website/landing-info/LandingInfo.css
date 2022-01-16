@@ -1,0 +1,84 @@
+.svgee-landing-page {
+  background-color: white;
+  text-align: center;
+  margin-top: 40px;
+  border-radius: 20px;
+  max-width: 700px;
+  padding: 30px;
+  border: 1px solid black;
+  margin: 5vh auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.svgee-landing-page-background {
+  z-index: 5;
+  background: rgba(21, 63, 65, 0.5);
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.svgee-logo-image {
+  height: 160px;
+}
+
+.svgee-demo-link-container {
+  margin-top: 40px;
+  position: relative;
+}
+
+.svgee-import-image-example {
+  margin-top: 50px;
+}
+
+.svgee-demo-link {
+  background-color: #15b7b9;
+  border: 1px solid #15b7b9;
+  border-radius: 3px;
+  color: white;
+  font-size: 22px;
+  padding: 14px 20px;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-animation: fadein 2s;
+  -ms-animation: fadein 2s;
+  animation: fadein 2s;
+
+  text-decoration: none;
+  transition: all 200ms;
+}
+.svgee-demo-link:hover {
+  box-shadow: 0 0 20px rgba(39, 158, 160, 0.6);
+  cursor: pointer;
+}
+.svgee-demo-link:active {
+  box-shadow: 0 0 20px rgba(21, 183, 185, 0.35);
+  cursor: pointer;
+}
+
+.svgee-home-desc {
+  font-size: 16px;
+  color: #707070;
+  line-height: 24px;
+  margin: auto;
+  margin-top: 16px;
+  max-width: 400px;
+}
+
+.svgee-example-table {
+  width: 50%;
+  margin: auto;
+  margin-top: 40px;
+  max-width: 600px;
+}
+
+.svgee-image-example-input {
+  width: 160px;
+}
