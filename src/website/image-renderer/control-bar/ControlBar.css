@@ -2,6 +2,7 @@
   /* background-color: #fafafa; */
   /* background-color: #061621; */
   /* background-color: #15b7b9; */
+  /* background-color: #f3e8cb; */
   position: relative;
   width: 100%;
 }
@@ -23,6 +24,7 @@
 .svgee-control-bar-right {
   float: right;
   margin-right: 10px;
+  padding: 4px 0px;
 }
 
 .svgee-control-bar-button {

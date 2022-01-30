@@ -13,7 +13,12 @@
 .svgee-demo-toolbar-area {
   /* background-color: #061621; */
   /* background-color: #15b7b9; */
-  background-color: rgba(39, 158, 160, 0.6);
+  /* background-color: rgba(39, 158, 160, 0.6); */
+  /* background-color: #f3e8cb; */
+  /* background-color: #21313C; */
+  /* background-color: #89979B; */
+  background-color: white;
+  box-shadow: 0 4px 3px rgba(9, 28, 30, 0.05);
 }
 
 .svgee-demo-main-render-area {

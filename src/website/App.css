@@ -9,10 +9,18 @@
 }
 
 .svgee-top-nav-bar {
+  /* background-color: #15b7b9; */
+  /* background-color: #061621; */
+  /* background-color: #1c2026; */
+  /* background-color: #89979B; */
+  /* background-color: #21313C; */
   background-color: #15b7b9;
   position: relative;
   text-align: right;
   width: 100%;
+  
+  /* vertical-align: middle; */
+  /* align-items: center; */
 }
 
 .svgee-top-nav-link {

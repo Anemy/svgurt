@@ -5,19 +5,29 @@ import { Menu, Button, MenuItem } from '@material-ui/core';
 
 import 'react-select/dist/react-select.css';
 
-import './ControlBar.css';
+import './SettingsMenu.css';
 
-export default function ControlBar(props) {
+export default function SettingsMenu(props) {
+
+  // constructor() {
+  //   this.configs = {};
+  //   _.each(controllerConfig, (configItem, index) => {
+  //     this[index] = configItem.default;
+  //   });
+
+  //   this.configNames = [];
+
+  //   this.loadConfigFromStore();
+
+  //   this.currentConfigName = DEFAULT_CONFIG_NAME;
+  // }
+
   const {
     // onConfigChange,
     // onCreateNewConfigClicked,
     // onDeleteConfigClicked,
     onDownloadSVGClicked,
     onImportNewImageClicked
-    // onRevertClicked,
-    // onSaveConfigClicked,
-    // currentConfigName,
-    // configNames
   } = props;
 
   // const selectOptions = _.map(configNames, name => {
