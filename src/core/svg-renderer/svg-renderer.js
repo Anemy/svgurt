@@ -17,7 +17,7 @@ export function renderSvgString(
 ) {
   const { scale } = svgSettings;
 
-  setImmediate(() => {
+  setTimeout(() => {
     const dimensionsString = `height="${height * scale}" width="${width *
       scale}"`;
     const nameSpaceString =

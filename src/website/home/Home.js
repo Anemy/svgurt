@@ -52,58 +52,62 @@ export default class Home extends Component {
             </Link>
           </div>
           <table className="svgee-example-table">
-            <tr>
-              <th>Input</th>
-              <th>Output</th>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  className="svgee-image-example-input"
-                  src="/images/palm.png"
-                  alt="palm tree input"
-                />
-              </td>
-              <td>
-                <img
-                  className="svgee-svg-example-output"
-                  src="/images/palm-1.svg"
-                  alt="palm tree svg output"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  className="svgee-image-example-input"
-                  src="/images/palm.png"
-                  alt="palm tree"
-                />
-              </td>
-              <td>
-                <img
-                  className="svgee-svg-example-output"
-                  src="/images/palm-2.svg"
-                  alt="palm tree svg output"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  className="svgee-image-example-input"
-                  src="/images/palm.png"
-                  alt="palm tree"
-                />
-              </td>
-              <td>
-                <img
-                  className="svgee-svg-example-output"
-                  src="/images/palm-3.svg"
-                  alt="palm tree svg output"
-                />
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <th>Input</th>
+                <th>Output</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <img
+                    className="svgee-image-example-input"
+                    src="/images/palm.png"
+                    alt="palm tree input"
+                  />
+                </td>
+                <td>
+                  <img
+                    className="svgee-svg-example-output"
+                    src="/images/palm-1.svg"
+                    alt="palm tree svg output"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img
+                    className="svgee-image-example-input"
+                    src="/images/palm.png"
+                    alt="palm tree"
+                  />
+                </td>
+                <td>
+                  <img
+                    className="svgee-svg-example-output"
+                    src="/images/palm-2.svg"
+                    alt="palm tree svg output"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img
+                    className="svgee-image-example-input"
+                    src="/images/palm.png"
+                    alt="palm tree"
+                  />
+                </td>
+                <td>
+                  <img
+                    className="svgee-svg-example-output"
+                    src="/images/palm-3.svg"
+                    alt="palm tree svg output"
+                  />
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

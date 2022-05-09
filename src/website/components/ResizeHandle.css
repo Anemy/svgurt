@@ -1,0 +1,51 @@
+.svgee-resizer-styles {
+  position: absolute;
+  background: transparent;
+  padding: 0;
+  transition: opacity 250ms ease;
+  transition-delay: 0ms;
+  background-color: #019EE2;
+  opacity: 0;
+  outline: none;
+  z-index: 100;
+  
+  -webkit-appearance: none;
+}
+
+.svgee-resizer-styles:focus {
+  opacity: 1;
+}
+.svgee-resizer-styles:hover {
+  transition-delay: 250ms;
+  opacity: 1;
+}
+.svgee-resizer-styles::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+.svgee-resizer-styles::-ms-track {
+  background: none;
+  border-color: none;
+  color: none;
+}
+
+.svgee-vertical-resizer-styles {
+  width: 4px !important;
+  right: -2px;
+  bottom: 0;
+  top: 0;
+}
+.svgee-vertical-resizer-styles:hover {
+  cursor: ew-resize;
+}
+
+.svgee-horizontal-resizer-styles {
+  width: 100%;
+  height: 4px !important;
+  top: -2px;
+  right: 0;
+  left: 0;
+};
+
+.svgee-horizontal-resizer-styles:hover {
+  cursor: ns-resize;
+}

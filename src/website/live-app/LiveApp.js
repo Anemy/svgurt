@@ -85,7 +85,7 @@ export default class LiveApp extends Component {
         });
       };
 
-      setImmediate(() => {
+      setTimeout(() => {
         reader.readAsDataURL(this.imageInputRef.files[0]);
       });
     }

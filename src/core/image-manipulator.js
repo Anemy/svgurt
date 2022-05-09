@@ -1,5 +1,5 @@
 import jsfeat from 'jsfeat';
-import StackBlur from 'stackblur-canvas';
+import * as StackBlur from 'stackblur-canvas';
 
 import noise from './utils/noise';
 

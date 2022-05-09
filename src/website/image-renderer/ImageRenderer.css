@@ -23,5 +23,12 @@
 
 .svgee-demo-main-render-area {
   flex-grow: 1;
+  display: flex;
   position: relative;
+}
+
+.svgee-demo-panel-container {
+  display: flex;
+  position: relative;
+  flex-grow: 1;
 }

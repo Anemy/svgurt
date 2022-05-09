@@ -1,7 +1,5 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import SplitterLayout from 'react-splitter-layout';
-import 'react-splitter-layout/lib/index.css';
 
 import './ImageRenderer.css';
 
@@ -12,6 +10,9 @@ import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 import { manipulateImageData } from '../../core/image-manipulator';
 import { renderSvgString } from '../../core/svg-renderer/svg-renderer';
 import { downloadSVGString } from './downloader';
+import ResizableArea from '../components/ResizeableArea';
+
+const minLeftPanelWidth = 100;
 
 export default class ImageRenderer extends Component {
   constructor(props) {
@@ -135,7 +136,7 @@ export default class ImageRenderer extends Component {
           imageLoaded: true
         });
 
-        setImmediate(() => this.renderFirstTimeImage());
+        setTimeout(() => this.renderFirstTimeImage());
       };
 
       reader.onerror = () => {
@@ -145,7 +146,7 @@ export default class ImageRenderer extends Component {
         });
       };
 
-      setImmediate(() => {
+      setTimeout(() => {
         reader.readAsDataURL(this.hiddenImageChooser.files[0]);
       });
     }
@@ -313,7 +314,10 @@ export default class ImageRenderer extends Component {
           {isRendering && <p>Building Image...</p>}
         </div>
         <div className="svgee-demo-main-render-area">
-          <SplitterLayout>
+          <ResizableArea
+            minWidth={minLeftPanelWidth}
+            initialWidth={window.innerWidth / 2}
+          >
             <div className="svgee-demo-panel">
               <canvas
                 style={{
@@ -326,10 +330,12 @@ export default class ImageRenderer extends Component {
                 }}
               />
             </div>
+          </ResizableArea>
+          <div className="svgee-demo-panel-container">
             <div className="svgee-demo-panel">
               <div dangerouslySetInnerHTML={{ __html: svgString }} />
             </div>
-          </SplitterLayout>
+          </div>
         </div>
       </div>
     );

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // import Select from 'react-select';
 import { Menu, Button, MenuItem } from '@material-ui/core';
 
-import 'react-select/dist/react-select.css';
+// import 'react-select/dist/react-select.css';
 
 import './SettingsMenu.css';
 
