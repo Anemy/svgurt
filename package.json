@@ -9,7 +9,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Anemy/svgurt.git"
+    "url": "git://github.com/Anemy/svgurt.git"
   },
   "scripts": {
     "start": "react-scripts start",
