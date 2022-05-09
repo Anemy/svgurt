@@ -35,9 +35,9 @@ function getSVG(pathList, size, opt_type) {
       return s;
     }
 
-    var n = curve.n,
+    let n = curve.n,
       i;
-    var p =
+    let p =
       'M' +
       (curve.c[(n - 1) * 3 + 2].x * size).toFixed(3) +
       ' ' +
@@ -50,11 +50,11 @@ function getSVG(pathList, size, opt_type) {
         p += segment(i);
       }
     }
-    //p +=
+    // p +=
     return p;
   }
 
-  var w = 846,
+  let w = 846,
     h = 352,
     len = pathList.length,
     c,
@@ -63,7 +63,7 @@ function getSVG(pathList, size, opt_type) {
     fillc,
     fillrule;
 
-  var svg =
+  let svg =
     '<svg id="svg" version="1.1" width="' +
     w +
     '" height="' +

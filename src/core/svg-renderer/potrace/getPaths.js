@@ -38,14 +38,14 @@ export default function getPaths(pathlist) {
         }
       ];
     }
-    var p = [];
+    const p = [];
 
-    var n = curve.n,
+    let n = curve.n,
       i,
       s;
 
-    var x = curve.c[(n - 1) * 3 + 2].x;
-    var y = curve.c[(n - 1) * 3 + 2].y;
+    const x = curve.c[(n - 1) * 3 + 2].x;
+    const y = curve.c[(n - 1) * 3 + 2].y;
 
     p.push({
       type: 'POINT',
@@ -61,15 +61,15 @@ export default function getPaths(pathlist) {
         p.push(s[0], s[1]);
       }
     }
-    //p +=
+    // p +=
     return p;
   }
 
-  var len = pathlist.length,
+  let len = pathlist.length,
     c,
     i;
 
-  var paths = [];
+  const paths = [];
   for (i = 0; i < len; i++) {
     c = pathlist[i].curve;
     paths.push(path(c));

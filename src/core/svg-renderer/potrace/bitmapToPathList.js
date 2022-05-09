@@ -39,7 +39,8 @@ function findPath(point, bitmap, bitmapTarget, options) {
   let area = 0;
   const isHole = !bitmap.at(x, y);
 
-  while (true) {
+  const alwaysRun = true;
+  while (alwaysRun) {
     points.push(new Point(x, y));
 
     x += dirX;
