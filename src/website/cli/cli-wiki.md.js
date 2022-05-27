@@ -22,7 +22,7 @@ The config file can either be stored as \`.json\` or \`.js\`.
 svgurt config
 \`\`\`
 
-An example of a config file can be found on [Github](https://github.com/Anemy/svgurt/blob/master/test/config.json)
+An example of a config file can be found on [Github](https://github.com/Anemy/svgurt/blob/main/test/config.json)
 
 The available configurations and the defaults are as follows:
 
