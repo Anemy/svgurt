@@ -6,7 +6,7 @@ import './SvgurtTextLogo.css';
 export default function SvgurtTextLogo() {
   /* eslint-disable max-len */
   return (
-    <Link to="/">
+    <Link to="/#/">
       <svg className="svgee-text-logo" height="25" width="90">
         <g transform="translate(-20,-16) scale(0.45)">
           <path d="M 45 45  L 45 45 L 50 50 L 55 55 L 60 60 L 65 60 L 70 65 L 75 70 L 80 75" />

@@ -11,10 +11,10 @@ export default class Home extends Component {
       <div className="svgee-home">
         <div className="svgee-top-nav-bar">
           <SvgurtTextLogo />
-          <Link className="svgee-top-nav-link" to="cli">
+          <Link className="svgee-top-nav-link" to="/#/cli">
             CLI Docs
           </Link>
-          <Link className="svgee-top-nav-link" to="/">
+          <Link className="svgee-top-nav-link" to="/#/">
             Live App
           </Link>
           <a

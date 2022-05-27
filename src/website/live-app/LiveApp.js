@@ -108,7 +108,7 @@ export default class LiveApp extends Component {
           >
             Home
           </button>
-          <Link className="svgee-top-nav-link" to="cli">
+          <Link className="svgee-top-nav-link" to="/#/cli">
             Cli Docs
           </Link>
           <a
