@@ -12,7 +12,7 @@ const App = () => (
     {/* <Router> */}
       <Routes>
       {/* <Switch> */}
-        <Route path="/#/cli" element={<CLIPage />} />
+        <Route path="/cli" element={<CLIPage />} />
         <Route exact path="/" element={<LiveApp />} />
       {/* </Switch> */}
       </Routes>
