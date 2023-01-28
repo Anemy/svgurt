@@ -11,6 +11,13 @@
     "type": "git",
     "url": "git://github.com/Anemy/svgurt.git"
   },
+  "files": [
+    "LICENSE",
+    "lib",
+    "bin",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "start": "react-scripts start",
     "format": "prettier --write \"src/**/*{.js,.jsx}\" \"!**/lib/**\"",
@@ -19,23 +26,16 @@
     "build": "react-scripts build && npm run compile-cli",
     "deploy": "npm run build && gh-pages -d build",
     "eject": "react-scripts eject",
+    "pretest": "npm run build",
     "test": "babel-node ./test/test-npm-module.js"
   },
   "dependencies": {
-    "dat.gui": "^0.7.9",
     "file-api": "^0.10.4",
     "get-pixels": "^3.3.3",
     "image-data-uri": "^2.0.1",
     "image-size": "^1.0.1",
     "jsfeat": "0.0.8",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "^8.0.3",
-    "react-router-dom": "^6.8.0",
-    "react-scripts": "^5.0.1",
-    "react-select": "^5.3.2",
-    "shelljs": "^0.8.5",
     "stackblur-canvas": "^2.5.0"
   },
   "devDependencies": {
@@ -51,11 +51,20 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.6",
+    "dat.gui": "^0.7.9",
+    "dotenv": "^16.0.3",
     "eslint": "^8.15.0",
     "eslint-plugin-react": "^7.29.4",
     "gh-pages": "^3.2.3",
+    "node-fetch": "^2.6.8",
     "postcss-normalize": "^10.0.1",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.3",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "^5.0.1",
+    "react-select": "^5.3.2"
   },
   "browserslist": {
     "production": [

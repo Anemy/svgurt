@@ -1,7 +1,11 @@
 /* eslint-disable no-console */
 const assert = require('assert');
+// TODO: Once we're on node 17+ we can use the built in fetch api.
+const fetch = require('node-fetch');
+const fs = require('fs');
 
 const svgurt = require('../lib/module');
+const { promisify } = require('util');
 
 async function test() {
   console.log('Running tests...');
@@ -53,6 +57,29 @@ async function test() {
     assert(false);
   }
   console.log('Ran it with basic config on two inputs. Check for two files with array in their name in this directory.');
+
+  const imageResponse = await fetch('https://i.imgur.com/K3aUeSr.png');
+  const blob = await imageResponse.blob();
+  const arrayBuffer = await blob.arrayBuffer();
+  const imageBuffer = Buffer.from(arrayBuffer);
+
+  // const runWriteFile = promisify(fs.writeFile);
+  // await runWriteFile('./test/image_buffer_test', imageBuffer);
+
+  console.log('Running svgurt with a buffer from a url...');
+  const bufferConfig = {
+    imageBuffer,
+    output: ['./test/buffer_svg_output'],
+    svgRenderType: 'CIRCLE'
+  };
+
+  try {
+    await svgurt(bufferConfig);
+  } catch (err) {
+    console.log('Error trying buffer:', err);
+    assert(false);
+  }
+  console.log('Ran it with basic config on buffer, check for `buffer_svg_output` in this directory.');
 
 
   console.log('Done running tests.');

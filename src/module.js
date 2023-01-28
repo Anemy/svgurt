@@ -8,6 +8,9 @@ import { manipulateImageData } from './core/image-manipulator';
 import { controllerConfig } from './core/ControllerConstants';
 import { renderSvgString } from './core/svg-renderer/svg-renderer';
 
+// TODO: Cleanup a lot of the things in this file.
+// We should have some better flows and configuration management.
+
 const configDefaults = {};
 
 _.each(controllerConfig, (configItem, index) => {
@@ -21,13 +24,12 @@ const defaultConfig = {
   returnSVGString: false
 };
 
-async function runSvgurtOnFile(config, inputFileName, outputFileName) {
-  const fileNameToImport = path.join(__dirname, '..', inputFileName);
-
+// Data is either a file name or a buffer.
+async function runSvgurtOnData(config, input, outputFileName) {
   let pixels;
   try {
     const runGetPixels = promisify(getPixels);
-    pixels = await runGetPixels(fileNameToImport);
+    pixels = await runGetPixels(input);
   } catch (err) {
     throw new Error(`Error importing image: ${err}`);
   }
@@ -61,23 +63,34 @@ async function runSvgurtOnFile(config, inputFileName, outputFileName) {
   }
 }
 
+async function runSvgurtOnFile(config, inputFileName, outputFileName) {
+  const fileNameToImport = path.join(__dirname, '..', inputFileName);
+
+  return await runSvgurtOnData(config, fileNameToImport, outputFileName);
+}
+
 async function runSvgurt(config) {
-  let svgurtConfig = {
+  const svgurtConfig = {
     ...defaultConfig,
     ...config
   };
 
+  if (svgurtConfig.imageBuffer) {
+    return await runSvgurtOnData(svgurtConfig, svgurtConfig.imageBuffer);
+  }
+
+  // File runners.
   if (_.isArray(svgurtConfig.input)) {
     const isOutputArray = _.isArray(svgurtConfig.output);
 
     let svgStrings = [];
     let errStrings = [];
 
-    await Promise.all(svgurtConfig.input, (inputFileName, index) => {
+    await Promise.all(svgurtConfig.input, async(inputFileName, index) => {
       try {
         let res;
         if (isOutputArray && svgurtConfig.output[index]) {
-          res = runSvgurtOnFile(
+          res = await runSvgurtOnFile(
             svgurtConfig,
             inputFileName,
             svgurtConfig.output[index]
@@ -85,7 +98,7 @@ async function runSvgurt(config) {
 
         } else {
           // If they don't supply a corresponding output file name then we just use the input file name.
-          res = runSvgurtOnFile(
+          res = await runSvgurtOnFile(
             svgurtConfig,
             inputFileName,
             inputFileName
