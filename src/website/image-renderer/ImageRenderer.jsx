@@ -117,126 +117,66 @@ class ImageRenderer extends Component {
 
   handleImageChange = () => {
     if (
-      !this.state.loadingImage &&
-      this.hiddenImageChooser.files &&
-      this.hiddenImageChooser.files[0]
+      this.state.loadingImage ||
+      !this.hiddenImageChooser.files ||
+      !this.hiddenImageChooser.files[0]
     ) {
-      this.setState({
-        imageLoadingError: false,
-        loadingImage: true
-      });
-
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        this.imageURI = reader.result;
-
-        this.setState({
-          loadingImage: false,
-          imageLoaded: true
-        });
-
-        setTimeout(() => this.renderFirstTimeImage());
-      };
-
-      reader.onerror = () => {
-        this.setState({
-          loadingImage: false,
-          imageLoadingError: true
-        });
-      };
-
-      setTimeout(() => {
-        reader.readAsDataURL(this.hiddenImageChooser.files[0]);
-      });
+      return;
     }
+
+    this.setState({
+      imageLoadingError: false,
+      loadingImage: true
+    });
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.imageURI = reader.result;
+
+      this.setState({
+        loadingImage: false,
+        imageLoaded: true
+      });
+
+      setTimeout(() => this.renderFirstTimeImage());
+    };
+
+    reader.onerror = () => {
+      this.setState({
+        loadingImage: false,
+        imageLoadingError: true
+      });
+    };
+
+    setTimeout(() => {
+      reader.readAsDataURL(this.hiddenImageChooser.files[0]);
+    });
   };
 
   renderFirstTimeImage() {
-    // TODO: Offload hard things to web workers.
-    if (this.imageURI) {
-      this.setState({
-        isRendering: true,
-        isRendered: false
-      });
-
-      const htmlRenderedImage = new Image();
-
-      htmlRenderedImage.onload = () => {
-        this.canvasRef.width = htmlRenderedImage.width;
-        this.canvasRef.height = htmlRenderedImage.height;
-
-        this.height = htmlRenderedImage.height;
-        this.width = htmlRenderedImage.width;
-
-        const ctx = this.canvasRef.getContext('2d');
-        this.renderedImage = htmlRenderedImage;
-        ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
-
-        this.imageData = ctx.getImageData(0, 0, this.width, this.height);
-
-        manipulateImageData(
-          this.imageData,
-          this.props.controller.config,
-          this.width,
-          this.height
-        );
-
-        ctx.putImageData(this.imageData, 0, 0);
-
-        // Check if no updates here.
-        this.setState({
-          isRendered: true,
-          isRendering: false,
-          loadingImage: false
-        });
-
-        this.updateSvgRender();
-      };
-
-      htmlRenderedImage.src = this.imageURI;
+    if (!this.imageURI) {
+      return;
     }
-  }
 
-  updateSvgRender() {
-    if (
-      this.state.isRendered &&
-      this.imageData &&
-      this.props.controller.config['Live Update']
-    ) {
-      renderSvgString(
-        this.imageData.data,
-        this.canvasRef,
-        this.props.controller.config,
-        this.canvasRef.width,
-        this.canvasRef.height,
-        svgString => {
-          // TODO: Version/cancel this.
-          this.setState({
-            svgString
-          });
-        }
-      );
-    }
-  }
-
-  updateCanvasRender() {
     // TODO: Offload hard things to web workers.
-    // TODO: Version of render management.
-    if (
-      this.renderedImage &&
-      !this.state.isRendering &&
-      this.props.controller.config['Live Update']
-    ) {
-      this.setState({
-        isRendering: true,
-        isRendered: false
-      });
+    this.setState({
+      isRendering: true,
+      isRendered: false
+    });
+
+    const htmlRenderedImage = new Image();
+
+    htmlRenderedImage.onload = () => {
+      this.canvasRef.width = htmlRenderedImage.width;
+      this.canvasRef.height = htmlRenderedImage.height;
+
+      this.height = htmlRenderedImage.height;
+      this.width = htmlRenderedImage.width;
 
       const ctx = this.canvasRef.getContext('2d');
-      this.canvasRef.width = this.width;
-      this.canvasRef.height = this.height;
-      ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
+      this.renderedImage = htmlRenderedImage;
+      ctx.drawImage(htmlRenderedImage, 0, 0, this.width, this.height);
 
       this.imageData = ctx.getImageData(0, 0, this.width, this.height);
 
@@ -252,11 +192,77 @@ class ImageRenderer extends Component {
       // Check if no updates here.
       this.setState({
         isRendered: true,
-        isRendering: false
+        isRendering: false,
+        loadingImage: false
       });
 
       this.updateSvgRender();
+    };
+
+    htmlRenderedImage.src = this.imageURI;
+  }
+
+  async updateSvgRender() {
+    if (!this.state.isRendered
+      || !this.imageData
+      || !this.props.controller.config['Live Update']
+    ) {
+      return;
     }
+
+    const svgString = await renderSvgString(
+      this.imageData.data,
+      this.canvasRef,
+      this.props.controller.config,
+      this.canvasRef.width,
+      this.canvasRef.height
+    );
+
+    // TODO: Version/cancel this.
+    this.setState({
+      svgString
+    });
+  }
+
+  updateCanvasRender() {
+    if (
+      !this.renderedImage ||
+      this.state.isRendering ||
+      !this.props.controller.config['Live Update']
+    ) {
+      return;
+    }
+
+    // TODO: Offload hard things to web workers.
+    // TODO: Version of render management.
+    this.setState({
+      isRendering: true,
+      isRendered: false
+    });
+
+    const ctx = this.canvasRef.getContext('2d');
+    this.canvasRef.width = this.width;
+    this.canvasRef.height = this.height;
+    ctx.drawImage(this.renderedImage, 0, 0, this.width, this.height);
+
+    this.imageData = ctx.getImageData(0, 0, this.width, this.height);
+
+    manipulateImageData(
+      this.imageData,
+      this.props.controller.config,
+      this.width,
+      this.height
+    );
+
+    ctx.putImageData(this.imageData, 0, 0);
+
+    // Check if no updates here.
+    this.setState({
+      isRendered: true,
+      isRendering: false
+    });
+
+    this.updateSvgRender();
   }
 
   render() {

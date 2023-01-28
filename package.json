@@ -19,7 +19,7 @@
     "build": "react-scripts build && npm run compile-cli",
     "deploy": "npm run build && gh-pages -d build",
     "eject": "react-scripts eject",
-    "test": "node ./test/test-npm-module.js"
+    "test": "babel-node ./test/test-npm-module.js"
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
@@ -42,12 +42,15 @@
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
     "@babel/eslint-parser": "^7.17.0",
+    "@babel/node": "^7.20.7",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "@babel/preset-react": "^7.16.7",
-    "@material-ui/core": "^4.12.4",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.6",
     "eslint": "^8.15.0",
     "eslint-plugin-react": "^7.29.4",
     "gh-pages": "^3.2.3",

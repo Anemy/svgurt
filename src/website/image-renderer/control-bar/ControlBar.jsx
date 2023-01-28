@@ -1,7 +1,9 @@
 // import _ from 'lodash';
 import React, { useState } from 'react';
 // import Select from 'react-select';
-import { Menu, Button, MenuItem } from '@material-ui/core';
+// import { Menu, Button, MenuItem } from '@material-ui/core';
+import { Menu, Button, MenuItem } from '@mui/material';
+
 
 // import 'react-select/dist/react-select.css';
 
@@ -45,6 +47,7 @@ function ControlBar(props) {
           // variant="outlined"
           // color="primary"
           // color=""
+          color="secondary"
           variant="contained"
           size="small"
           onClick={() => {
@@ -140,6 +143,7 @@ function ControlBar(props) {
       </div> */}
       <div className="svgee-control-bar-right">
         <Button
+          color="secondary"
           // variant="outlined"
           // color="primary"
           variant="contained"

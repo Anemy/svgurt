@@ -1,45 +1,61 @@
+/* eslint-disable no-console */
+const assert = require('assert');
 
 const svgurt = require('../lib/module');
 
-console.log('Running to create svg string...');
-const stringConfig = {
-  input: './test/diamond.png',
-  returnSVGString: true
-};
+async function test() {
+  console.log('Running tests...');
 
-svgurt(stringConfig, (err, svgStringOutput) => {
-  if (err) {
+  console.log('Running to create svg string...');
+  const stringConfig = {
+    input: './test/diamond.png',
+    returnSVGString: true,
+    svgRenderType: 'LINE'
+  };
+
+  try {
+    const svgStringOutput = await svgurt(stringConfig);
+    console.log('Svg string output length:', svgStringOutput.length);
+  } catch (err) {
     console.log('Error trying svg string:', err);
+    assert(false);
   }
-  console.log('Svg string output length:', svgStringOutput.length);
-});
 
-console.log('Running svg with a basic input image...');
-const basicConfig = {
-  input: './test/palm.jpg',
-  output: './test/palm output',
-  blur: 10,
-  applyFractalDisplacement: true,
-  circleRadius: true,
-  svgRenderType: 'CIRCLE'
-};
+  console.log('Running svg with a basic input image...');
+  const basicConfig = {
+    input: './test/palm.jpg',
+    output: './test/palm output',
+    blur: 10,
+    applyFractalDisplacement: true,
+    circleRadius: true,
+    svgRenderType: 'CIRCLE'
+  };
 
-svgurt(basicConfig, err => {
-  if (err) {
+  try {
+    await svgurt(basicConfig);
+    console.log('Ran it with basic input image. Check for "palm output.svg" in this directory.');
+  } catch (err) {
     console.log('Error trying basic input image:', err);
+    assert(false);
   }
-  console.log('Ran it with basic input image. Check for "palm output.svg" in this directory.');
-});
 
-console.log('Running svgurt with two input files...');
-const arrayConfig = {
-  input: ['./test/palm.jpg', './test/diamond.png'],
-  output: ['./test/palm in array output', './test/diamond array output']
-};
+  console.log('Running svgurt with two input files...');
+  const arrayConfig = {
+    input: ['./test/palm.jpg', './test/diamond.png'],
+    output: ['./test/palm in array output', './test/diamond array output'],
+    svgRenderType: 'CIRCLE'
+  };
 
-svgurt(arrayConfig, err => {
-  if (err) {
+  try {
+    await svgurt(arrayConfig);
+  } catch (err) {
     console.log('Error trying two input images:', err);
+    assert(false);
   }
   console.log('Ran it with basic config on two inputs. Check for two files with array in their name in this directory.');
-});
+
+
+  console.log('Done running tests.');
+}
+
+test();

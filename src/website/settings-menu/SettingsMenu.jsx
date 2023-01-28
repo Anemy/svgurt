@@ -1,7 +1,8 @@
 // import _ from 'lodash';
 import React, { useState } from 'react';
 // import Select from 'react-select';
-import { Menu, Button, MenuItem } from '@material-ui/core';
+// import { Menu, Button, MenuItem } from '@material-ui/core';
+import { Menu, Button, MenuItem } from '@mui/material';
 
 // import 'react-select/dist/react-select.css';
 
@@ -54,6 +55,7 @@ function SettingsMenu(props) {
           // variant="outlined"
           // color="primary"
           // color=""
+          color="secondary"
           variant="contained"
           size="small"
           onClick={() => {
@@ -151,6 +153,7 @@ function SettingsMenu(props) {
         <Button
           // variant="outlined"
           // color="primary"
+          color="secondary"
           variant="contained"
           size="small"
           onClick={() => {

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
 import getPixels from 'get-pixels';
+import { promisify } from 'util';
 
 import { manipulateImageData } from './core/image-manipulator';
 import { controllerConfig } from './core/ControllerConstants';
@@ -20,48 +21,47 @@ const defaultConfig = {
   returnSVGString: false
 };
 
-function runSvgurtOnFile(config, inputFileName, outputFileName, callback) {
+async function runSvgurtOnFile(config, inputFileName, outputFileName) {
   const fileNameToImport = path.join(__dirname, '..', inputFileName);
 
-  getPixels(fileNameToImport, (err, pixels) => {
-    if (err) {
-      callback(`Error importing image: ${err}`);
-      return;
-    }
+  let pixels;
+  try {
+    const runGetPixels = promisify(getPixels);
+    pixels = await runGetPixels(fileNameToImport);
+  } catch (err) {
+    throw new Error(`Error importing image: ${err}`);
+  }
 
-    const width = pixels.shape[0];
-    const height = pixels.shape[1];
+  const width = pixels.shape[0];
+  const height = pixels.shape[1];
 
-    const imageDataToUse = {
-      data: pixels.data
-    };
+  const imageDataToUse = {
+    data: pixels.data
+  };
 
-    // Do image manipulation - this mutates the image data.
-    // It mutates because we're depending on some libraries that mutate it... Not my choice!
-    manipulateImageData(imageDataToUse, config, width, height);
+  // Do image manipulation - this mutates the image data.
+  // It mutates because we're depending on some libraries that mutate it... Not my choice!
+  manipulateImageData(imageDataToUse, config, width, height);
 
-    // Run svg creation based on the image data.
-    renderSvgString(
-      imageDataToUse.data,
-      null,
-      config,
-      width,
-      height,
-      svgString => {
-        // Write svg string to output file name.
-        if (config.returnSVGString) {
-          callback(false, svgString);
-        } else {
-          fs.writeFile(`${outputFileName}.svg`, svgString, function() {
-            callback(false);
-          });
-        }
-      }
-    );
-  });
+  // Run svg creation based on the image data.
+  const svgString = await renderSvgString(
+    imageDataToUse.data,
+    null,
+    config,
+    width,
+    height,
+  );
+
+  // Write svg string to output file name.
+  if (config.returnSVGString) {
+    return svgString;
+  } else {
+    const writeFile = promisify(fs.writeFile);
+    await writeFile(`${outputFileName}.svg`, svgString);
+  }
 }
 
-module.exports = function(config, callback) {
+async function runSvgurt(config) {
   let svgurtConfig = {
     ...defaultConfig,
     ...config
@@ -70,42 +70,37 @@ module.exports = function(config, callback) {
   if (_.isArray(svgurtConfig.input)) {
     const isOutputArray = _.isArray(svgurtConfig.output);
 
-    let done = 0;
     let svgStrings = [];
     let errStrings = [];
 
-    _.each(svgurtConfig.input, (inputFileName, index) => {
-      const doneFunction = (err, output) => {
-        done++;
+    await Promise.all(svgurtConfig.input, (inputFileName, index) => {
+      try {
+        let res;
+        if (isOutputArray && svgurtConfig.output[index]) {
+          res = runSvgurtOnFile(
+            svgurtConfig,
+            inputFileName,
+            svgurtConfig.output[index]
+          );
 
-        if (err) {
-          errStrings.push(err);
-        } else if (config.returnSVGString) {
-          svgStrings.push(output);
+        } else {
+          // If they don't supply a corresponding output file name then we just use the input file name.
+          res = runSvgurtOnFile(
+            svgurtConfig,
+            inputFileName,
+            inputFileName
+          );
         }
 
-        if (done === svgurtConfig.input.length) {
-          callback(_.isEmpty(errStrings) ? false : errStrings, svgStrings);
+        if (config.returnSVGString) {
+          svgStrings.push(res);
         }
-      };
-
-      if (isOutputArray && svgurtConfig.output[index]) {
-        runSvgurtOnFile(
-          svgurtConfig,
-          inputFileName,
-          svgurtConfig.output[index],
-          doneFunction
-        );
-      } else {
-        // If they don't supply a corresponding output file name then we just use the input file name.
-        runSvgurtOnFile(
-          svgurtConfig,
-          inputFileName,
-          inputFileName,
-          doneFunction
-        );
+      } catch (err) {
+        errStrings.push(err);
       }
     });
+
+    return _.isEmpty(errStrings) ? false : errStrings, svgStrings;
   } else {
     if (_.isArray(svgurtConfig.output)) {
       if (_.isEmpty(svgurtConfig.output)) {
@@ -116,11 +111,13 @@ module.exports = function(config, callback) {
       }
     }
 
-    runSvgurtOnFile(
+    return await runSvgurtOnFile(
       svgurtConfig,
       svgurtConfig.input,
       svgurtConfig.output,
-      callback
     );
   }
 };
+
+
+module.exports = runSvgurt;
