@@ -14,11 +14,11 @@ const containerStyles = {
   position: 'relative'
 };
 
-const ResizableArea = ({
+function ResizableArea({
   initialWidth,
   minWidth,
   children
-}) => {
+}) {
   const [width, setWidth] = useState(initialWidth);
 
   const maxWidth = useMemo(() => {
@@ -47,4 +47,4 @@ const ResizableArea = ({
   );
 };
 
-export default ResizableArea;
+export { ResizableArea };

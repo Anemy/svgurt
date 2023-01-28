@@ -1,20 +1,20 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
+import _ from 'lodash';
 
 import './ImageRenderer.css';
 
-import ControlBar from './control-bar/ControlBar';
+import { ControlBar } from './control-bar/ControlBar';
 
 import { updateGuiDisplay, updateRenderType } from '../controller/Controller';
 
 import { manipulateImageData } from '../../core/image-manipulator';
 import { renderSvgString } from '../../core/svg-renderer/svg-renderer';
 import { downloadSVGString } from './downloader';
-import ResizableArea from '../components/ResizeableArea';
+import { ResizableArea } from '../components/ResizeableArea';
 
 const minLeftPanelWidth = 100;
 
-export default class ImageRenderer extends Component {
+class ImageRenderer extends Component {
   constructor(props) {
     super(props);
 
@@ -341,3 +341,5 @@ export default class ImageRenderer extends Component {
     );
   }
 }
+
+export { ImageRenderer };

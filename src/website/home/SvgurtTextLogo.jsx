@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './SvgurtTextLogo.css';
 
-export default function SvgurtTextLogo() {
+function SvgurtTextLogo() {
   /* eslint-disable max-len */
   return (
     <Link to="/">
@@ -66,3 +66,5 @@ export default function SvgurtTextLogo() {
   );
   /* eslint-enable max-len */
 }
+
+export { SvgurtTextLogo };

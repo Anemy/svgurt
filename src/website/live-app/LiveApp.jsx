@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import './LiveApp.css';
 
-import ImageRenderer from '../image-renderer/ImageRenderer';
+import { ImageRenderer } from '../image-renderer/ImageRenderer';
 
 import { createController } from '../controller/Controller';
 import exampleImage from '../fixtures/example-image';
-import SvgurtTextLogo from '../home/SvgurtTextLogo';
-import LandingInfo from '../landing-info/LandingInfo';
+import { SvgurtTextLogo } from '../home/SvgurtTextLogo';
+import { LandingInfo } from '../landing-info/LandingInfo';
 
-export default class LiveApp extends Component {
+class LiveApp extends Component {
   state = {
     showLandingInfo: true,
     loadingImage: true,
@@ -142,3 +142,5 @@ export default class LiveApp extends Component {
     );
   }
 }
+
+export { LiveApp };

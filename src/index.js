@@ -1,17 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-// import { BrowserRouter } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
+
 import './website/index.css';
-import App from './website/App';
+
+import { App } from './website/App';
 import registerServiceWorker from './website/registerServiceWorker';
 
-ReactDOM.render(
-  // <BrowserRouter>
-  <HashRouter>
-    <App />
-  </HashRouter>,
-  // </BrowserRouter>,
+createRoot(
   document.getElementById('root')
-);
+).render(<App />);
 registerServiceWorker();
