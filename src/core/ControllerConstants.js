@@ -130,22 +130,22 @@ export const controllerConfig = {
     default: createRandomSeed()
   },
   radius: {
-    default: 1.5
+    default: 4
   },
   radiusOnColor: {
     default: true
   },
   radiusRandomness: {
-    default: 0.25
+    default: 0.2
   },
   recursiveAlgorithm: {
     default: RECURSIVE_LINE_ALGORITHMS.fifth
   },
   renderEveryXPixels: {
-    default: 5
+    default: 6
   },
   renderEveryYPixels: {
-    default: 5
+    default: 6
   },
   startAtCenterOfShapes: {
     default: false
@@ -163,7 +163,7 @@ export const controllerConfig = {
     default: 0.1
   },
   svgRenderType: {
-    default: SVG_RENDER_TYPES.TRACE
+    default: SVG_RENDER_TYPES.CIRCLE
   },
   wavelength: {
     default: 3
