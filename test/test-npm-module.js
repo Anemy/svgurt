@@ -2,10 +2,8 @@
 const assert = require('assert');
 // TODO: Once we're on node 17+ we can use the built in fetch api.
 const fetch = require('node-fetch');
-const fs = require('fs');
 
 const svgurt = require('../lib/module');
-const { promisify } = require('util');
 
 async function test() {
   console.log('Running tests...');
@@ -63,13 +61,11 @@ async function test() {
   const arrayBuffer = await blob.arrayBuffer();
   const imageBuffer = Buffer.from(arrayBuffer);
 
-  // const runWriteFile = promisify(fs.writeFile);
-  // await runWriteFile('./test/image_buffer_test', imageBuffer);
-
   console.log('Running svgurt with a buffer from a url...');
   const bufferConfig = {
     imageBuffer,
-    output: ['./test/buffer_svg_output'],
+    imageBufferType: 'image/png',
+    output: './test/buffer_svg_output',
     svgRenderType: 'CIRCLE'
   };
 

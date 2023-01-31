@@ -29,7 +29,12 @@ async function runSvgurtOnData(config, input, outputFileName) {
   let pixels;
   try {
     const runGetPixels = promisify(getPixels);
-    pixels = await runGetPixels(input);
+    // Types from https://github.com/scijs/get-pixels/blob/master/node-pixels.js#L108
+    if (config.imageBuffer && config.imageBufferType) {
+      pixels = await runGetPixels(config.imageBuffer, config.imageBufferType);
+    } else {
+      pixels = await runGetPixels(input);
+    }
   } catch (err) {
     throw new Error(`Error importing image: ${err}`);
   }
@@ -59,7 +64,7 @@ async function runSvgurtOnData(config, input, outputFileName) {
     return svgString;
   } else {
     const writeFile = promisify(fs.writeFile);
-    await writeFile(`${outputFileName}.svg`, svgString);
+    await writeFile(`${outputFileName || config.output}.svg`, svgString);
   }
 }
 
@@ -75,8 +80,9 @@ async function runSvgurt(config) {
     ...config
   };
 
-  if (svgurtConfig.imageBuffer) {
-    return await runSvgurtOnData(svgurtConfig, svgurtConfig.imageBuffer);
+  // Types from https://github.com/scijs/get-pixels/blob/master/node-pixels.js#L108
+  if (svgurtConfig.imageBuffer && svgurtConfig.imageBufferType) {
+    return await runSvgurtOnData(svgurtConfig);
   }
 
   // File runners.
