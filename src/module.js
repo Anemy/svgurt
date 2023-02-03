@@ -138,5 +138,4 @@ async function runSvgurt(config) {
   }
 };
 
-
 module.exports = runSvgurt;

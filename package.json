@@ -2,10 +2,11 @@
   "homepage": "http://svgurt.com",
   "name": "svgurt",
   "version": "1.0.1",
-  "main": "bin/module.js",
+  "main": "lib/module.js",
   "bin": {
     "svgurt": "./lib/cli.js"
   },
+  "types": "./index.d.ts",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,9 +15,9 @@
   "files": [
     "LICENSE",
     "lib",
-    "bin",
     "package.json",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ],
   "scripts": {
     "start": "react-scripts start",
