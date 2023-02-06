@@ -109,4 +109,4 @@ function LandingInfo({
   );
 }
 
-export { LandingInfo } ;
+export { LandingInfo };

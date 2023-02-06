@@ -24,16 +24,21 @@ const defaultConfig = {
   returnSVGString: false
 };
 
+type SvgurtConfig = any;
+
 // Data is either a file name or a buffer.
-async function runSvgurtOnData(config, input, outputFileName) {
+async function runSvgurtOnData(config: SvgurtConfig, input?: string, outputFileName?: string) {
   let pixels;
   try {
-    const runGetPixels = promisify(getPixels);
+    const runGetPixels: (input: string, type?: string) => Promise<{
+      shape: number[];
+      data: any;
+    }> = promisify(getPixels);
     // Types from https://github.com/scijs/get-pixels/blob/master/node-pixels.js#L108
     if (config.imageBuffer && config.imageBufferType) {
       pixels = await runGetPixels(config.imageBuffer, config.imageBufferType);
     } else {
-      pixels = await runGetPixels(input);
+      pixels = await runGetPixels(input!);
     }
   } catch (err) {
     throw new Error(`Error importing image: ${err}`);
@@ -56,7 +61,7 @@ async function runSvgurtOnData(config, input, outputFileName) {
     null,
     config,
     width,
-    height,
+    height
   );
 
   // Write svg string to output file name.
@@ -89,10 +94,10 @@ async function runSvgurt(config) {
   if (_.isArray(svgurtConfig.input)) {
     const isOutputArray = _.isArray(svgurtConfig.output);
 
-    let svgStrings = [];
-    let errStrings = [];
+    const svgStrings: string[] = [];
+    const errStrings: Error[] = [];
 
-    await Promise.all(svgurtConfig.input, async(inputFileName, index) => {
+    await Promise.all(svgurtConfig.input.map(async(inputFileName, index) => {
       try {
         let res;
         if (isOutputArray && svgurtConfig.output[index]) {
@@ -101,7 +106,6 @@ async function runSvgurt(config) {
             inputFileName,
             svgurtConfig.output[index]
           );
-
         } else {
           // If they don't supply a corresponding output file name then we just use the input file name.
           res = await runSvgurtOnFile(
@@ -114,12 +118,13 @@ async function runSvgurt(config) {
         if (config.returnSVGString) {
           svgStrings.push(res);
         }
-      } catch (err) {
+      } catch (err: any) {
         errStrings.push(err);
       }
-    });
+    }));
 
-    return _.isEmpty(errStrings) ? false : errStrings, svgStrings;
+    // TODO: Pass errors?
+    return _.isEmpty(errStrings) ? svgStrings : errStrings;
   } else {
     if (_.isArray(svgurtConfig.output)) {
       if (_.isEmpty(svgurtConfig.output)) {
@@ -133,9 +138,9 @@ async function runSvgurt(config) {
     return await runSvgurtOnFile(
       svgurtConfig,
       svgurtConfig.input,
-      svgurtConfig.output,
+      svgurtConfig.output
     );
   }
-};
+}
 
-module.exports = runSvgurt;
+export default runSvgurt;

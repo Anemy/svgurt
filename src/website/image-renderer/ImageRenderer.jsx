@@ -204,8 +204,8 @@ class ImageRenderer extends Component {
 
   async updateSvgRender() {
     if (
-      !this.imageData
-      || !this.props.controller.config['Live Update']
+      !this.imageData ||
+      !this.props.controller.config['Live Update']
     ) {
       return;
     }

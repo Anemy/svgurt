@@ -51,8 +51,8 @@ function buildRecursivePath(
   let xPos = x;
   let yPos = y;
 
-  let xBase = x;
-  let yBase = y;
+  const xBase = x;
+  const yBase = y;
 
   if (applyFractalDisplacement) {
     // if (displaceOrigin) {

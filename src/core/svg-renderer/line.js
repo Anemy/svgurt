@@ -121,7 +121,7 @@ function createContinuousLines(lineNumber, width, height, settings) {
   lines.push(createContinuousLine(lineNumber, width, height, dir, settings));
 
   if (crossHatch) {
-    let perpendicularDir = dir > -90 ? dir - 90 : dir + 90;
+    const perpendicularDir = dir > -90 ? dir - 90 : dir + 90;
     lines.push(
       createContinuousLine(
         lineNumber,
@@ -238,7 +238,7 @@ function getLinesAlongLine(guidingLine, width, height, settings, imageData) {
     tickY = 0;
   }
 
-  let amountOfPixelsInLine =
+  const amountOfPixelsInLine =
     Math.abs(Math.abs(guidingLine.x1) - Math.abs(guidingLine.x2)) +
     Math.abs(Math.abs(guidingLine.y1) - Math.abs(guidingLine.y2));
   for (let i = 0; i < amountOfPixelsInLine; i++) {

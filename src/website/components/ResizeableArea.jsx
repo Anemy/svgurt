@@ -29,8 +29,8 @@ function ResizableArea({
     <div
       style={{
         ...containerStyles,
-        minWidth: minWidth,
-        width: width,
+        minWidth,
+        width,
         flex: 'none'
       }}
     >
@@ -45,6 +45,6 @@ function ResizableArea({
       />
     </div>
   );
-};
+}
 
 export { ResizableArea };

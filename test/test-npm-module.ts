@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-const assert = require('assert');
+import assert from 'assert';
 // TODO: Once we're on node 17+ we can use the built in fetch api.
-const fetch = require('node-fetch');
+// import fetch from 'node-fetch';
 
-const svgurt = require('../lib/module');
+import svgurt from '../lib/module';
 
 async function test() {
   console.log('Running tests...');
@@ -76,7 +76,6 @@ async function test() {
     assert(false);
   }
   console.log('Ran it with basic config on buffer, check for `buffer_svg_output` in this directory.');
-
 
   console.log('Done running tests.');
 }

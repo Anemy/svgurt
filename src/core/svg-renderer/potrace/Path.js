@@ -14,6 +14,7 @@ export default class Path {
 
     this.curve = {};
   }
+
   reverse() {
     this.curve.vertex.reverse();
   }

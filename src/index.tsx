@@ -6,7 +6,13 @@ import './website/index.css';
 import { App } from './website/App';
 import registerServiceWorker from './website/registerServiceWorker';
 
+const htmlRoot = document.getElementById('root');
+
+if (!htmlRoot) {
+  throw new Error('No html root for react.');
+}
+
 createRoot(
-  document.getElementById('root')
+  htmlRoot
 ).render(<App />);
 registerServiceWorker();

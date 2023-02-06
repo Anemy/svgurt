@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "sourceMap": true,
+    "strict": true,
+    "declaration": true,
+    "removeComments": true,
+    "target": "es2019",
+    "lib": ["es2019"],
+    "outDir": "./lib",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "allowJs": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./src/**/*.spec.*"
+  ]
+}

@@ -8,7 +8,7 @@ function grayScale(imageData, width, height) {
 
   jsfeat.imgproc.grayscale(imageData.data, width, height, grayImageMatrix);
 
-  let data_u32 = new Uint32Array(imageData.data.buffer);
+  const data_u32 = new Uint32Array(imageData.data.buffer);
   let i = grayImageMatrix.cols * grayImageMatrix.rows;
   let pix = 0;
 
@@ -34,7 +34,7 @@ function cannyEdgeDetection(
 
   jsfeat.imgproc.canny(matrix, matrix, lowThreshold, highThreshold);
 
-  let data_u32 = new Uint32Array(imageData.data.buffer);
+  const data_u32 = new Uint32Array(imageData.data.buffer);
   let i = matrix.cols * matrix.rows;
   let pix = 0;
 

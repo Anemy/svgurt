@@ -340,7 +340,7 @@ noise.seed(0);
 for(var i=0; i<256; i++) {
   perm[i] = perm[i + 256] = p[i];
   gradP[i] = gradP[i + 256] = grad3[perm[i] % 12];
-}*/
+} */
 
 // Skewing and unskewing factors for 2, 3, and 4 dimensions
 const F2 = 0.5 * (Math.sqrt(3) - 1);
@@ -549,8 +549,8 @@ function lerp(a, b, t) {
 // 2D Perlin Noise
 noise.perlin2 = function(x, y) {
   // Find unit grid cell containing point
-  var X = Math.floor(x),
-    Y = Math.floor(y);
+  let X = Math.floor(x);
+  let Y = Math.floor(y);
   // Get relative xy coordinates of point within that cell
   x = x - X;
   y = y - Y;
@@ -565,7 +565,7 @@ noise.perlin2 = function(x, y) {
   const n11 = gradP[X + 1 + perm[Y + 1]].dot2(x - 1, y - 1);
 
   // Compute the fade curve value for x
-  let u = fade(x);
+  const u = fade(x);
 
   // Interpolate the four results
   return lerp(lerp(n00, n10, u), lerp(n01, n11, u), fade(y));
@@ -574,9 +574,9 @@ noise.perlin2 = function(x, y) {
 // 3D Perlin Noise
 noise.perlin3 = function(x, y, z) {
   // Find unit grid cell containing point
-  var X = Math.floor(x),
-    Y = Math.floor(y),
-    Z = Math.floor(z);
+  let X = Math.floor(x);
+  let Y = Math.floor(y);
+  let Z = Math.floor(z);
   // Get relative xyz coordinates of point within that cell
   x = x - X;
   y = y - Y;
@@ -601,9 +601,9 @@ noise.perlin3 = function(x, y, z) {
   );
 
   // Compute the fade curve value for x, y, z
-  let u = fade(x);
-  let v = fade(y);
-  let w = fade(z);
+  const u = fade(x);
+  const v = fade(y);
+  const w = fade(z);
 
   // Interpolate
   return lerp(

@@ -21,6 +21,8 @@ if (args[0] === '-h' || args[0] === 'help') {
 }
 
 async function main() {
+  // TODO: Read as json instead of require.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const config = require(path.join(__dirname, '..', args[0]));
 
   const result = await svgurt(config);

@@ -32,8 +32,8 @@ export function getSpiralPath(
   thetaStep = (thetaStep * Math.PI) / 180;
 
   // radii
-  let oldR,
-    newR = a + b * newTheta;
+  let oldR;
+  let newR = a + b * newTheta;
 
   // start and end points
   const oldPoint = { x: 0, y: 0 };

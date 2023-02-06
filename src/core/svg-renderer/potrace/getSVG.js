@@ -1,7 +1,7 @@
 function getSVG(pathList, size, opt_type) {
   function path(curve) {
     function bezier(i) {
-      var b =
+      let b =
         'C ' +
         (curve.c[i * 3 + 0].x * size).toFixed(3) +
         ' ' +
@@ -21,7 +21,7 @@ function getSVG(pathList, size, opt_type) {
     }
 
     function segment(i) {
-      var s =
+      let s =
         'L ' +
         (curve.c[i * 3 + 1].x * size).toFixed(3) +
         ' ' +
@@ -35,8 +35,8 @@ function getSVG(pathList, size, opt_type) {
       return s;
     }
 
-    let n = curve.n,
-      i;
+    const n = curve.n;
+    let i;
     let p =
       'M' +
       (curve.c[(n - 1) * 3 + 2].x * size).toFixed(3) +
@@ -54,14 +54,14 @@ function getSVG(pathList, size, opt_type) {
     return p;
   }
 
-  let w = 846,
-    h = 352,
-    len = pathList.length,
-    c,
-    i,
-    strokec,
-    fillc,
-    fillrule;
+  const w = 846;
+  const h = 352;
+  const len = pathList.length;
+  let c;
+  let i;
+  let strokec;
+  let fillc;
+  let fillrule;
 
   let svg =
     '<svg id="svg" version="1.1" width="' +

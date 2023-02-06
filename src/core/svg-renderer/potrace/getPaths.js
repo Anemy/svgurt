@@ -1,29 +1,29 @@
 export default function getPaths(pathlist) {
   function path(curve) {
     function bezier(i) {
-      var x1 = curve.c[i * 3 + 0].x;
-      var y1 = curve.c[i * 3 + 0].y;
-      var x2 = curve.c[i * 3 + 1].x;
-      var y2 = curve.c[i * 3 + 1].y;
-      var x = curve.c[i * 3 + 2].x;
-      var y = curve.c[i * 3 + 2].y;
+      const x1 = curve.c[i * 3 + 0].x;
+      const y1 = curve.c[i * 3 + 0].y;
+      const x2 = curve.c[i * 3 + 1].x;
+      const y2 = curve.c[i * 3 + 1].y;
+      const x = curve.c[i * 3 + 2].x;
+      const y = curve.c[i * 3 + 2].y;
 
       return {
         type: 'CURVE',
-        x1: x1,
-        y1: y1,
-        x2: x2,
-        y2: y2,
-        x: x,
-        y: y
+        x1,
+        y1,
+        x2,
+        y2,
+        x,
+        y
       };
     }
 
     function segment(i) {
-      var x1 = curve.c[i * 3 + 1].x;
-      var y1 = curve.c[i * 3 + 1].y;
-      var x2 = curve.c[i * 3 + 2].x;
-      var y2 = curve.c[i * 3 + 2].y;
+      const x1 = curve.c[i * 3 + 1].x;
+      const y1 = curve.c[i * 3 + 1].y;
+      const x2 = curve.c[i * 3 + 2].x;
+      const y2 = curve.c[i * 3 + 2].y;
 
       return [
         {
@@ -40,17 +40,17 @@ export default function getPaths(pathlist) {
     }
     const p = [];
 
-    let n = curve.n,
-      i,
-      s;
+    const n = curve.n;
+    let i;
+    let s;
 
     const x = curve.c[(n - 1) * 3 + 2].x;
     const y = curve.c[(n - 1) * 3 + 2].y;
 
     p.push({
       type: 'POINT',
-      x: x,
-      y: y
+      x,
+      y
     });
 
     for (i = 0; i < n; i++) {
@@ -65,9 +65,9 @@ export default function getPaths(pathlist) {
     return p;
   }
 
-  let len = pathlist.length,
-    c,
-    i;
+  const len = pathlist.length;
+  let c;
+  let i;
 
   const paths = [];
   for (i = 0; i < len; i++) {
