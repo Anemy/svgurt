@@ -34,7 +34,7 @@
     "file-api": "^0.10.4",
     "get-pixels": "^3.3.3",
     "image-data-uri": "^2.0.1",
-    "image-size": "^1.0.1",
+    "image-size": "npm:image-size-next@1.2.2",
     "jsfeat": "0.0.8",
     "lodash": "^4.17.21",
     "stackblur-canvas": "^2.5.0"
